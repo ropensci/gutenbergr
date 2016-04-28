@@ -12,7 +12,8 @@ knitr::opts_chunk$set(
 gutenbergr: R package to search and download public domain texts from Project Gutenberg
 ----------------
 
-[![Travis-CI Build Status](https://travis-ci.org/.svg?branch=master)](https://travis-ci.org/)
+[![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
+
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 

@@ -5,9 +5,10 @@
 gutenbergr: R package to search and download public domain texts from Project Gutenberg
 ----------------
 
-[![Travis-CI Build Status](https://travis-ci.org/.svg?branch=master)](https://travis-ci.org/)
+[![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
 
-Download and process public domain works in the Project Gutenberg collection. Includes
+
+Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 
 * A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: e.g., `gutenberg_download(84)` downloads the text of Frankenstein.
 * Metadata for all Project Gutenberg works as R datasets, so that they can be searched and filtered:
