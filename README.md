@@ -37,8 +37,6 @@ We recommend the [tidytext](https://github.com/juliasilge/tidytext) package for 
 
 See the [data-raw](data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog) on **April 27 2016**.
 
-There are no guarantees about how often the metadata will be updated in the package. If you're interested in works that have just been added or heavily edited on Project Gutenberg, you may want to run the scripts yourself.
-
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
 Yes! The package respects [these rules](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) and complies to the best of our ability. Namely:
@@ -47,4 +45,8 @@ Yes! The package respects [these rules](https://www.gutenberg.org/wiki/Gutenberg
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We retrieve the .zip file rather than txt to minimize bandwidth on the mirror.
 
-Still, this package is *not* the right way to download the entire Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic for analysis.
+Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic for analysis.
+
+### Code of Conduct
+
+This project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
