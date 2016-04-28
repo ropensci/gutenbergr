@@ -25,7 +25,7 @@ Download and process public domain works from the [Project Gutenberg](https://ww
 
 ### FAQ
 
-### What do I do with the text once I have it?
+#### What do I do with the text once I have it?
 
 We recommend the [tidytext](https://github.com/juliasilge/tidytext) package for tokenization and analysis!
 
