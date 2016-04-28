@@ -1,7 +1,6 @@
 Package: gutenbergr
 Type: Package
-Title: Download and process public domain books stored in
-    Project Gutenberg
+Title: Download And Process Public Domain Works From Project Gutenberg
 Version: 0.1
 Date: 2016-04-27
 Authors@R: person("David", "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cre"))
