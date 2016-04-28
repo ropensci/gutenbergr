@@ -1,0 +1,119 @@
+---
+title: "gutenbergr: Search and download public domain texts from Project Gutenberg"
+author: "David Robinson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gutenbergr: Search and download public domain texts from Project Gutenberg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest.
+
+### Downloading books by ID
+
+The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, the book "Frankenstein; or The Modern Prometheus", by Mary Wollstonecraft Shelly, has ID 84 (see [the URL here](https://www.gutenberg.org/ebooks/84)), so `gutenberg_download(84)` downloads this text.
+
+```{r frankenstein}
+library(dplyr)
+library(gutenbergr)
+
+frankenstein <- gutenberg_download(84)
+
+frankenstein
+```
+
+Notice it is returned as a tbl_df (a form of data frame), including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/84/84.txt)) have been stripped away.
+
+Provide a vector of IDs to download multiple books. For example, to download Dracula (book [345](https://www.gutenberg.org/ebooks/345)) along with Frankenstein, do:
+
+```{r frankenstein_dracula}
+frankenstein_dracula <- gutenberg_download(c(84, 345))
+
+frankenstein_dracula %>%
+  count(gutenberg_id)
+```
+
+### Project Gutenberg Metadata
+
+This package contains metadata for all Project Gutenberg works as R datasets, so that you can search and filter for particular works before downloading.
+
+The dataset `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc:
+
+```{r}
+gutenberg_metadata
+```
+
+For example, you could find the Gutenberg ID of Wuthering Heights by doing:
+
+```{r}
+gutenberg_metadata %>%
+  filter(title == "Wuthering Heights")
+```
+
+In many analyses, you may want to filter just for English works, avoid duplicates, and include only books that have text that can be downloaded. The `gutenberg_works()` function does this pre-filtering:
+
+```{r}
+gutenberg_works()
+```
+
+It also allows you to perform filtering as an argument:
+
+```{r}
+gutenberg_works(author == "Austen, Jane")
+```
+
+#### Other meta-datasets
+
+`gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](http://id.loc.gov/authorities/subjects.html):
+
+```{r}
+gutenberg_subjects
+```
+
+This is useful for extracting texts from a particular topic or genre, such as horror, or a particular character, such as Sherlock Holmes. The `gutenberg_id` column can then be used to download these texts or to link with other metadata.
+
+```{r}
+gutenberg_subjects %>%
+  filter(subject == "Horror tales")
+
+gutenberg_subjects %>%
+  filter(grepl("Holmes, Sherlock", subject))
+```
+
+`gutenberg_authors` contains information about each author, such as aliases and birth/death year:
+
+```{r}
+gutenberg_authors
+```
+
+### Analysis
+
+What's next after retrieving a book's text? It can be joined with the `gutenberg_metadata` set to have more informative fields than just `gutenberg_id`:
+
+```{r}
+book_titles <- gutenberg_metadata %>%
+  select(gutenberg_id, title)
+
+frankenstein_dracula %>%
+  inner_join(book_titles, by = "gutenberg_id")
+```
+
+Having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
+
+```{r}
+library(tidytext)
+
+words <- frankenstein_dracula %>%
+  unnest_tokens(word, text)
+
+words
+
+word_counts <- words %>%
+  anti_join(stop_words, by = "word") %>%
+  count(gutenberg_id, word, sort = TRUE) %>%
+  ungroup()
+
+word_counts
+```

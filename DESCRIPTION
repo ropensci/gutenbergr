@@ -22,4 +22,8 @@ Imports:
     stringr
 RoxygenNote: 5.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat,
+    tidytext,
+    ggplot2,
+    tidyr
