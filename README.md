@@ -5,8 +5,10 @@
 gutenbergr: R package to search and download public domain texts from Project Gutenberg
 ----------------
 
-[![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
+**Authors:** [David Robinson](http://varianceexplained.org/)<br/>
+**License:** [MIT](https://opensource.org/licenses/MIT)
 
+[![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 
@@ -15,6 +17,15 @@ Download and process public domain works from the [Project Gutenberg](https://ww
   * `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc
   * `gutenberg_authors` contains information about each author, such as aliases and birth/death year
   * `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics
+
+### Installation
+
+Install using [devtools](https://github.com/hadley/devtools) with:
+
+
+```r
+devtools::install_github("dgrtwo/gutenbergr")
+```
 
 ### FAQ
 
@@ -32,7 +43,7 @@ There are no guarantees about how often the metadata will be updated in the pack
 
 Yes! The package respects [these rules](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) and complies to the best of our ability. Namely:
 
-* Project Gutenberg allows wget to harvest Project Gutenberg using [this list of links](http://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits the page once to find the recommended mirror for the user's location.
+* Project Gutenberg allows wget to harvest Project Gutenberg using [this list of links](http://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits that page once to find the recommended mirror for the user's location.
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We retrieve the .zip file rather than txt to minimize bandwidth on the mirror.
 
