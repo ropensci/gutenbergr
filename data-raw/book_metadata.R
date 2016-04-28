@@ -54,7 +54,8 @@ gutenberg_subjects <- gutenberg_metadata_raw %>%
   filter(!map_lgl(subjects, is.null)) %>%
   mutate(subjects = map(subjects, as.data.frame, stringsAsFactors = FALSE)) %>%
   unnest(subjects) %>%
-  rename(subject_type = V1, subject = V2)
+  rename(subject_type = V1, subject = V2) %>%
+  arrange(gutenberg_id)
 
 gutenberg_authors <- gutenberg_metadata_raw %>%
   distinct(creator.author.gutenberg_agent_id) %>%
@@ -71,7 +72,8 @@ gutenberg_authors <- gutenberg_authors %>%
             author = agent_name,
             alias, birthdate, deathdate,
             wikipedia = collapse_col(wikipedia),
-            aliases = collapse_col(aliases))
+            aliases = collapse_col(aliases)) %>%
+  arrange(gutenberg_author_id)
 
 devtools::use_data(gutenberg_metadata, overwrite = TRUE)
 devtools::use_data(gutenberg_subjects, overwrite = TRUE)
