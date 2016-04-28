@@ -2,11 +2,13 @@
 #'
 #' @param gutenberg_id A vector of Project Gutenberg ID
 #' @param mirror Optionally a mirror URL to retrieve the books from
+#' @param strip Whether to strip suspected headers and footers
+#' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}
 #'
 #' @import dplyr
 #'
 #' @export
-gutenberg_download <- function(gutenberg_id, mirror = NULL) {
+gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE, ...) {
   if (is.null(mirror)) {
     mirror <- gutenberg_get_mirror()
   }
@@ -47,9 +49,16 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL) {
   ret <- full_url %>%
     purrr::map(try_download) %>%
     purrr::discard(is.null) %>%
-    purrr::map(gutenberg_strip) %>%
     purrr::map_df(~data_frame(text = .), .id = "gutenberg_id") %>%
     mutate(gutenberg_id = as.integer(gutenberg_id))
+
+  if (strip) {
+    ret <-
+      ret %>%
+      group_by(gutenberg_id) %>%
+      do(data_frame(text = gutenberg_strip(.$text))) %>%
+      ungroup()
+  }
 
   ret
 }
@@ -62,33 +71,33 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL) {
 #' will also not strip tables of contents, prologues, or other text
 #' that appears at the start of a book.
 #'
-#' @param text A character vector of book text
+#' @param text A character vector with lines of a book
 #'
 #' @export
 gutenberg_strip <- function(text) {
   text[is.na(text)] <- ""
 
-  starting_regex <- "^\\*\\*\\*.*PROJECT GUTENBERG"
-  start_after <- which(stringr::str_detect(text, starting_regex))[1]
-
-  if (!is.na(start_after)) {
-    text <- tail(text, -(start_after))
-  }
+  starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END .*SMALL PRINT)"
+  text <- discard_start_while(text, !stringr::str_detect(text, starting_regex))[-1]
+  # also discard rest of "paragraph"
+  text <- discard_start_while(text, text != "")
 
   ending_regex <- "^(End of .*Project Gutenberg.*|\\*\\*\\*.*END OF.*PROJECT GUTENBERG)"
-  stop_before <- which(stringr::str_detect(text, ending_regex))[1]
+  text <- keep_while(text, !stringr::str_detect(text, ending_regex))
 
-  if (!is.na(stop_before)) {
-    text <- head(text, stop_before - 1)
+  # strip empty lines from start and end
+  text <- discard_start_while(text, text == "")
+
+  # also paragraphs at the start that are meta-data
+  start_paragraph_regex <- "(produced by|prepared by|transcribed from|project gutenberg|^note: )"
+  while (length(text) > 0 &&
+         stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)) {
+    # get rid of that paragraph, then the following whitespace
+    text <- discard_start_while(text, text != "")
+    text <- discard_start_while(text, text == "")
   }
 
-  # strip empty lines from start and empty
-  if (text[1] == "") {
-    text <- tail(text, -(min(which(text != "")) - 1))
-  }
-  if (tail(text, 1) == "") {
-    text <- head(text, max(which(text != "")))
-  }
+  text <- discard_end_while(text, text == "")
 
   text
 }

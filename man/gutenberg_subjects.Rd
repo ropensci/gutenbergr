@@ -35,13 +35,9 @@ sherlock_holmes_subjects <- gutenberg_subjects \%>\%
 
 sherlock_holmes_subjects
 
-sherlock_holmes_metadata <- gutenberg_metadata \%>\%
-  semi_join(sherlock_holmes_subjects) \%>\%
-  filter(author == "Doyle, Arthur Conan",
-         language == "en",
-         has_text) \%>\%
-  arrange(gutenberg_id) \%>\%
-  distinct(title)
+sherlock_holmes_metadata <- gutenberg_works() \%>\%
+  filter(author == "Doyle, Arthur Conan") \%>\%
+  semi_join(sherlock_holmes_subjects, by = "gutenberg_id")
 
 sherlock_holmes_metadata
 
@@ -50,6 +46,10 @@ holmes_books <- gutenberg_download(sherlock_holmes_metadata$gutenberg_id)
 
 holmes_books
 }
+
+}
+\seealso{
+\link{gutenberg_metadata}, \link{gutenberg_authors}
 }
 \keyword{datasets}
 

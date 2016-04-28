@@ -43,8 +43,6 @@ We recommend the [tidytext](https://github.com/juliasilge/tidytext) package for 
 
 See the [data-raw](data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog) on **April 27 2016**.
 
-There are no guarantees about how often the metadata will be updated in the package. If you're interested in works that have just been added or heavily edited on Project Gutenberg, you may want to run the scripts yourself.
-
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
 Yes! The package respects [these rules](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) and complies to the best of our ability. Namely:

@@ -12,3 +12,32 @@ read_zip_url <- function(url) {
 
   ret
 }
+
+
+#' Discard all values at the start of .x while .p is true
+#'
+#' @param .x Vector
+#' @param .p Logical vector
+discard_start_while <- function(.x, .p) {
+  if (.p[1] && any(!.p)) {
+    .x <- tail(.x, -(min(which(!.p)) - 1))
+  }
+  .x
+}
+
+
+keep_while <- function(.x, .p) {
+  if (.p[1] && any(.p)) {
+    .x <- head(.x, min(which(!.p)) - 1)
+  }
+  .x
+}
+
+
+#' Discard all values at the start of .x while .p is true
+#'
+#' @param .x Vector
+#' @param .p Logical vector
+discard_end_while <- function(.x, .p) {
+  rev(discard_start_while(rev(.x), rev(.p)))
+}

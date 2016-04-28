@@ -30,17 +30,30 @@
 #' library(dplyr)
 #' library(stringr)
 #'
+#' gutenberg_metadata
+#'
+#' gutenberg_metadata %>%
+#'   count(author, sort = TRUE)
+#'
 #' # look for Shakespeare, excluding collections (containing "Works") and translations
 #' shakespeare_metadata <- gutenberg_metadata %>%
 #'   filter(author == "Shakespeare, William",
 #'          language == "en",
 #'          !str_detect(title, "Works"),
-#'          has_text) %>%
+#'          has_text,
+#'          !str_detect(rights, "Copyright")) %>%
 #'          distinct(title)
 #'
 #' \dontrun{
 #' shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 #' }
+#'
+#' # note that gutenberg_works() function is a shortcut to some of the above
+#'
+#' shakespeare_metadata2 <- gutenberg_works(author == "Shakespeare, William",
+#'                                          !str_detect(title, "Works"))
+#'
+#' @seealso \link{gutenberg_works}, \link{gutenberg_authors}, \link{gutenberg_subjects}
 "gutenberg_metadata"
 
 
@@ -74,13 +87,9 @@
 #'
 #' sherlock_holmes_subjects
 #'
-#' sherlock_holmes_metadata <- gutenberg_metadata %>%
-#'   semi_join(sherlock_holmes_subjects) %>%
-#'   filter(author == "Doyle, Arthur Conan",
-#'          language == "en",
-#'          has_text) %>%
-#'   arrange(gutenberg_id) %>%
-#'   distinct(title)
+#' sherlock_holmes_metadata <- gutenberg_works() %>%
+#'   filter(author == "Doyle, Arthur Conan") %>%
+#'   semi_join(sherlock_holmes_subjects, by = "gutenberg_id")
 #'
 #' sherlock_holmes_metadata
 #'
@@ -89,6 +98,8 @@
 #'
 #' holmes_books
 #' }
+#'
+#' @seealso \link{gutenberg_metadata}, \link{gutenberg_authors}
 "gutenberg_subjects"
 
 
@@ -112,4 +123,6 @@
 #'   \item{aliases}{List column of character vectors of aliases. If there
 #'   are multiple, they are "/"-delimited}
 #' }
+#'
+#' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
 "gutenberg_authors"

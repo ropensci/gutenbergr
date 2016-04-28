@@ -26,5 +26,8 @@ Gutenberg work. For space only metadata from people that have
 been the single author of a work (not multiple authors,
 contributors, etc) are included.
 }
+\seealso{
+\link{gutenberg_metadata}, \link{gutenberg_subjects}
+}
 \keyword{datasets}
 

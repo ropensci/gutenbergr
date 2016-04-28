@@ -37,17 +37,32 @@ particularly the \code{pg_rdf_to_json} function.
 library(dplyr)
 library(stringr)
 
+gutenberg_metadata
+
+gutenberg_metadata \%>\%
+  count(author, sort = TRUE)
+
 # look for Shakespeare, excluding collections (containing "Works") and translations
 shakespeare_metadata <- gutenberg_metadata \%>\%
   filter(author == "Shakespeare, William",
          language == "en",
          !str_detect(title, "Works"),
-         has_text) \%>\%
+         has_text,
+         !str_detect(rights, "Copyright")) \%>\%
          distinct(title)
 
 \dontrun{
 shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 }
+
+# note that gutenberg_works() function is a shortcut to some of the above
+
+shakespeare_metadata2 <- gutenberg_works(author == "Shakespeare, William",
+                                         !str_detect(title, "Works"))
+
+}
+\seealso{
+\link{gutenberg_works}, \link{gutenberg_authors}, \link{gutenberg_subjects}
 }
 \keyword{datasets}
 

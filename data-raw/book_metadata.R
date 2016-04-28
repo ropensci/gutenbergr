@@ -1,8 +1,14 @@
-# you first need to run:
+### Before running, you first need to run two scrips:
+
+# First:
 
 # python data-raw/gitenberg_metadata.py
 
-# which creates data-raw/metadata.json.gz
+# which creates data-raw/metadata.json.gz, and
+
+# sh text_files.sh
+
+# which creates data-raw/
 
 library(purrr)
 library(dplyr)
@@ -17,7 +23,7 @@ gutenberg_metadata_raw <- fromJSON(str_c("[", str_c(metadata_lines, collapse = "
   jsonlite::flatten() %>%
   tbl_df()
 
-# select columns, and combine some list columns into  character
+# select columns, and combine some list columns into "/"-delimited character
 # vector columns
 
 collapse_col <- function(x) {
@@ -27,8 +33,7 @@ collapse_col <- function(x) {
     unlist()
 }
 
-ids_with_text <- read_lines("data-raw/have_text.txt") %>%
-  unique() %>%
+ids_with_text <- read_lines("data-raw/ids_with_text.txt") %>%
   extract_numeric() %>%
   as.integer()
 
