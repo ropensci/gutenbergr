@@ -77,7 +77,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE, ...) {
 gutenberg_strip <- function(text) {
   text[is.na(text)] <- ""
 
-  starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END .*SMALL PRINT)"
+  starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END.*SMALL PRINT)"
   text <- discard_start_while(text, !stringr::str_detect(text, starting_regex))[-1]
   # also discard rest of "paragraph"
   text <- discard_start_while(text, text != "")
