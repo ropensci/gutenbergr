@@ -26,6 +26,10 @@ discard_start_while <- function(.x, .p) {
 }
 
 
+#' Keep values at the start of .x while .p is true
+#'
+#' @param .x Vector
+#' @param .p Logical vector
 keep_while <- function(.x, .p) {
   if (.p[1] && any(.p)) {
     .x <- head(.x, min(which(!.p)) - 1)
