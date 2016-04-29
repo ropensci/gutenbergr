@@ -38,29 +38,30 @@ Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find 
 
 ```r
 library(dplyr)
+library(gutenbergr)
 
 gutenberg_works() %>%
   filter(title == "Wuthering Heights")
 #> Source: local data frame [1 x 8]
 #> 
-#>   gutenberg_id             title        author gutenberg_author_id
-#>          (int)             (chr)         (chr)               (int)
-#> 1          768 Wuthering Heights Brontë, Emily                 405
-#>   language                                 gutenberg_bookshelf
-#>      (chr)                                               (chr)
-#> 1       en Gothic Fiction/Best Books Ever Listings/Movie Books
+#>   gutenberg_id             title        author gutenberg_author_id language
+#>          (int)             (chr)         (chr)               (int)    (chr)
+#> 1          768 Wuthering Heights Brontë, Emily                 405       en
+#>                                   gutenberg_bookshelf
+#>                                                 (chr)
+#> 1 Gothic Fiction/Best Books Ever Listings/Movie Books
 #> Variables not shown: rights (chr), has_text (lgl)
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
 #> Source: local data frame [1 x 8]
 #> 
-#>   gutenberg_id             title        author gutenberg_author_id
-#>          (int)             (chr)         (chr)               (int)
-#> 1          768 Wuthering Heights Brontë, Emily                 405
-#>   language                                 gutenberg_bookshelf
-#>      (chr)                                               (chr)
-#> 1       en Gothic Fiction/Best Books Ever Listings/Movie Books
+#>   gutenberg_id             title        author gutenberg_author_id language
+#>          (int)             (chr)         (chr)               (int)    (chr)
+#> 1          768 Wuthering Heights Brontë, Emily                 405       en
+#>                                   gutenberg_bookshelf
+#>                                                 (chr)
+#> 1 Gothic Fiction/Best Books Ever Listings/Movie Books
 #> Variables not shown: rights (chr), has_text (lgl)
 ```
 
@@ -72,32 +73,19 @@ wuthering_heights <- gutenberg_download(768)
 wuthering_heights
 #> Source: local data frame [12,085 x 2]
 #> 
-#>    gutenberg_id
-#>           (int)
-#> 1           768
-#> 2           768
-#> 3           768
-#> 4           768
-#> 5           768
-#> 6           768
-#> 7           768
-#> 8           768
-#> 9           768
-#> 10          768
-#> ..          ...
-#>                                                                       text
-#>                                                                      (chr)
-#> 1                                                        WUTHERING HEIGHTS
-#> 2                                                                         
-#> 3                                                                         
-#> 4                                                                CHAPTER I
-#> 5                                                                         
-#> 6                                                                         
-#> 7    1801.--I have just returned from a visit to my landlord--the solitary
-#> 8  neighbour that I shall be troubled with.  This is certainly a beautiful
-#> 9  country!  In all England, I do not believe that I could have fixed on a
-#> 10    situation so completely removed from the stir of society.  A perfect
-#> ..                                                                     ...
+#>    gutenberg_id                                                                    text
+#>           (int)                                                                   (chr)
+#> 1           768                                                       WUTHERING HEIGHTS
+#> 2           768                                                                        
+#> 3           768                                                                        
+#> 4           768                                                               CHAPTER I
+#> 5           768                                                                        
+#> 6           768                                                                        
+#> 7           768   1801.--I have just returned from a visit to my landlord--the solitary
+#> 8           768 neighbour that I shall be troubled with.  This is certainly a beautiful
+#> 9           768 country!  In all England, I do not believe that I could have fixed on a
+#> 10          768    situation so completely removed from the stir of society.  A perfect
+#> ..          ...                                                                     ...
 ```
 
 `gutenberg_download` can download multiple books, which works well when downloading multiple from the metadata. For example, we could get the text of all Aristotle's works with:
@@ -110,32 +98,19 @@ aristotle_books <- gutenberg_download(aristotle_metadata$gutenberg_id)
 aristotle_books
 #> Source: local data frame [39,950 x 2]
 #> 
-#>    gutenberg_id
-#>           (int)
-#> 1          1974
-#> 2          1974
-#> 3          1974
-#> 4          1974
-#> 5          1974
-#> 6          1974
-#> 7          1974
-#> 8          1974
-#> 9          1974
-#> 10         1974
-#> ..          ...
-#>                                                                      text
-#>                                                                     (chr)
-#> 1                                                THE POETICS OF ARISTOTLE
-#> 2                                                                        
-#> 3                                                            By Aristotle
-#> 4                                                                        
-#> 5                                          A Translation By S. H. Butcher
-#> 6                                                                        
-#> 7                                                                        
-#> 8         [Transcriber's Annotations and Conventions: the translator left
-#> 9  intact some Greek words to illustrate a specific point of the original
-#> 10   discourse. In this transcription, in order to retain the accuracy of
-#> ..                                                                    ...
+#>    gutenberg_id                                                                   text
+#>           (int)                                                                  (chr)
+#> 1          1974                                               THE POETICS OF ARISTOTLE
+#> 2          1974                                                                       
+#> 3          1974                                                           By Aristotle
+#> 4          1974                                                                       
+#> 5          1974                                         A Translation By S. H. Butcher
+#> 6          1974                                                                       
+#> 7          1974                                                                       
+#> 8          1974        [Transcriber's Annotations and Conventions: the translator left
+#> 9          1974 intact some Greek words to illustrate a specific point of the original
+#> 10         1974   discourse. In this transcription, in order to retain the accuracy of
+#> ..          ...                                                                    ...
 ```
 
 ### FAQ

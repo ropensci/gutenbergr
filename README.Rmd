@@ -39,12 +39,14 @@ The `gutenberg_works()` function retrieves, by default, a table of metadata for 
 
 ```{r echo = FALSE}
 options(dplyr.width = 140)
+options(width = 100)
 ```
 
 Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find the book's ID by filtering:
 
 ```{r}
 library(dplyr)
+library(gutenbergr)
 
 gutenberg_works() %>%
   filter(title == "Wuthering Heights")
