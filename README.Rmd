@@ -33,6 +33,42 @@ Install using [devtools](https://github.com/hadley/devtools) with:
 devtools::install_github("dgrtwo/gutenbergr")
 ```
 
+### Examples
+
+The `gutenberg_works()` function retrieves, by default, a table of metadata for all unique English-language Project Gutenberg works that have text associated with them. (The `gutenberg_metadata` dataset has all Gutenberg works, unfiltered).
+
+```{r echo = FALSE}
+options(dplyr.width = 140)
+```
+
+Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find the book's ID by filtering:
+
+```{r}
+library(dplyr)
+
+gutenberg_works() %>%
+  filter(title == "Wuthering Heights")
+
+# or just:
+gutenberg_works(title == "Wuthering Heights")
+```
+
+Since we see that it has `gutenberg_id` 768, we can download it with the `gutenberg_download()` function:
+
+```{r}
+wuthering_heights <- gutenberg_download(768)
+wuthering_heights
+```
+
+`gutenberg_download` can download multiple books, which works well when downloading multiple from the metadata. For example, we could get the text of all Aristotle's works with:
+
+```{r}
+aristotle_metadata <- gutenberg_works(author == "Aristotle")
+aristotle_books <- gutenberg_download(aristotle_metadata$gutenberg_id)
+
+aristotle_books
+```
+
 ### FAQ
 
 #### What do I do with the text once I have it?
