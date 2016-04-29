@@ -45,6 +45,7 @@ gutenberg_works <- function(..., languages = "en",
                             only_text = TRUE,
                             rights = c("Public domain in the USA.", "None"),
                             distinct = TRUE) {
+  data("gutenberg_metadata", package = "gutenbergr", envir = environment())
   ret <- filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
