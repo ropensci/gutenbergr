@@ -5,7 +5,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 2 notes
 
 The notes are:
 
@@ -27,7 +27,9 @@ This word is correctly spelled.
 			    error:14077410:SSL routines:SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
     <several other URLs snipped for length>
 
-These links appear in the README and the intro vignette, and are to Project Gutenberg. Project Gutenberg blocks automated traffic, so these appear blocked when accessed from CRAN/build_win/etc. The URLs are accurate.
+These links appear in the README and the intro vignette, and are to Project
+Gutenberg. Project Gutenberg blocks automated traffic, so these appear blocked
+when accessed from CRAN/build_win/etc. The URLs are accurate.
 
     checking data for non-ASCII characters ... NOTE
       Note: found 13591 marked UTF-8 strings
