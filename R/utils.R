@@ -5,7 +5,7 @@
 #' @param url URL to a .zip file
 read_zip_url <- function(url) {
   tmp <- tempfile(fileext = ".zip")
-  download.file(url, tmp, quiet = TRUE)
+  utils::download.file(url, tmp, quiet = TRUE)
 
   ret <- purrr::possibly(readr::read_lines, NULL)(tmp)
   unlink(tmp)
@@ -18,9 +18,11 @@ read_zip_url <- function(url) {
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#'
+#' @noRd
 discard_start_while <- function(.x, .p) {
   if (.p[1] && any(!.p)) {
-    .x <- tail(.x, -(min(which(!.p)) - 1))
+    .x <- utils::tail(.x, -(min(which(!.p)) - 1))
   }
   .x
 }
@@ -30,9 +32,11 @@ discard_start_while <- function(.x, .p) {
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#'
+#' @noRd
 keep_while <- function(.x, .p) {
   if (.p[1] && any(.p)) {
-    .x <- head(.x, min(which(!.p)) - 1)
+    .x <- utils::head(.x, min(which(!.p)) - 1)
   }
   .x
 }
@@ -42,6 +46,8 @@ keep_while <- function(.x, .p) {
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#'
+#' @noRd
 discard_end_while <- function(.x, .p) {
   rev(discard_start_while(rev(.x), rev(.p)))
 }

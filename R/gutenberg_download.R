@@ -10,7 +10,7 @@
 #' containing a \code{gutenberg_id} column, such as from the results of
 #' a \code{gutenberg_works()} call.
 #' @param mirror Optionally a mirror URL to retrieve the books from. By
-#' default uses the mirror from \code{\link{get_gutenberg_mirror}}.
+#' default uses the mirror from \code{\link{gutenberg_get_mirror}}.
 #' @param strip Whether to strip suspected headers and footers using the
 #' \code{\link{gutenberg_strip}} function
 #' @param meta_fields Additional fields, such as \code{title} and \code{author},
@@ -120,7 +120,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
   if (length(meta_fields) > 0) {
     meta_fields <- unique(c("gutenberg_id", meta_fields))
 
-    data("gutenberg_metadata", package = "gutenbergr", envir = environment())
+    utils::data("gutenberg_metadata", package = "gutenbergr", envir = environment())
     md <- gutenberg_metadata[meta_fields]
 
     ret <- ret %>%

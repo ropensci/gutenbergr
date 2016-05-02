@@ -12,7 +12,8 @@ gutenberg_download(gutenberg_id, mirror = NULL, strip = TRUE,
 containing a \code{gutenberg_id} column, such as from the results of
 a \code{gutenberg_works()} call.}
 
-\item{mirror}{Optionally a mirror URL to retrieve the books from}
+\item{mirror}{Optionally a mirror URL to retrieve the books from. By
+default uses the mirror from \code{\link{gutenberg_get_mirror}}.}
 
 \item{strip}{Whether to strip suspected headers and footers using the
 \code{\link{gutenberg_strip}} function}
@@ -50,7 +51,7 @@ the start and end of each downloaded book.
 \examples{
 
 \dontrun{
-# load dplyr first to print only first few rows
+# load dplyr first to display tbl_dfs appropriately
 library(dplyr)
 
 # download The Count of Monte Cristo
@@ -63,7 +64,7 @@ books \%>\% count(title)
 
 # download all books from Jane Austen
 austen <- gutenberg_works(author == "Austen, Jane") \%>\%
-  gutenberg_download()
+  gutenberg_download(meta_fields = "title")
 
 austen
 austen \%>\%
