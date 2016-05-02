@@ -1,16 +1,73 @@
-#' Download a book using its Gutenberg ID
+#' Download one or more works using a Project Gutenberg ID
 #'
-#' @param gutenberg_id A vector of Project Gutenberg ID
+#' Download one or more works by their Project Gutenberg IDs into
+#' a data frame with one row per line per work. This can be used to download
+#' a single work of interest or multiple at a time. You can look up the
+#' Gutenberg IDs of a work using the \code{gutenberg_works()} function or
+#' the \code{gutenberg_metadata} dataset.
+#'
+#' @param gutenberg_id A vector of Project Gutenberg ID, or a data frame
+#' containing a \code{gutenberg_id} column, such as from the results of
+#' a \code{gutenberg_works()} call.
 #' @param mirror Optionally a mirror URL to retrieve the books from
-#' @param strip Whether to strip suspected headers and footers
-#' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}
+#' @param strip Whether to strip suspected headers and footers using the
+#' \code{\link{gutenberg_strip}} function
+#' @param meta_fields Additional fields, such as \code{title} and \code{author},
+#' to add from \link{gutenberg_metadata} describing each book. This is useful
+#' when returning multiple.
+#' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}, currently
+#' unused
+#'
+#' @details Note that if \code{strip = TRUE}, this tries to remove the
+#' Gutenberg header and footer using the \code{\link{gutenberg_strip}}
+#' function. This is not an exact process since headers and footers differ
+#' between books. Before doing an in-depth analysis you may want to check
+#' the start and end of each downloaded book.
+#'
+#' @return A two column data frame with one row for each line of the
+#' text or texts, with columns
+#' \describe{
+#'   \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
+#'   each text}
+#'   \item{text}{A character vector}
+#' }
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # load dplyr first to print only first few rows
+#' library(dplyr)
+#'
+#' # download The Count of Monte Cristo
+#' gutenberg_download(1184)
+#'
+#' # download two books: Wuthering Heights and Jane Eyre
+#' books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+#' books
+#' books %>% count(title)
+#'
+#' # download all books from Jane Austen
+#' austen <- gutenberg_works(author == "Austen, Jane") %>%
+#'   gutenberg_download()
+#'
+#' austen
+#' austen %>%
+#'  count(title)
+#' }
 #'
 #' @import dplyr
 #'
 #' @export
-gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE, ...) {
+gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
+                               meta_fields = NULL, ...) {
   if (is.null(mirror)) {
     mirror <- gutenberg_get_mirror()
+  }
+
+  if (inherits(gutenberg_id, "data.frame")) {
+    # extract the gutenberg_id column. This is useful for working
+    # with the output of gutenberg_works()
+    gutenberg_id <- gutenberg_id[["gutenberg_id"]]
   }
 
   id <- as.character(gutenberg_id)
@@ -53,11 +110,20 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE, ...) {
     mutate(gutenberg_id = as.integer(gutenberg_id))
 
   if (strip) {
-    ret <-
-      ret %>%
+    ret <- ret %>%
       group_by(gutenberg_id) %>%
-      do(data_frame(text = gutenberg_strip(.$text))) %>%
+      do(data_frame(text = gutenberg_strip(.$text, ...))) %>%
       ungroup()
+  }
+
+  if (length(meta_fields) > 0) {
+    meta_fields <- unique(c("gutenberg_id", meta_fields))
+
+    data("gutenberg_metadata", package = "gutenbergr", envir = environment())
+    md <- gutenberg_metadata[meta_fields]
+
+    ret <- ret %>%
+      inner_join(md, by = "gutenberg_id")
   }
 
   ret

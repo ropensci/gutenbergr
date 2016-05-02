@@ -2,20 +2,73 @@
 % Please edit documentation in R/gutenberg_download.R
 \name{gutenberg_download}
 \alias{gutenberg_download}
-\title{Download a book using its Gutenberg ID}
+\title{Download one or more works using a Project Gutenberg ID}
 \usage{
-gutenberg_download(gutenberg_id, mirror = NULL, strip = TRUE, ...)
+gutenberg_download(gutenberg_id, mirror = NULL, strip = TRUE,
+  meta_fields = NULL, ...)
 }
 \arguments{
-\item{gutenberg_id}{A vector of Project Gutenberg ID}
+\item{gutenberg_id}{A vector of Project Gutenberg ID, or a data frame
+containing a \code{gutenberg_id} column, such as from the results of
+a \code{gutenberg_works()} call.}
 
 \item{mirror}{Optionally a mirror URL to retrieve the books from}
 
-\item{strip}{Whether to strip suspected headers and footers}
+\item{strip}{Whether to strip suspected headers and footers using the
+\code{\link{gutenberg_strip}} function}
 
-\item{...}{Extra arguments passed to \code{\link{gutenberg_strip}}}
+\item{meta_fields}{Additional fields, such as \code{title} and \code{author},
+to add from \link{gutenberg_metadata} describing each book. This is useful
+when returning multiple.}
+
+\item{...}{Extra arguments passed to \code{\link{gutenberg_strip}}, currently
+unused}
+}
+\value{
+A two column data frame with one row for each line of the
+text or texts, with columns
+\describe{
+  \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
+  each text}
+  \item{text}{A character vector}
+}
 }
 \description{
-Download a book using its Gutenberg ID
+Download one or more works by their Project Gutenberg IDs into
+a data frame with one row per line per work. This can be used to download
+a single work of interest or multiple at a time. You can look up the
+Gutenberg IDs of a work using the \code{gutenberg_works()} function or
+the \code{gutenberg_metadata} dataset.
+}
+\details{
+Note that if \code{strip = TRUE}, this tries to remove the
+Gutenberg header and footer using the \code{\link{gutenberg_strip}}
+function. This is not an exact process since headers and footers differ
+between books. Before doing an in-depth analysis you may want to check
+the start and end of each downloaded book.
+}
+\examples{
+
+\dontrun{
+# load dplyr first to print only first few rows
+library(dplyr)
+
+# download The Count of Monte Cristo
+gutenberg_download(1184)
+
+# download two books: Wuthering Heights and Jane Eyre
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+books
+books \%>\% count(title)
+
+# download all books from Jane Austen
+austen <- gutenberg_works(author == "Austen, Jane") \%>\%
+  gutenberg_download()
+
+austen
+austen \%>\%
+ count(title)
+}
+
 }
 
