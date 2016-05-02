@@ -62,11 +62,22 @@ wuthering_heights <- gutenberg_download(768)
 wuthering_heights
 ```
 
-`gutenberg_download` can download multiple books, which works well when downloading multiple from the metadata. For example, we could get the text of all Aristotle's works with:
+`gutenberg_download` can download multiple books when given multiple IDs. It also takes a `meta_fields` argument that will add variables from the metadata.
 
 ```{r}
-aristotle_metadata <- gutenberg_works(author == "Aristotle")
-aristotle_books <- gutenberg_download(aristotle_metadata$gutenberg_id)
+# 1260 is the ID of Jane Eyre
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+books
+
+books %>%
+  count(title)
+```
+
+It can also take the output of `gutenberg_works` directly. For example, we could get the text of all Aristotle's works, each annotated with both `gutenberg_id` and `title`, using:
+
+```{r}
+aristotle_books <- gutenberg_works(author == "Aristotle") %>%
+  gutenberg_download(meta_fields = "title")
 
 aristotle_books
 ```

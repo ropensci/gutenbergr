@@ -88,15 +88,61 @@ wuthering_heights
 #> ..          ...                                                                     ...
 ```
 
-`gutenberg_download` can download multiple books, which works well when downloading multiple from the metadata. For example, we could get the text of all Aristotle's works with:
+`gutenberg_download` can download multiple books when given multiple IDs. It also takes a `meta_fields` argument that will add variables from the metadata.
 
 
 ```r
-aristotle_metadata <- gutenberg_works(author == "Aristotle")
-aristotle_books <- gutenberg_download(aristotle_metadata$gutenberg_id)
+# 1260 is the ID of Jane Eyre
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+books
+#> Source: local data frame [32,744 x 3]
+#> 
+#>    gutenberg_id                                                                    text
+#>           (int)                                                                   (chr)
+#> 1           768                                                       WUTHERING HEIGHTS
+#> 2           768                                                                        
+#> 3           768                                                                        
+#> 4           768                                                               CHAPTER I
+#> 5           768                                                                        
+#> 6           768                                                                        
+#> 7           768   1801.--I have just returned from a visit to my landlord--the solitary
+#> 8           768 neighbour that I shall be troubled with.  This is certainly a beautiful
+#> 9           768 country!  In all England, I do not believe that I could have fixed on a
+#> 10          768    situation so completely removed from the stir of society.  A perfect
+#> ..          ...                                                                     ...
+#>                title
+#>                (chr)
+#> 1  Wuthering Heights
+#> 2  Wuthering Heights
+#> 3  Wuthering Heights
+#> 4  Wuthering Heights
+#> 5  Wuthering Heights
+#> 6  Wuthering Heights
+#> 7  Wuthering Heights
+#> 8  Wuthering Heights
+#> 9  Wuthering Heights
+#> 10 Wuthering Heights
+#> ..               ...
+
+books %>%
+  count(title)
+#> Source: local data frame [2 x 2]
+#> 
+#>                         title     n
+#>                         (chr) (int)
+#> 1 Jane Eyre: An Autobiography 20659
+#> 2           Wuthering Heights 12085
+```
+
+It can also take the output of `gutenberg_works` directly. For example, we could get the text of all Aristotle's works, each annotated with both `gutenberg_id` and `title`, using:
+
+
+```r
+aristotle_books <- gutenberg_works(author == "Aristotle") %>%
+  gutenberg_download(meta_fields = "title")
 
 aristotle_books
-#> Source: local data frame [39,950 x 2]
+#> Source: local data frame [39,950 x 3]
 #> 
 #>    gutenberg_id                                                                   text
 #>           (int)                                                                  (chr)
@@ -111,6 +157,19 @@ aristotle_books
 #> 9          1974 intact some Greek words to illustrate a specific point of the original
 #> 10         1974   discourse. In this transcription, in order to retain the accuracy of
 #> ..          ...                                                                    ...
+#>                       title
+#>                       (chr)
+#> 1  The Poetics of Aristotle
+#> 2  The Poetics of Aristotle
+#> 3  The Poetics of Aristotle
+#> 4  The Poetics of Aristotle
+#> 5  The Poetics of Aristotle
+#> 6  The Poetics of Aristotle
+#> 7  The Poetics of Aristotle
+#> 8  The Poetics of Aristotle
+#> 9  The Poetics of Aristotle
+#> 10 The Poetics of Aristotle
+#> ..                      ...
 ```
 
 ### FAQ

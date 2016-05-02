@@ -24,15 +24,21 @@ frankenstein <- gutenberg_download(84)
 frankenstein
 ```
 
-Notice it is returned as a tbl_df (a form of data frame), including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/84/84.txt)) have been stripped away.
+Notice it is returned as a tbl_df (a type of data frame), including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/84/84.txt)) have been stripped away.
 
 Provide a vector of IDs to download multiple books. For example, to download Dracula (book [345](https://www.gutenberg.org/ebooks/345)) along with Frankenstein, do:
 
 ```{r frankenstein_dracula}
-frankenstein_dracula <- gutenberg_download(c(84, 345))
+frankenstein_dracula <- gutenberg_download(c(84, 345), meta_fields = "title")
 
+frankenstein_dracula
+```
+
+Notice that the `meta_fields` argument allows us to add one or more additional fields from the `gutenberg_metadata` to the downloaded text, such as title or author.
+
+```{r}
 frankenstein_dracula %>%
-  count(gutenberg_id)
+  count(title)
 ```
 
 ### Project Gutenberg Metadata
@@ -90,17 +96,7 @@ gutenberg_authors
 
 ### Analysis
 
-What's next after retrieving a book's text? It can be joined with the `gutenberg_metadata` set to have more informative fields than just `gutenberg_id`:
-
-```{r}
-book_titles <- gutenberg_metadata %>%
-  select(gutenberg_id, title)
-
-frankenstein_dracula %>%
-  inner_join(book_titles, by = "gutenberg_id")
-```
-
-Having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
+What's next after retrieving a book's text? Well, having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
 
 ```{r}
 library(tidytext)
@@ -112,8 +108,7 @@ words
 
 word_counts <- words %>%
   anti_join(stop_words, by = "word") %>%
-  count(gutenberg_id, word, sort = TRUE) %>%
-  ungroup()
+  count(title, word, sort = TRUE)
 
 word_counts
 ```
