@@ -9,6 +9,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
 [![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)](http://cran.r-project.org/package=gutenbergr)
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 
@@ -20,7 +21,14 @@ Download and process public domain works from the [Project Gutenberg](https://ww
 
 ### Installation
 
-Install using [devtools](https://github.com/hadley/devtools) with:
+Install the package with:
+
+
+```r
+install.packages("gutenbergr")
+```
+
+Or install the development version using [devtools](https://github.com/hadley/devtools) with:
 
 
 ```r
