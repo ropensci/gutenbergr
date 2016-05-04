@@ -1,6 +1,7 @@
 # gutenbergr 0.1.0.9000
 
 * Added AppVeyor for Windows continuous integration
+* Added code coverage information through codecov.io and covr
 
 # gutenbergr 0.1
 
