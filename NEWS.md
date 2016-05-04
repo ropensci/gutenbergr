@@ -1,5 +1,7 @@
 # gutenbergr 0.1.0.9000
 
+* Added AppVeyor for Windows continuous integration
+
 # gutenbergr 0.1
 
 * First version of package, including
