@@ -4,7 +4,8 @@
 \name{gutenberg_authors}
 \alias{gutenberg_authors}
 \title{Metadata about Project Gutenberg authors}
-\format{A tbl_df with one row for each author, with the columns
+\format{A tbl_df (see tibble or dplyr) with one row for each
+author, with the columns
 \describe{
   \item{gutenberg_author_id}{Unique identifier for the author that can
   be used to join with the \link{gutenberg_metadata} dataset}
@@ -14,7 +15,7 @@
   \item{deathdate}{Year of death}
   \item{wikipedia}{Link to Wikipedia article on the author. If there
   are multiple, they are "/"-delimited}
-  \item{aliases}{List column of character vectors of aliases. If there
+  \item{aliases}{Character vector of aliases. If there
   are multiple, they are "/"-delimited}
 }}
 \usage{
@@ -22,9 +23,10 @@ gutenberg_authors
 }
 \description{
 Data frame with metadata about each author of a Project
-Gutenberg work. For space only metadata from people that have
-been the single author of a work (not multiple authors,
-contributors, etc) are included.
+Gutenberg work. Although the Project Gutenberg raw data
+also includes metadata on contributors, editors, illustrators,
+etc., this dataset contains only people who have been the
+single author of at least one work.
 }
 \seealso{
 \link{gutenberg_metadata}, \link{gutenberg_subjects}

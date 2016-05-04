@@ -9,7 +9,17 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest.
+```{r echo = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest. Includes:
+
+* A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: e.g., `gutenberg_download(84)` downloads the text of Frankenstein.
+* Metadata for all Project Gutenberg works as R datasets, so that they can be searched and filtered:
+  * `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc
+  * `gutenberg_authors` contains information about each author, such as aliases and birth/death year
+  * `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics
 
 ### Downloading books by ID
 
@@ -112,3 +122,8 @@ word_counts <- words %>%
 
 word_counts
 ```
+
+You may also find these resources useful:
+
+* The [Natural Language Processing CRAN View](https://cran.r-project.org/web/views/NaturalLanguageProcessing.html) suggests many R packages related to text mining, especially around the [tm package](https://cran.r-project.org/web/packages/tm/index.html)
+* You could match the `wikipedia` column in `gutenberg_author` to Wikipedia content with the [WikipediR](https://cran.r-project.org/web/packages/WikipediR/index.html) package or to pageview statistics with the [wikipediatrend](https://cran.r-project.org/web/packages/wikipediatrend/index.html) package

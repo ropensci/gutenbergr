@@ -5,29 +5,33 @@
 \title{Download one or more works using a Project Gutenberg ID}
 \usage{
 gutenberg_download(gutenberg_id, mirror = NULL, strip = TRUE,
-  meta_fields = NULL, ...)
+  meta_fields = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{gutenberg_id}{A vector of Project Gutenberg ID, or a data frame
 containing a \code{gutenberg_id} column, such as from the results of
-a \code{gutenberg_works()} call.}
+a \code{gutenberg_works()} call}
 
 \item{mirror}{Optionally a mirror URL to retrieve the books from. By
-default uses the mirror from \code{\link{gutenberg_get_mirror}}.}
+default uses the mirror from \code{\link{gutenberg_get_mirror}}}
 
 \item{strip}{Whether to strip suspected headers and footers using the
 \code{\link{gutenberg_strip}} function}
 
 \item{meta_fields}{Additional fields, such as \code{title} and \code{author},
 to add from \link{gutenberg_metadata} describing each book. This is useful
-when returning multiple.}
+when returning multiple}
+
+\item{verbose}{Whether to show messages about the Project Gutenberg
+mirror that was chosen}
 
 \item{...}{Extra arguments passed to \code{\link{gutenberg_strip}}, currently
 unused}
 }
 \value{
-A two column data frame with one row for each line of the
-text or texts, with columns
+A two column tbl_df (a type of data frame; see tibble or
+dplyr packages) with one row for each line of the text or texts,
+with columns
 \describe{
   \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
   each text}
@@ -51,7 +55,6 @@ the start and end of each downloaded book.
 \examples{
 
 \dontrun{
-# load dplyr first to display tbl_dfs appropriately
 library(dplyr)
 
 # download The Count of Monte Cristo

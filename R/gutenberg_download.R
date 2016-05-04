@@ -8,14 +8,16 @@
 #'
 #' @param gutenberg_id A vector of Project Gutenberg ID, or a data frame
 #' containing a \code{gutenberg_id} column, such as from the results of
-#' a \code{gutenberg_works()} call.
+#' a \code{gutenberg_works()} call
 #' @param mirror Optionally a mirror URL to retrieve the books from. By
-#' default uses the mirror from \code{\link{gutenberg_get_mirror}}.
+#' default uses the mirror from \code{\link{gutenberg_get_mirror}}
 #' @param strip Whether to strip suspected headers and footers using the
 #' \code{\link{gutenberg_strip}} function
 #' @param meta_fields Additional fields, such as \code{title} and \code{author},
 #' to add from \link{gutenberg_metadata} describing each book. This is useful
-#' when returning multiple.
+#' when returning multiple
+#' @param verbose Whether to show messages about the Project Gutenberg
+#' mirror that was chosen
 #' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}, currently
 #' unused
 #'
@@ -25,8 +27,9 @@
 #' between books. Before doing an in-depth analysis you may want to check
 #' the start and end of each downloaded book.
 #'
-#' @return A two column data frame with one row for each line of the
-#' text or texts, with columns
+#' @return A two column tbl_df (a type of data frame; see tibble or
+#' dplyr packages) with one row for each line of the text or texts,
+#' with columns
 #' \describe{
 #'   \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
 #'   each text}
@@ -36,7 +39,6 @@
 #' @examples
 #'
 #' \dontrun{
-#' # load dplyr first to display tbl_dfs appropriately
 #' library(dplyr)
 #'
 #' # download The Count of Monte Cristo
@@ -60,9 +62,9 @@
 #'
 #' @export
 gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
-                               meta_fields = NULL, ...) {
+                               meta_fields = NULL, verbose = TRUE, ...) {
   if (is.null(mirror)) {
-    mirror <- gutenberg_get_mirror()
+    mirror <- gutenberg_get_mirror(verbose = verbose)
   }
 
   if (inherits(gutenberg_id, "data.frame")) {
@@ -138,6 +140,20 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' will also not strip tables of contents, prologues, or other text
 #' that appears at the start of a book.
 #'
+#' @examples
+#'
+#' library(dplyr)
+#' book <- gutenberg_works(title == "Pride and Prejudice") %>%
+#'   gutenberg_download(strip = FALSE)
+#'
+#' head(book$text, 10)
+#' tail(book$text, 10)
+#'
+#' text_stripped <- gutenberg_strip(book$text)
+#'
+#' head(text_stripped, 10)
+#' tail(text_stripped, 10)
+#'
 #' @param text A character vector with lines of a book
 #'
 #' @export
@@ -175,17 +191,23 @@ gutenberg_strip <- function(text) {
 #' Get the recommended mirror for Gutenberg files by accessing
 #' the wget harvest path, which is
 #' \url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
-#' Also set the global \code{gutenberg_mirror} option
+#' Also sets the global \code{gutenberg_mirror} options.
+#'
+#' @param verbose Whether to show messages about the Project Gutenberg
+#' mirror that was chosen
 #'
 #' @export
-gutenberg_get_mirror <- function() {
+gutenberg_get_mirror <- function(verbose = TRUE) {
   mirror <- getOption("gutenberg_mirror")
   if (!is.null(mirror)) {
     return(mirror)
   }
 
   # figure out the mirror for this location from wget
-  message("Determining mirror for Gutenberg http://www.gutenberg.org/robot/harvest")
+  if (verbose) {
+    message("Determining mirror for Project Gutenberg from ",
+            "http://www.gutenberg.org/robot/harvest")
+  }
   wget_url <- "http://www.gutenberg.org/robot/harvest?filetypes[]=txt"
   mirror_full_url <- xml2::read_html(wget_url) %>%
     rvest::html_nodes("a") %>%
@@ -195,6 +217,10 @@ gutenberg_get_mirror <- function() {
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- paste0(parsed$scheme, "://", parsed$domain)
+
+  if (verbose) {
+    message("Using mirror ", mirror)
+  }
 
   # set option for next time
   options(gutenberg_mirror = mirror)

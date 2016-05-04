@@ -4,12 +4,16 @@
 \alias{gutenberg_get_mirror}
 \title{Get the recommended mirror for Gutenberg files}
 \usage{
-gutenberg_get_mirror()
+gutenberg_get_mirror(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Whether to show messages about the Project Gutenberg
+mirror that was chosen}
 }
 \description{
 Get the recommended mirror for Gutenberg files by accessing
 the wget harvest path, which is
 \url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
-Also set the global \code{gutenberg_mirror} option
+Also sets the global \code{gutenberg_mirror} options.
 }
 
