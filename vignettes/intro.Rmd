@@ -134,3 +134,4 @@ You may also find these resources useful:
 
 * The [Natural Language Processing CRAN View](https://cran.r-project.org/web/views/NaturalLanguageProcessing.html) suggests many R packages related to text mining, especially around the [tm package](https://cran.r-project.org/web/packages/tm/index.html)
 * You could match the `wikipedia` column in `gutenberg_author` to Wikipedia content with the [WikipediR](https://cran.r-project.org/web/packages/WikipediR/index.html) package or to pageview statistics with the [wikipediatrend](https://cran.r-project.org/web/packages/wikipediatrend/index.html) package
+* If you're considering an analysis based on author name, you may find the [humaniformat](https://cran.r-project.org/package=humaniformat) (for extraction of first names) and [gender](https://cran.r-project.org/package=gender) (prediction of gender from first names) packages useful. (Note that humaniformat has a `format_reverse` function for reversing "Last, First" names).

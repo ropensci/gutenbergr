@@ -59,7 +59,7 @@ gutenberg_works() %>%
 #> 1          768 Wuthering Heights Brontë, Emily                 405       en
 #>                                   gutenberg_bookshelf
 #>                                                 (chr)
-#> 1 Gothic Fiction/Best Books Ever Listings/Movie Books
+#> 1 Gothic Fiction/Movie Books/Best Books Ever Listings
 #> Variables not shown: rights (chr), has_text (lgl)
 
 # or just:
@@ -71,7 +71,7 @@ gutenberg_works(title == "Wuthering Heights")
 #> 1          768 Wuthering Heights Brontë, Emily                 405       en
 #>                                   gutenberg_bookshelf
 #>                                                 (chr)
-#> 1 Gothic Fiction/Best Books Ever Listings/Movie Books
+#> 1 Gothic Fiction/Movie Books/Best Books Ever Listings
 #> Variables not shown: rights (chr), has_text (lgl)
 ```
 
@@ -189,6 +189,7 @@ aristotle_books
 * The [Natural Language Processing CRAN View](https://cran.r-project.org/view=NaturalLanguageProcessing) suggests many R packages related to text mining, especially around the [tm package](https://cran.r-project.org/package=tm).
 * The [tidytext](https://github.com/juliasilge/tidytext) package is useful for tokenization and analysis, especially since gutenbergr downloads books as a data frame already.
 * You could match the `wikipedia` column in `gutenberg_author` to Wikipedia content with the [WikipediR](https://cran.r-project.org/package=WikipediR) package or to pageview statistics with the [wikipediatrend](https://cran.r-project.org/package=wikipediatrend) package.
+* If you're considering an analysis based on author name, you may find the [humaniformat](https://cran.r-project.org/package=humaniformat) (for extraction of first names) and [gender](https://cran.r-project.org/package=gender) (prediction of gender from first names) packages useful. (Note that humaniformat has a `format_reverse` function for reversing "Last, First" names).
 
 #### How were the metadata R files generated?
 
