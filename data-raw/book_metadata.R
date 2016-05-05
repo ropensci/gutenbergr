@@ -2,13 +2,13 @@
 
 # First:
 
-# python data-raw/gitenberg_metadata.py
+# python data-raw/gitenberg_metadata.py ~/Downloads/cache/epub
 
 # which creates data-raw/metadata.json.gz, and
 
-# sh text_files.sh
+# sh data-raw/text_files.sh
 
-# which creates data-raw/
+# which creates data-raw/ids_with_text.txt
 
 library(purrr)
 library(dplyr)
@@ -18,6 +18,11 @@ library(stringr)
 library(tidyr)
 
 metadata_lines <- read_lines("data-raw/metadata.json.gz")
+
+# This is assuming the file was created the same day it was downloaded
+# That assumption might be off: this is not perfect and you may need
+# to adjust
+updated <- as.Date(file.info("data-raw/metadata.json.gz")$mtime)
 
 gutenberg_metadata_raw <- fromJSON(str_c("[", str_c(metadata_lines, collapse = ","), "]")) %>%
   jsonlite::flatten() %>%
@@ -43,7 +48,7 @@ gutenberg_metadata <-
             title = collapse_col(title),
             author = creator.author.agent_name,
             gutenberg_author_id = as.integer(creator.author.gutenberg_agent_id),
-            language = collapse_col(language),
+            language = collapse_col(map(language, sort)),
             gutenberg_bookshelf = collapse_col(gutenberg_bookshelf),
             rights,
             has_text = gutenberg_id %in% ids_with_text) %>%
@@ -74,6 +79,10 @@ gutenberg_authors <- gutenberg_authors %>%
             wikipedia = collapse_col(wikipedia),
             aliases = collapse_col(aliases)) %>%
   arrange(gutenberg_author_id)
+
+attr(gutenberg_metadata, "date_updated") <- updated
+attr(gutenberg_subjects, "date_updated") <- updated
+attr(gutenberg_authors, "date_updated") <- updated
 
 devtools::use_data(gutenberg_metadata, overwrite = TRUE)
 devtools::use_data(gutenberg_subjects, overwrite = TRUE)

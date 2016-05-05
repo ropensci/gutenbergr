@@ -29,3 +29,14 @@ test_that("gutenberg_works gives error messages with named arguments", {
   expect_error(gutenberg_works(author = "Dickens, Charles"),
                "named arguments")
 })
+
+
+test_that("All three datasets have a date-updated", {
+  d1 <- attr(gutenberg_metadata, "date_updated")
+  d2 <- attr(gutenberg_subjects, "date_updated")
+  d3 <- attr(gutenberg_authors, "date_updated")
+
+  expect_is(d1, "Date")
+  expect_is(d2, "Date")
+  expect_is(d3, "Date")
+})

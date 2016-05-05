@@ -7,4 +7,4 @@
 
 (for filename in ~/Downloads/cache/epub/*/*.rdf;
     do grep -p '<pgterms:file.*\d\.txt"' $filename;
-    done) | egrep -o '/\d+/' | sed 's/\///g' | uniq > ids_with_text.txt
+    done) | egrep -o '/\d+/' | sed 's/\///g' | uniq > data-raw/ids_with_text.txt

@@ -4,6 +4,9 @@
 #' works. These were collected using the gitenberg Python package,
 #' particularly the \code{pg_rdf_to_json} function.
 #'
+#' @details To find the date on which this metadata was last updated,
+#' run \code{attr(gutenberg_metadata, "date_updated")}.
+#'
 #' @format A tbl_df (see tibble or dplyr) with one row for each work in Project Gutenberg
 #' and the following columns:
 #' \describe{
@@ -56,6 +59,9 @@
 #' shakespeare_metadata2 <- gutenberg_works(author == "Shakespeare, William",
 #'                                          !str_detect(title, "Works"))
 #'
+#' # date last updated
+#' attr(gutenberg_metadata, "date_updated")
+#'
 #' @seealso \link{gutenberg_works}, \link{gutenberg_authors},
 #' \link{gutenberg_subjects}
 "gutenberg_metadata"
@@ -81,6 +87,9 @@
 #' here: \url{https://www.loc.gov/catdir/cpso/lcco/}, and about
 #' Library of Congress Subject Headings here:
 #' \url{http://id.loc.gov/authorities/subjects.html}.
+#'
+#' To find the date on which this metadata was last updated,
+#' run \code{attr(gutenberg_subjects, "date_updated")}.
 #'
 #' @examples
 #'
@@ -108,6 +117,9 @@
 #' holmes_books
 #' }
 #'
+#' # date last updated
+#' attr(gutenberg_subjects, "date_updated")
+#'
 #' @seealso \link{gutenberg_metadata}, \link{gutenberg_authors}
 "gutenberg_subjects"
 
@@ -119,6 +131,9 @@
 #' also includes metadata on contributors, editors, illustrators,
 #' etc., this dataset contains only people who have been the
 #' single author of at least one work.
+#'
+#' @details To find the date on which this metadata was last updated,
+#' run \code{attr(gutenberg_authors, "date_updated")}.
 #'
 #' @format A tbl_df (see tibble or dplyr) with one row for each
 #' author, with the columns
@@ -134,6 +149,11 @@
 #'   \item{aliases}{Character vector of aliases. If there
 #'   are multiple, they are "/"-delimited}
 #' }
+#'
+#' @examples
+#'
+#' # date last updated
+#' attr(gutenberg_authors, "date_updated")
 #'
 #' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
 "gutenberg_authors"

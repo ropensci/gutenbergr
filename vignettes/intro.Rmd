@@ -58,6 +58,8 @@ library(stringr)
 gutenberg_works(str_detect(author, "Austen"))
 ```
 
+The meta-data currently in the package was last updated on **`r format(attr(gutenberg_metadata, "date_updated"), '%d %B %Y')`**.
+
 ### Downloading books by ID
 
 The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that "Wuthering Heights" has ID 768 (see [the URL here](https://www.gutenberg.org/ebooks/768)), so `gutenberg_download(768)` downloads this text.
