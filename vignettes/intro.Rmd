@@ -28,6 +28,7 @@ This package contains metadata for all Project Gutenberg works as R datasets, so
 The dataset `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc:
 
 ```{r}
+library(gutenbergr)
 gutenberg_metadata
 ```
 
