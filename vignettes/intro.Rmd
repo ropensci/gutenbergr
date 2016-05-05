@@ -20,37 +20,7 @@ The gutenbergr package helps you download and process public domain works from t
   * `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc
   * `gutenberg_authors` contains information about each author, such as aliases and birth/death year
   * `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics
-
-### Downloading books by ID
-
-The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, the book "Frankenstein; or The Modern Prometheus", by Mary Wollstonecraft Shelly, has ID 84 (see [the URL here](https://www.gutenberg.org/ebooks/84)), so `gutenberg_download(84)` downloads this text.
-
-```{r frankenstein}
-library(dplyr)
-library(gutenbergr)
-
-frankenstein <- gutenberg_download(84)
-
-frankenstein
-```
-
-Notice it is returned as a tbl_df (a type of data frame), including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/84/84.txt)) have been stripped away.
-
-Provide a vector of IDs to download multiple books. For example, to download Dracula (book [345](https://www.gutenberg.org/ebooks/345)) along with Frankenstein, do:
-
-```{r frankenstein_dracula}
-frankenstein_dracula <- gutenberg_download(c(84, 345), meta_fields = "title")
-
-frankenstein_dracula
-```
-
-Notice that the `meta_fields` argument allows us to add one or more additional fields from the `gutenberg_metadata` to the downloaded text, such as title or author.
-
-```{r}
-frankenstein_dracula %>%
-  count(title)
-```
-
+  
 ### Project Gutenberg Metadata
 
 This package contains metadata for all Project Gutenberg works as R datasets, so that you can search and filter for particular works before downloading.
@@ -64,6 +34,8 @@ gutenberg_metadata
 For example, you could find the Gutenberg ID of Wuthering Heights by doing:
 
 ```{r}
+library(dplyr)
+
 gutenberg_metadata %>%
   filter(title == "Wuthering Heights")
 ```
@@ -85,19 +57,46 @@ library(stringr)
 gutenberg_works(str_detect(author, "Austen"))
 ```
 
-#### Other meta-datasets
+### Downloading books by ID
 
-`gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](http://id.loc.gov/authorities/subjects.html):
+The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that "Wuthering Heights" has ID 768 (see [the URL here](https://www.gutenberg.org/ebooks/768)), so `gutenberg_download(768)` downloads this text.
+
+```{r}
+wuthering_heights <- gutenberg_download(768)
+
+wuthering_heights
+```
+
+Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/768/768.txt)) have been stripped away.
+
+Provide a vector of IDs to download multiple books. For example, to download Jane Eyre (book [1260](https://www.gutenberg.org/ebooks/1260)) along with Wuthering Heights, do:
+
+```{r}
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+
+books
+```
+
+Notice that the `meta_fields` argument allows us to add one or more additional fields from the `gutenberg_metadata` to the downloaded text, such as title or author.
+
+```{r}
+books %>%
+  count(title)
+```
+
+### Other meta-datasets
+
+You may want to select books based on information other than their title or author, such as their genre or topic. `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](http://id.loc.gov/authorities/subjects.html):
 
 ```{r}
 gutenberg_subjects
 ```
 
-This is useful for extracting texts from a particular topic or genre, such as horror, or a particular character, such as Sherlock Holmes. The `gutenberg_id` column can then be used to download these texts or to link with other metadata.
+This is useful for extracting texts from a particular topic or genre, such as detective stories, or a particular character, such as Sherlock Holmes. The `gutenberg_id` column can then be used to download these texts or to link with other metadata.
 
 ```{r}
 gutenberg_subjects %>%
-  filter(subject == "Horror tales")
+  filter(subject == "Detective and mystery stories")
 
 gutenberg_subjects %>%
   filter(grepl("Holmes, Sherlock", subject))
@@ -116,7 +115,7 @@ What's next after retrieving a book's text? Well, having the book as a data fram
 ```{r}
 library(tidytext)
 
-words <- frankenstein_dracula %>%
+words <- books %>%
   unnest_tokens(word, text)
 
 words
