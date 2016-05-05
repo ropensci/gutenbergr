@@ -19,7 +19,8 @@ Imports:
     urltools,
     rvest,
     xml2,
-    stringr
+    stringr,
+    lazyeval
 RoxygenNote: 5.0.1
 Suggests: knitr,
     rmarkdown,

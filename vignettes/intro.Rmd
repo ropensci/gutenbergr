@@ -78,6 +78,11 @@ It also allows you to perform filtering as an argument:
 
 ```{r}
 gutenberg_works(author == "Austen, Jane")
+
+# or with a regular expression
+
+library(stringr)
+gutenberg_works(str_detect(author, "Austen"))
 ```
 
 #### Other meta-datasets
