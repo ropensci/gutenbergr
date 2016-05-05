@@ -49,7 +49,14 @@ gutenberg_works <- function(..., languages = "en",
                             rights = c("Public domain in the USA.", "None"),
                             distinct = TRUE) {
   utils::data("gutenberg_metadata", package = "gutenbergr", envir = environment())
-  ret <- filter(gutenberg_metadata, ...)
+
+  dots <- lazyeval::lazy_dots(...)
+  if (length(dots) > 0 && any(names(dots) != "")) {
+    stop("Use == expressions, not named arguments, as extra arguments to ",
+         "gutenberg_works. E.g. use gutenberg_works(author == 'Dickens, Charles') ",
+         "not gutenberg_works(author = 'Dickens, Charles').")
+  }
+  ret <- filter_(gutenberg_metadata, .dots = dots)
 
   if (!is.null(languages)) {
     ret <- filter(ret, language %in% languages)
