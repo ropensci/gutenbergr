@@ -34,3 +34,9 @@ test_that("Can download Charles Dickens' Christmas Carol and Jane Austen's Persu
   # expect that Gutenberg is not mentioned: footer and header were stripped
   expect_equal(sum(str_detect(books$text, regex("gutenberg", ignore_case = TRUE))), 0)
 })
+
+
+test_that("We can download a file that only has a -8 version", {
+  d <- gutenberg_download(8438)
+  expect_gt(sum(str_detect(d$text, "Aristotle")), 50)
+})
