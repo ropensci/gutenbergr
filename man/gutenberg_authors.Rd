@@ -28,6 +28,16 @@ also includes metadata on contributors, editors, illustrators,
 etc., this dataset contains only people who have been the
 single author of at least one work.
 }
+\details{
+To find the date on which this metadata was last updated,
+run \code{attr(gutenberg_authors, "date_updated")}.
+}
+\examples{
+
+# date last updated
+attr(gutenberg_authors, "date_updated")
+
+}
 \seealso{
 \link{gutenberg_metadata}, \link{gutenberg_subjects}
 }

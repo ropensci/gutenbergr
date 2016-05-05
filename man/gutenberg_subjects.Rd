@@ -26,6 +26,9 @@ Find more information about Library of Congress Categories
 here: \url{https://www.loc.gov/catdir/cpso/lcco/}, and about
 Library of Congress Subject Headings here:
 \url{http://id.loc.gov/authorities/subjects.html}.
+
+To find the date on which this metadata was last updated,
+run \code{attr(gutenberg_subjects, "date_updated")}.
 }
 \examples{
 
@@ -52,6 +55,9 @@ holmes_books <- gutenberg_download(sherlock_holmes_metadata$gutenberg_id)
 
 holmes_books
 }
+
+# date last updated
+attr(gutenberg_subjects, "date_updated")
 
 }
 \seealso{

@@ -34,6 +34,10 @@ Selected fields of metadata about each of the Project Gutenberg
 works. These were collected using the gitenberg Python package,
 particularly the \code{pg_rdf_to_json} function.
 }
+\details{
+To find the date on which this metadata was last updated,
+run \code{attr(gutenberg_metadata, "date_updated")}.
+}
 \examples{
 
 library(dplyr)
@@ -62,6 +66,9 @@ shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 
 shakespeare_metadata2 <- gutenberg_works(author == "Shakespeare, William",
                                          !str_detect(title, "Works"))
+
+# date last updated
+attr(gutenberg_metadata, "date_updated")
 
 }
 \seealso{

@@ -1,5 +1,7 @@
 context("Gutenberg metadata")
 
+library(stringr)
+
 test_that("gutenberg_works does appropriate filtering by default", {
   w <- gutenberg_works()
 
@@ -22,6 +24,25 @@ test_that("gutenberg_works does appropriate filtering by language", {
 
   w_lang <- gutenberg_works(languages = NULL)
   expect_gt(length(unique(w_lang$language)), 50)
+
+  w_de_not_only <- gutenberg_works(languages = "de", only_languages = FALSE)
+  expect_false(all(w_de_not_only$language == "de"))
+  expect_true(all(str_detect(w_de_not_only$language, "de")))
+
+  w_en_fr_all <- gutenberg_works(languages = c("en", "fr"),
+                                 all_languages = TRUE)
+  expect_true(all(w_en_fr_all$language == "en/fr"))
+
+  w_en_fr_all_not_only <- gutenberg_works(languages = c("en", "fr"),
+                                 all_languages = TRUE,
+                                 only_languages = FALSE,
+                                 rights = NULL)
+  expect_false(all(w_en_fr_all_not_only$language == "en/fr"))
+  expect_true(any(w_en_fr_all_not_only$language == "en/fr"))
+  expect_true(any(w_en_fr_all_not_only$language == "en/es/fr"))
+
+  en_es <- gutenberg_works(languages = c("en", "es"))
+  expect_equal(sort(unique(en_es$language)), c("en", "en/es", "es"))
 })
 
 
