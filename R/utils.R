@@ -4,10 +4,12 @@
 #'
 #' @param url URL to a .zip file
 read_zip_url <- function(url) {
+  f <- function(tmp) {
+    utils::download.file(url, tmp, quiet = TRUE)
+    readr::read_lines(tmp)
+  }
   tmp <- tempfile(fileext = ".zip")
-  utils::download.file(url, tmp, quiet = TRUE)
-
-  ret <- purrr::possibly(readr::read_lines, NULL)(tmp)
+  ret <- suppressWarnings(purrr::possibly(f, NULL)(tmp))
   unlink(tmp)
 
   ret
@@ -35,7 +37,7 @@ discard_start_while <- function(.x, .p) {
 #'
 #' @noRd
 keep_while <- function(.x, .p) {
-  if (.p[1] && any(.p)) {
+  if (.p[1] && any(!.p)) {
     .x <- utils::head(.x, min(which(!.p)) - 1)
   }
   .x
