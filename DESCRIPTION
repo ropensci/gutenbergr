@@ -7,7 +7,7 @@ Authors@R: person("David", "Robinson", email = "admiral.david@gmail.com", role =
 Description: Download and process public domain works in the Project
     Gutenberg collection. Includes metadata for all Project Gutenberg works,
     so that they can be searched and retrieved.
-License: MIT + file LICENSE
+License: GPL-2
 LazyData: TRUE
 Maintainer: David Robinson <admiral.david@gmail.com>
 VignetteBuilder: knitr

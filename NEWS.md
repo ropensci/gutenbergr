@@ -1,5 +1,6 @@
 # gutenbergr 0.1.0.9000
 
+* The license was changed from MIT to GPL-2. This is based on the realization that the catalog data is licensed under the GPL, and the package includes a processed version of the catalog data. (See [here](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog)).
 * Various documentation, vignette, and README adjustments in response to ROpenSci feedback.
 * Added AppVeyor for Windows continuous integration
 * Added code coverage information through codecov.io and covr
