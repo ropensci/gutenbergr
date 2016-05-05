@@ -3,6 +3,18 @@ context("Download books")
 library(stringr)
 suppressPackageStartupMessages(library(dplyr))
 
+
+test_that("gutenberg_get_mirror works", {
+  m <- gutenberg_get_mirror()
+
+  expect_is(m, "character")
+
+  # expect we can get something from it
+  mirror_text <- readLines(m)
+  expect_true(str_detect(mirror_text[1], "DOCTYPE"))
+})
+
+
 test_that("Can download Charles Dickens' Christmas Carol and Jane Austen's Persuasion", {
   books <- gutenberg_download(c(46, 105), meta_fields = c("title", "author"))
 

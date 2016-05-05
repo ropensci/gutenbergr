@@ -23,3 +23,9 @@ test_that("gutenberg_works does appropriate filtering by language", {
   w_lang <- gutenberg_works(languages = NULL)
   expect_gt(length(unique(w_lang$language)), 50)
 })
+
+
+test_that("gutenberg_works gives error messages with named arguments", {
+  expect_error(gutenberg_works(author = "Dickens, Charles"),
+               "named arguments")
+})
