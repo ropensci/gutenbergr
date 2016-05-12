@@ -10,6 +10,8 @@ Description: Download and process public domain works in the Project
 License: GPL-2
 LazyData: TRUE
 Maintainer: David Robinson <admiral.david@gmail.com>
+URL: http://github.com/ropenscilabs/gutenbergr
+BugReports: http://github.com/ropenscilabs/gutenbergr/issues
 VignetteBuilder: knitr
 Depends: R (>= 2.10)
 Imports:

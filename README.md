@@ -8,10 +8,10 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 **Authors:** [David Robinson](http://varianceexplained.org/)<br/>
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
-[![Build Status](https://travis-ci.org/dgrtwo/gutenbergr.svg?branch=master)](https://travis-ci.org/dgrtwo/gutenbergr)
+[![Build Status](https://travis-ci.org/ropenscilabs/gutenbergr.svg?branch=master)](https://travis-ci.org/ropenscilabs/gutenbergr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)](http://cran.r-project.org/package=gutenbergr)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/dgrtwo/gutenbergr?branch=master&svg=true)](https://ci.appveyor.com/project/dgrtwo/gutenbergr)
-[![Coverage Status](https://img.shields.io/codecov/c/github/dgrtwo/gutenbergr/master.svg)](https://codecov.io/github/dgrtwo/gutenbergr?branch=master)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropenscilabs/gutenbergr?branch=master&svg=true)](https://ci.appveyor.com/project/ropenscilabs/gutenbergr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/ropenscilabs/gutenbergr/master.svg)](https://codecov.io/github/ropenscilabs/gutenbergr?branch=master)
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 
@@ -34,7 +34,7 @@ Or install the development version using [devtools](https://github.com/hadley/de
 
 
 ```r
-devtools::install_github("dgrtwo/gutenbergr")
+devtools::install_github("ropenscilabs/gutenbergr")
 ```
 
 ### Examples
@@ -208,3 +208,5 @@ Still, this package is *not* the right way to download the entire Project Gutenb
 ### Code of Conduct
 
 This project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
