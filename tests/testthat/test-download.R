@@ -49,10 +49,3 @@ test_that("We can download a file that only has a -8 version", {
   d <- gutenberg_download(8438)
   expect_gt(sum(str_detect(d$text, "Aristotle")), 50)
 })
-
-
-test_that("Trying to download a non-existent book raises a warning", {
-  expect_warning(d <- gutenberg_download(c(5, 1000000)), "Could not download")
-  expect_true(inherits(d, "data.frame"))
-  expect_true(all(d$gutenberg_id == 5))
-})
