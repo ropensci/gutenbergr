@@ -17,7 +17,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 
 [![Build Status](https://travis-ci.org/ropenscilabs/gutenbergr.svg?branch=master)](https://travis-ci.org/ropenscilabs/gutenbergr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)](http://cran.r-project.org/package=gutenbergr)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropenscilabs/gutenbergr?branch=master&svg=true)](https://ci.appveyor.com/project/ropenscilabs/gutenbergr)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/i41bhbh87sb87w8o?svg=true)](https://ci.appveyor.com/project/ropenscilabs/gutenbergr)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ropenscilabs/gutenbergr/master.svg)](https://codecov.io/github/ropenscilabs/gutenbergr?branch=master)
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
