@@ -71,8 +71,6 @@ gutenberg_works <- function(..., languages = "en",
                             distinct = TRUE,
                             all_languages = FALSE,
                             only_languages = TRUE) {
-  utils::data("gutenberg_metadata", package = "gutenbergr", envir = environment())
-
   dots <- lazyeval::lazy_dots(...)
   if (length(dots) > 0 && any(names(dots) != "")) {
     stop("Use == expressions, not named arguments, as extra arguments to ",
