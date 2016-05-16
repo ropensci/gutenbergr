@@ -19,7 +19,8 @@ without text (e.g. audiobooks) cannot be downloaded with
 \code{\link{gutenberg_download}}}
 
 \item{rights}{Values to allow in the \code{rights} field. By default allows
-public domain in the US or "None", while excluding works under copyright}
+public domain in the US or "None", while excluding works under copyright.
+NULL allows any value of Rights}
 
 \item{distinct}{Whether to return only one distinct combination of each
 title and gutenberg_author_id. If multiple occur (that fulfill the other
@@ -64,9 +65,6 @@ gutenberg_works()
 
 # filter conditions
 gutenberg_works(author == "Shakespeare, William")
-
-# changing default options
-gutenberg_works(rights = NULL)
 
 # language specifications
 

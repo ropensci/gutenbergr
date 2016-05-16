@@ -14,7 +14,8 @@
 #' without text (e.g. audiobooks) cannot be downloaded with
 #' \code{\link{gutenberg_download}}
 #' @param rights Values to allow in the \code{rights} field. By default allows
-#' public domain in the US or "None", while excluding works under copyright
+#' public domain in the US or "None", while excluding works under copyright.
+#' NULL allows any value of Rights
 #' @param distinct Whether to return only one distinct combination of each
 #' title and gutenberg_author_id. If multiple occur (that fulfill the other
 #' conditions), it uses the one with the lowest ID
