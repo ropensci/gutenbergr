@@ -47,9 +47,6 @@
 #' # filter conditions
 #' gutenberg_works(author == "Shakespeare, William")
 #'
-#' # changing default options
-#' gutenberg_works(rights = NULL)
-#'
 #' # language specifications
 #'
 #' gutenberg_works(languages = "es") %>%
