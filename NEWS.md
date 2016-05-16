@@ -1,4 +1,4 @@
-# gutenbergr 0.1.0.9000
+# gutenbergr 0.1.1
 
 * Transferred repo ownership to [ropenscilabs](https://github.com/ropenscilabs)
 * The license was changed from MIT to GPL-2. This is based on the realization that the catalog data is licensed under the GPL, and the package includes a processed version of the catalog data. (See [here](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog)).
