@@ -1,5 +1,7 @@
 # gutenbergr 0.1.1.9000
 
+* Made compatible with change to `distinct` in dplyr 0.4.3.9001 (eventually dplyr 0.5).
+
 # gutenbergr 0.1.1
 
 * Transferred repo ownership to [ropenscilabs](https://github.com/ropenscilabs)

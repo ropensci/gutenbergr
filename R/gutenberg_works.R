@@ -114,7 +114,11 @@ gutenberg_works <- function(..., languages = "en",
   }
 
   if (distinct) {
-    ret <- distinct_(ret, "title", "gutenberg_author_id")
+    ret <- distinct_(ret, "title", "gutenberg_author_id", .keep_all = TRUE)
+    # in older versions of dplyr, distinct_ didn't need .keep_all
+    if (any(colnames(ret) == ".keep_all")) {
+      ret$.keep_all <- NULL
+    }
   }
 
   ret
