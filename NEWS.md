@@ -1,6 +1,6 @@
-# gutenbergr 0.1.1.9000
+# gutenbergr 0.1.2
 
-* Made compatible with change to `distinct` in dplyr 0.4.3.9001 (eventually dplyr 0.5).
+* Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN)
 
 # gutenbergr 0.1.1
 

@@ -1,8 +1,8 @@
 Package: gutenbergr
 Type: Package
 Title: Download and Process Public Domain Works from Project Gutenberg
-Version: 0.1.1.9000
-Date: 2016-05-16
+Version: 0.1.2
+Date: 2016-06-22
 Authors@R: person("David", "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cre"))
 Description: Download and process public domain works in the Project
     Gutenberg collection. Includes metadata for all Project Gutenberg works,

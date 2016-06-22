@@ -1,16 +1,8 @@
-# gutenbergr 0.1.1
+# gutenbergr 0.1.2
 
 ## Changes
 
-* Transferred repo ownership to [ropenscilabs](https://github.com/ropenscilabs)
-* The license was changed from MIT to GPL-2. This is based on the realization that the catalog data is licensed under the GPL, and the package includes a processed version of the catalog data. (See [here](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog)).
-* Updated datasets to 5/5/2016 and added a "date_updated" attriute to tell when they were last updated
-* Added `all_languages` and `only_languages` arguments to `gutenberg_works`, allowing fine-grained control of languages. (For example, "either English or French" or "both English and French")
-* Changed get_gutenberg_mirror to use xml2 directly, in order to handle AppVeyor
-* Removed use of data() in `gutenberg_works`, since it slows down `gutenberg_works` about 2X
-* Various documentation, vignette, and README adjustments in response to ROpenSci feedback.
-* Added AppVeyor for Windows continuous integration
-* Added code coverage information through codecov.io and covr, along with tests to improve coverage
+* Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN).
 
 ## Test environments
 
@@ -58,4 +50,4 @@ from Project Gutenberg works, so I have elected not to change them.
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+There are currently no reverse dependencies on CRAN.
