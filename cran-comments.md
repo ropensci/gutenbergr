@@ -2,7 +2,8 @@
 
 ## Changes
 
-* Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN).
+* Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN)
+* Removed xml2 dependency
 
 ## Test environments
 

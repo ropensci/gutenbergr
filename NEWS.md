@@ -1,6 +1,7 @@
 # gutenbergr 0.1.2
 
 * Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN)
+* Removed xml2 dependency
 
 # gutenbergr 0.1.1
 
