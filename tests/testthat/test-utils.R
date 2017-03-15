@@ -2,14 +2,14 @@ context("Utility functions")
 
 test_that("read_zip_url can download and read a zip file", {
   # read Bill of Rights (small file)
-  z <- read_zip_url("http://www.gutenberg.lib.md.us/0/2/2.zip")
+  z <- read_zip_url("http://gutenberg.pglaf.org/0/2/2.zip")
 
   expect_true(any(z == "Congress shall make no law respecting an establishment of religion,"))
 })
 
 
 test_that("read_zip_url returns NULL on non-existent file", {
-  z2 <- read_zip_url("http://www.gutenberg.lib.md.us/0/2/THISISNOTAFILE.zip")
+  z2 <- read_zip_url("http://gutenberg.pglaf.org/0/2/THISISNOTAFILE.zip")
 
   expect_null(z2)
 })

@@ -217,6 +217,12 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- paste0(parsed$scheme, "://", parsed$domain)
 
+  if (mirror == "http://www.gutenberg.lib.md.us") {
+    # this mirror is broken (PG has been contacted)
+    # for now, replace:
+    mirror <- "http://gutenberg.pglaf.org"
+  }
+
   if (verbose) {
     message("Using mirror ", mirror)
   }

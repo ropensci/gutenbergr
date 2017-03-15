@@ -1,3 +1,7 @@
+# gutenbergr 0.1.2.9000
+
+* The Project Gutenberg mirror in Maryland Public Libraries (http://www.gutenberg.lib.md.us) has been broken for weeks. When it is provided from robot/harvest, replaces with `http://gutenberg.pglaf.org`.
+
 # gutenbergr 0.1.2
 
 * Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN)
