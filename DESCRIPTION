@@ -19,7 +19,6 @@ Imports:
     readr,
     purrr,
     urltools,
-    rvest,
     stringr,
     lazyeval
 RoxygenNote: 6.0.1
