@@ -220,7 +220,7 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   if (mirror == "http://www.gutenberg.lib.md.us") {
     # this mirror is broken (PG has been contacted)
     # for now, replace:
-    mirror <- "http://gutenberg.pglaf.org"
+    mirror <- "http://aleph.gutenberg.org"
   }
 
   if (verbose) {

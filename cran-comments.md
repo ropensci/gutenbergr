@@ -1,9 +1,10 @@
-# gutenbergr 0.1.2
+# gutenbergr 0.1.3
 
 ## Changes
 
-* Made compatible with change to `distinct` in dplyr 0.5 (which is about to be submitted to CRAN)
-* Removed xml2 dependency
+* The Project Gutenberg mirror in Maryland Public Libraries (http://www.gutenberg.lib.md.us) has been broken for months. When it is provided from robot/harvest, replaces with `http://aleph.gutenberg.org`.
+* Changed test of .zip capability not to run on CRAN
+* Removed rvest dependency
 
 ## Test environments
 
