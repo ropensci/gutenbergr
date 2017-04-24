@@ -5,7 +5,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "README-",
-  message = FALSE
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
@@ -16,7 +17,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
 [![Build Status](https://travis-ci.org/ropenscilabs/gutenbergr.svg?branch=master)](https://travis-ci.org/ropenscilabs/gutenbergr)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)](http://cran.r-project.org/package=gutenbergr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/i41bhbh87sb87w8o?svg=true)](https://ci.appveyor.com/project/ropenscilabs/gutenbergr)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ropenscilabs/gutenbergr/master.svg)](https://codecov.io/github/ropenscilabs/gutenbergr?branch=master)
 
@@ -95,7 +96,7 @@ aristotle_books
 
 #### What do I do with the text once I have it?
 
-* The [Natural Language Processing CRAN View](https://cran.r-project.org/view=NaturalLanguageProcessing) suggests many R packages related to text mining, especially around the [tm package](https://cran.r-project.org/package=tm).
+* The [Natural Language Processing CRAN View](https://CRAN.R-project.org/view=NaturalLanguageProcessing) suggests many R packages related to text mining, especially around the [tm package](https://cran.r-project.org/package=tm).
 * The [tidytext](https://github.com/juliasilge/tidytext) package is useful for tokenization and analysis, especially since gutenbergr downloads books as a data frame already.
 * You could match the `wikipedia` column in `gutenberg_author` to Wikipedia content with the [WikipediR](https://cran.r-project.org/package=WikipediR) package or to pageview statistics with the [wikipediatrend](https://cran.r-project.org/package=wikipediatrend) package.
 * If you're considering an analysis based on author name, you may find the [humaniformat](https://cran.r-project.org/package=humaniformat) (for extraction of first names) and [gender](https://cran.r-project.org/package=gender) (prediction of gender from first names) packages useful. (Note that humaniformat has a `format_reverse` function for reversing "Last, First" names).
