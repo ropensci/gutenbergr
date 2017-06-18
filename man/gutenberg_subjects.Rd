@@ -64,4 +64,3 @@ attr(gutenberg_subjects, "date_updated")
 \link{gutenberg_metadata}, \link{gutenberg_authors}
 }
 \keyword{datasets}
-

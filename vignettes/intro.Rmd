@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
-The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest. Includes:
+The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](http://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest. Includes:
 
 * A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: e.g., `gutenberg_download(84)` downloads the text of Frankenstein.
 * Metadata for all Project Gutenberg works as R datasets, so that they can be searched and filtered:

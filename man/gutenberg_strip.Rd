@@ -30,4 +30,3 @@ head(text_stripped, 10)
 tail(text_stripped, 10)
 
 }
-

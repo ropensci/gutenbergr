@@ -81,4 +81,3 @@ gutenberg_works(languages = c("en", "es"), only_languages = FALSE) \%>\%
   count(language, sort = TRUE)
 
 }
-

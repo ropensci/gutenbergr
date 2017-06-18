@@ -16,4 +16,3 @@ the wget harvest path, which is
 \url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
 Also sets the global \code{gutenberg_mirror} options.
 }
-

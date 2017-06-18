@@ -76,4 +76,3 @@ attr(gutenberg_metadata, "date_updated")
 \link{gutenberg_subjects}
 }
 \keyword{datasets}
-
