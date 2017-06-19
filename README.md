@@ -47,8 +47,13 @@ Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find 
 
 
 ```r
+
 library(dplyr)
+library(magrittr)
 library(gutenbergr)
+
+gutenberg_works() %>% 
+  filter(title == "Wuthering Heights")
 
 gutenberg_works() %>%
   filter(title == "Wuthering Heights")
