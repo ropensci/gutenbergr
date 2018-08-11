@@ -14,7 +14,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 ----------------
 
 **Authors:** [David Robinson](http://varianceexplained.org/)<br/>
-**License:** [MIT](https://opensource.org/licenses/MIT)
+**License:** [GPL-2](https://opensource.org/licenses/GPL-2.0)
 
 [![Build Status](https://travis-ci.org/ropensci/gutenbergr.svg?branch=master)](https://travis-ci.org/ropensci/gutenbergr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)

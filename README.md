@@ -6,7 +6,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 ----------------
 
 **Authors:** [David Robinson](http://varianceexplained.org/)<br/>
-**License:** [MIT](https://opensource.org/licenses/MIT)
+**License:** [GPL-2](https://opensource.org/licenses/GPL-2.0)
 
 [![Build Status](https://travis-ci.org/ropensci/gutenbergr.svg?branch=master)](https://travis-ci.org/ropensci/gutenbergr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)
@@ -56,9 +56,9 @@ gutenberg_works() %>%
 #>   gutenberg_id title             author        gutenberg_author_id language
 #>          <int> <chr>             <chr>                       <int> <chr>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf  rights  has_text
-#>   <chr>                <chr>   <lgl>   
-#> 1 Gothic Fiction/Movi… Public… TRUE
+#>   gutenberg_bookshelf                                 rights                    has_text
+#>   <chr>                                               <chr>                     <lgl>   
+#> 1 Gothic Fiction/Movie Books/Best Books Ever Listings Public domain in the USA. TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
@@ -66,9 +66,9 @@ gutenberg_works(title == "Wuthering Heights")
 #>   gutenberg_id title             author        gutenberg_author_id language
 #>          <int> <chr>             <chr>                       <int> <chr>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf  rights  has_text
-#>   <chr>                <chr>   <lgl>   
-#> 1 Gothic Fiction/Movi… Public… TRUE
+#>   gutenberg_bookshelf                                 rights                    has_text
+#>   <chr>                                               <chr>                     <lgl>   
+#> 1 Gothic Fiction/Movie Books/Best Books Ever Listings Public domain in the USA. TRUE
 ```
 
 Since we see that it has `gutenberg_id` 768, we can download it with the `gutenberg_download()` function:
