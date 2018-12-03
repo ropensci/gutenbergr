@@ -66,69 +66,78 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
   if (is.null(mirror)) {
     mirror <- gutenberg_get_mirror(verbose = verbose)
   }
-
+  
   if (inherits(gutenberg_id, "data.frame")) {
     # extract the gutenberg_id column. This is useful for working
     # with the output of gutenberg_works()
     gutenberg_id <- gutenberg_id[["gutenberg_id"]]
   }
-
+  
   id <- as.character(gutenberg_id)
-
+  
   path <- id %>%
     stringr::str_sub(1, -2) %>%
     stringr::str_split("") %>%
     sapply(stringr::str_c, collapse = "/")
-
+  
   path <- ifelse(nchar(id) == 1, "0", path)
-
+  
   full_url <- stringr::str_c(mirror, path, id,
                              stringr::str_c(id, ".zip"),
                              sep = "/")
   names(full_url) <- id
-
+  
   try_download <- function(url) {
     ret <- read_zip_url(url)
     if (!is.null(ret)) {
       return(ret)
     }
-    base_url <- stringr::str_replace(url, ".zip$", "")
-    for (suffix in c("-8", "-0")) {
-      new_url <- paste0(base_url, suffix, ".zip")
-      ret <- read_zip_url(new_url)
+    else {
+      base_url <- stringr::str_replace(url, ".zip$", "")
+      for (suffix in c("-8", "-0")) {
+        new_url <- paste0(base_url, suffix, ".zip")
+        ret <- read_zip_url(new_url)
+        if (is.null(ret)) {
+      old_url <- paste0(stringr::str_replace(url, "[0-9]+.zip$" , "old/"),
+                        stringr::str_extract(url, "[0-9]+.zip$"))
+      ret <- read_zip_url(old_url)
+        }
       if (!is.null(ret)) {
-        return(ret)
+          return(ret)
+      }
       }
     }
-    warning("Could not download a book at ", url)
-
+    
+    
+    warning("Could not download a book at ", url, " or ", old_url)
+    
     NULL
   }
-
+  
   # run this on all requested books
   ret <- full_url %>%
     purrr::map(try_download) %>%
     purrr::discard(is.null) %>%
     purrr::map_df(~data_frame(text = .), .id = "gutenberg_id") %>%
     mutate(gutenberg_id = as.integer(gutenberg_id))
-
+  
   if (strip) {
     ret <- ret %>%
       group_by(gutenberg_id) %>%
       do(data_frame(text = gutenberg_strip(.$text, ...))) %>%
       ungroup()
   }
-
+  
   if (length(meta_fields) > 0) {
     meta_fields <- unique(c("gutenberg_id", meta_fields))
-
+    
     utils::data("gutenberg_metadata", package = "gutenbergr", envir = environment())
     md <- gutenberg_metadata[meta_fields]
-
+    
     ret <- ret %>%
       inner_join(md, by = "gutenberg_id")
   }
-
+  
   ret
 }
 
