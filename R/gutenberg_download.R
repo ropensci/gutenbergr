@@ -109,13 +109,13 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
   ret <- full_url %>%
     purrr::map(try_download) %>%
     purrr::discard(is.null) %>%
-    purrr::map_df(~data_frame(text = .), .id = "gutenberg_id") %>%
+    purrr::map_df(~tibble(text = .), .id = "gutenberg_id") %>%
     mutate(gutenberg_id = as.integer(gutenberg_id))
 
   if (strip) {
     ret <- ret %>%
       group_by(gutenberg_id) %>%
-      do(data_frame(text = gutenberg_strip(.$text, ...))) %>%
+      do(tibble(text = gutenberg_strip(.$text, ...))) %>%
       ungroup()
   }
 
