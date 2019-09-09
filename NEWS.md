@@ -1,3 +1,9 @@
+# gutenbergr 0.1.5
+
+* Make compatible with tidyr v1.0.0
+* data_frame is deprecated, use tibble (thanks @evanodell for #21)
+* ROpensci updates to README (thanks @maelle for #23)
+
 # gutenbergr 0.1.4
 
 * Added curl to SUGGESTS, since if it's not installed `readr::read_lines` could fail

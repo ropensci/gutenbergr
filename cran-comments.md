@@ -1,13 +1,15 @@
-# gutenbergr 0.1.4
+# gutenbergr 0.1.5
 
 ## Changes
 
-* Added curl to SUGGESTS, since if it's not installed `readr::read_lines` could fail
+* Make compatible with tidyr v1.0.0
+* data_frame is deprecated, use tibble (thanks @evanodell for #21)
+* ROpensci updates to README (thanks @maelle for #23)
 
 ## Test environments
 
-* local OS X install, R 3.3.2
-* ubuntu 12.04 (on travis-ci), R 3.2.3
+* local OS X install, R 3.5.0
+* ubuntu 12.04 (on travis-ci)
 * win-builder (devel and release)
 
 ## R CMD check results
