@@ -172,7 +172,7 @@ gutenberg_strip <- function(text) {
   text <- discard_start_while(text, text == "")
 
   # also paragraphs at the start that are meta-data
-  start_paragraph_regex <- "(produced by|prepared by|transcribed from|project gutenberg|^note: )"
+  start_paragraph_regex <- "(produced by|prepared by|transcribed from|project gutenberg|^special thanks|^note: )"
   while (length(text) > 0 &&
          stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)) {
     # get rid of that paragraph, then the following whitespace
