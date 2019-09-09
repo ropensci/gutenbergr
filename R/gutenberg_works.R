@@ -80,7 +80,8 @@ gutenberg_works <- function(..., languages = "en",
   if (!is.null(languages)) {
     lang_spl <- ret %>%
       select(gutenberg_id, language) %>%
-      tidyr::unnest(language = stringr::str_split(language, "/")) %>%
+      mutate(language = stringr::str_split(language, "/")) %>%
+      tidyr::unnest(language) %>%
       group_by(gutenberg_id) %>%
       mutate(total = n()) %>%
       ungroup()
