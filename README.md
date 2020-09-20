@@ -20,7 +20,6 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://codecov.io/github/ropensci/gutenbergr?branch=master)
 [![rOpenSci peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN checks](https://cranchecks.info/badges/summary/gutenbergr)](https://cran.r-project.org/web/checks/check_results_gutenbergr.html)
 <!-- badges: end -->
 
 Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
@@ -88,18 +87,18 @@ Since we see that it has `gutenberg_id` 768, we can download it with the `gutenb
 wuthering_heights <- gutenberg_download(768)
 wuthering_heights
 #> # A tibble: 12,085 x 2
-#>    gutenberg_id text                                                                   
-#>           <int> <chr>                                                                  
-#>  1          768 WUTHERING HEIGHTS                                                      
-#>  2          768 ""                                                                     
-#>  3          768 ""                                                                     
-#>  4          768 CHAPTER I                                                              
-#>  5          768 ""                                                                     
-#>  6          768 ""                                                                     
-#>  7          768 1801.--I have just returned from a visit to my landlord--the solitary  
-#>  8          768 neighbour that I shall be troubled with.  This is certainly a beautiful
-#>  9          768 country!  In all England, I do not believe that I could have fixed on a
-#> 10          768 situation so completely removed from the stir of society.  A perfect   
+#>    gutenberg_id text                                                                     
+#>           <int> <chr>                                                                    
+#>  1          768 "WUTHERING HEIGHTS"                                                      
+#>  2          768 ""                                                                       
+#>  3          768 ""                                                                       
+#>  4          768 "CHAPTER I"                                                              
+#>  5          768 ""                                                                       
+#>  6          768 ""                                                                       
+#>  7          768 "1801.--I have just returned from a visit to my landlord--the solitary"  
+#>  8          768 "neighbour that I shall be troubled with.  This is certainly a beautiful"
+#>  9          768 "country!  In all England, I do not believe that I could have fixed on a"
+#> 10          768 "situation so completely removed from the stir of society.  A perfect"   
 #> # … with 12,075 more rows
 ```
 
@@ -111,18 +110,18 @@ wuthering_heights
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 books
 #> # A tibble: 32,744 x 3
-#>    gutenberg_id text                                                                   
-#>           <int> <chr>                                                                  
-#>  1          768 WUTHERING HEIGHTS                                                      
-#>  2          768 ""                                                                     
-#>  3          768 ""                                                                     
-#>  4          768 CHAPTER I                                                              
-#>  5          768 ""                                                                     
-#>  6          768 ""                                                                     
-#>  7          768 1801.--I have just returned from a visit to my landlord--the solitary  
-#>  8          768 neighbour that I shall be troubled with.  This is certainly a beautiful
-#>  9          768 country!  In all England, I do not believe that I could have fixed on a
-#> 10          768 situation so completely removed from the stir of society.  A perfect   
+#>    gutenberg_id text                                                                     
+#>           <int> <chr>                                                                    
+#>  1          768 "WUTHERING HEIGHTS"                                                      
+#>  2          768 ""                                                                       
+#>  3          768 ""                                                                       
+#>  4          768 "CHAPTER I"                                                              
+#>  5          768 ""                                                                       
+#>  6          768 ""                                                                       
+#>  7          768 "1801.--I have just returned from a visit to my landlord--the solitary"  
+#>  8          768 "neighbour that I shall be troubled with.  This is certainly a beautiful"
+#>  9          768 "country!  In all England, I do not believe that I could have fixed on a"
+#> 10          768 "situation so completely removed from the stir of society.  A perfect"   
 #>    title            
 #>    <chr>            
 #>  1 Wuthering Heights
@@ -155,18 +154,18 @@ aristotle_books <- gutenberg_works(author == "Aristotle") %>%
 
 aristotle_books
 #> # A tibble: 39,950 x 3
-#>    gutenberg_id text                                                                  
-#>           <int> <chr>                                                                 
-#>  1         1974 THE POETICS OF ARISTOTLE                                              
-#>  2         1974 ""                                                                    
-#>  3         1974 By Aristotle                                                          
-#>  4         1974 ""                                                                    
-#>  5         1974 A Translation By S. H. Butcher                                        
-#>  6         1974 ""                                                                    
-#>  7         1974 ""                                                                    
-#>  8         1974 [Transcriber's Annotations and Conventions: the translator left       
-#>  9         1974 intact some Greek words to illustrate a specific point of the original
-#> 10         1974 discourse. In this transcription, in order to retain the accuracy of  
+#>    gutenberg_id text                                                                    
+#>           <int> <chr>                                                                   
+#>  1         1974 "THE POETICS OF ARISTOTLE"                                              
+#>  2         1974 ""                                                                      
+#>  3         1974 "By Aristotle"                                                          
+#>  4         1974 ""                                                                      
+#>  5         1974 "A Translation By S. H. Butcher"                                        
+#>  6         1974 ""                                                                      
+#>  7         1974 ""                                                                      
+#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"       
+#>  9         1974 "intact some Greek words to illustrate a specific point of the original"
+#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"  
 #>    title                   
 #>    <chr>                   
 #>  1 The Poetics of Aristotle
