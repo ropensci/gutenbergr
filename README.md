@@ -39,7 +39,7 @@ Install the package with:
 install.packages("gutenbergr")
 ```
 
-Or install the development version using [devtools](https://github.com/hadley/devtools) with:
+Or install the development version using [devtools](https://github.com/r-lib/devtools) with:
 
 
 ```r
@@ -226,4 +226,4 @@ Still, this package is *not* the right way to download the entire Project Gutenb
 
 This project is released with a [Contributor Code of Conduct](https://github.com/ropensci/gutenbergr/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-[![ropensci\_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)

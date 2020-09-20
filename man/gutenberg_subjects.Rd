@@ -27,7 +27,7 @@ Subject Headings (lcsh).
 Find more information about Library of Congress Categories
 here: \url{https://www.loc.gov/catdir/cpso/lcco/}, and about
 Library of Congress Subject Headings here:
-\url{http://id.loc.gov/authorities/subjects.html}.
+\url{https://id.loc.gov/authorities/subjects.html}.
 
 To find the date on which this metadata was last updated,
 run \code{attr(gutenberg_subjects, "date_updated")}.

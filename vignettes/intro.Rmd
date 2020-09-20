@@ -110,7 +110,7 @@ books %>%
 
 ### Other meta-datasets
 
-You may want to select books based on information other than their title or author, such as their genre or topic. `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](http://id.loc.gov/authorities/subjects.html):
+You may want to select books based on information other than their title or author, such as their genre or topic. `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](https://id.loc.gov/authorities/subjects.html):
 
 ```{r}
 gutenberg_subjects

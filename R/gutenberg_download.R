@@ -109,7 +109,6 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
     NULL
   }
 
-  print(full_url)
   # run this on all requested books
   if (!is.null(files)) {
     # Read from local files instead (used for testing)
