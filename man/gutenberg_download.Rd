@@ -4,8 +4,15 @@
 \alias{gutenberg_download}
 \title{Download one or more works using a Project Gutenberg ID}
 \usage{
-gutenberg_download(gutenberg_id, mirror = NULL, strip = TRUE,
-  meta_fields = NULL, verbose = TRUE, ...)
+gutenberg_download(
+  gutenberg_id,
+  mirror = NULL,
+  strip = TRUE,
+  meta_fields = NULL,
+  verbose = TRUE,
+  files = NULL,
+  ...
+)
 }
 \arguments{
 \item{gutenberg_id}{A vector of Project Gutenberg ID, or a data frame
@@ -24,6 +31,10 @@ when returning multiple}
 
 \item{verbose}{Whether to show messages about the Project Gutenberg
 mirror that was chosen}
+
+\item{files}{A vector of .zip file paths. If given, this reads from the
+files rather than from the site. This is mostly used for testing when
+the Project Gutenberg website may not be available.}
 
 \item{...}{Extra arguments passed to \code{\link{gutenberg_strip}}, currently
 unused}

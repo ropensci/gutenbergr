@@ -18,6 +18,9 @@
 #' when returning multiple
 #' @param verbose Whether to show messages about the Project Gutenberg
 #' mirror that was chosen
+#' @param files A vector of .zip file paths. If given, this reads from the
+#' files rather than from the site. This is mostly used for testing when
+#' the Project Gutenberg website may not be available.
 #' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}, currently
 #' unused
 #'
@@ -62,7 +65,8 @@
 #'
 #' @export
 gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
-                               meta_fields = NULL, verbose = TRUE, ...) {
+                               meta_fields = NULL, verbose = TRUE,
+                               files = NULL, ...) {
   if (is.null(mirror)) {
     mirror <- gutenberg_get_mirror(verbose = verbose)
   }
@@ -105,9 +109,19 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
     NULL
   }
 
+  print(full_url)
   # run this on all requested books
-  ret <- full_url %>%
-    purrr::map(try_download) %>%
+  if (!is.null(files)) {
+    # Read from local files instead (used for testing)
+    downloaded <- files %>%
+      stats::setNames(id) %>%
+      purrr::map(readr::read_lines)
+  } else {
+    downloaded <- full_url %>%
+      purrr::map(try_download)
+  }
+
+  ret <- downloaded %>%
     purrr::discard(is.null) %>%
     purrr::map_df(~tibble(text = .), .id = "gutenberg_id") %>%
     mutate(gutenberg_id = as.integer(gutenberg_id))

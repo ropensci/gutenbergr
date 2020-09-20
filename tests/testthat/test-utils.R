@@ -11,6 +11,7 @@ test_that("read_zip_url can download and read a zip file", {
 
 
 test_that("read_zip_url returns NULL on non-existent file", {
+  skip_on_cran()
   z2 <- read_zip_url("http://gutenberg.pglaf.org/0/2/THISISNOTAFILE.zip")
 
   expect_null(z2)

@@ -65,8 +65,18 @@ The meta-data currently in the package was last updated on **`r format(attr(gute
 The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that "Wuthering Heights" has ID 768 (see [the URL here](https://www.gutenberg.org/ebooks/768)), so `gutenberg_download(768)` downloads this text.
 
 ```{r}
-wuthering_heights <- gutenberg_download(768)
+f768 <- system.file("extdata", "768.zip", package = "gutenbergr")
+wuthering_heights <- gutenberg_download(768,
+                                        files = f768,
+                                        mirror = "http://aleph.gutenberg.org")
+```
 
+
+```{r eval = FALSE}
+wuthering_heights <- gutenberg_download(768)
+```
+
+```{r}
 wuthering_heights
 ```
 
@@ -75,8 +85,19 @@ Notice it is returned as a tbl_df (a type of data frame) including two variables
 Provide a vector of IDs to download multiple books. For example, to download Jane Eyre (book [1260](https://www.gutenberg.org/ebooks/1260)) along with Wuthering Heights, do:
 
 ```{r}
-books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+f1260 <- system.file("extdata", "1260.zip", package = "gutenbergr")
+books <- gutenberg_download(c(768, 1260),
+                            meta_fields = "title",
+                            files = c(f768, f1260),
+                            mirror = "http://aleph.gutenberg.org")
+```
 
+
+```{r, eval = FALSE}
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+```
+
+```{r}
 books
 ```
 
