@@ -7,3 +7,5 @@
 ^CONDUCT\.md$
 ^cran-comments\.md$
 ^appveyor\.yml$
+^doc$
+^Meta$

@@ -4,7 +4,8 @@
 \name{gutenberg_authors}
 \alias{gutenberg_authors}
 \title{Metadata about Project Gutenberg authors}
-\format{A tbl_df (see tibble or dplyr) with one row for each
+\format{
+A tbl_df (see tibble or dplyr) with one row for each
 author, with the columns
 \describe{
   \item{gutenberg_author_id}{Unique identifier for the author that can
@@ -17,7 +18,8 @@ author, with the columns
   are multiple, they are "/"-delimited}
   \item{aliases}{Character vector of aliases. If there
   are multiple, they are "/"-delimited}
-}}
+}
+}
 \usage{
 gutenberg_authors
 }

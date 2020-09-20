@@ -4,9 +4,15 @@
 \alias{gutenberg_works}
 \title{Get a filtered table of Gutenberg work metadata}
 \usage{
-gutenberg_works(..., languages = "en", only_text = TRUE,
-  rights = c("Public domain in the USA.", "None"), distinct = TRUE,
-  all_languages = FALSE, only_languages = TRUE)
+gutenberg_works(
+  ...,
+  languages = "en",
+  only_text = TRUE,
+  rights = c("Public domain in the USA.", "None"),
+  distinct = TRUE,
+  all_languages = FALSE,
+  only_languages = TRUE
+)
 }
 \arguments{
 \item{...}{Additional filters, given as expressions using the variables

@@ -4,7 +4,8 @@
 \name{gutenberg_metadata}
 \alias{gutenberg_metadata}
 \title{Gutenberg metadata about each work}
-\format{A tbl_df (see tibble or dplyr) with one row for each work in Project Gutenberg
+\format{
+A tbl_df (see tibble or dplyr) with one row for each work in Project Gutenberg
 and the following columns:
 \describe{
   \item{gutenberg_id}{Numeric ID, used to retrieve works from
@@ -25,7 +26,8 @@ and the following columns:
   \code{.txt} in Project Gutenberg for this record (as opposed to, for
   example, audiobooks). If not, cannot be retrieved with
   \code{\link{gutenberg_download}}}
-}}
+}
+}
 \usage{
 gutenberg_metadata
 }
