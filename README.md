@@ -85,6 +85,8 @@ Since we see that it has `gutenberg_id` 768, we can download it with the `gutenb
 
 ```r
 wuthering_heights <- gutenberg_download(768)
+#>                                          768 
+#> "http://aleph.gutenberg.org/7/6/768/768.zip"
 wuthering_heights
 #> # A tibble: 12,085 x 2
 #>    gutenberg_id text                                                                     
@@ -108,6 +110,8 @@ wuthering_heights
 ```r
 # 1260 is the ID of Jane Eyre
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+#>                                              768                                             1260 
+#>     "http://aleph.gutenberg.org/7/6/768/768.zip" "http://aleph.gutenberg.org/1/2/6/1260/1260.zip"
 books
 #> # A tibble: 32,744 x 3
 #>    gutenberg_id text                                                                     
@@ -151,6 +155,20 @@ It can also take the output of `gutenberg_works` directly. For example, we could
 ```r
 aristotle_books <- gutenberg_works(author == "Aristotle") %>%
   gutenberg_download(meta_fields = "title")
+#>                                                 1974 
+#>     "http://aleph.gutenberg.org/1/9/7/1974/1974.zip" 
+#>                                                 2412 
+#>     "http://aleph.gutenberg.org/2/4/1/2412/2412.zip" 
+#>                                                 6762 
+#>     "http://aleph.gutenberg.org/6/7/6/6762/6762.zip" 
+#>                                                 6763 
+#>     "http://aleph.gutenberg.org/6/7/6/6763/6763.zip" 
+#>                                                 8438 
+#>     "http://aleph.gutenberg.org/8/4/3/8438/8438.zip" 
+#>                                                12699 
+#> "http://aleph.gutenberg.org/1/2/6/9/12699/12699.zip" 
+#>                                                26095 
+#> "http://aleph.gutenberg.org/2/6/0/9/26095/26095.zip"
 
 aristotle_books
 #> # A tibble: 39,950 x 3
@@ -192,7 +210,7 @@ aristotle_books
 
 #### How were the metadata R files generated?
 
-See the [data-raw](data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog) on **05 May 2016**.
+See the [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog) on **05 May 2016**.
 
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
