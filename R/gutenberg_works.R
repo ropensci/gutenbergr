@@ -75,7 +75,7 @@ gutenberg_works <- function(..., languages = "en",
          "gutenberg_works. E.g. use gutenberg_works(author == 'Dickens, Charles') ",
          "not gutenberg_works(author = 'Dickens, Charles').")
   }
-  ret <- filter_(gutenberg_metadata, .dots = dots)
+  ret <- filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
     lang_spl <- ret %>%
@@ -115,7 +115,7 @@ gutenberg_works <- function(..., languages = "en",
   }
 
   if (distinct) {
-    ret <- distinct_(ret, "title", "gutenberg_author_id", .keep_all = TRUE)
+    ret <- distinct(ret, title, gutenberg_author_id, .keep_all = TRUE)
     # in older versions of dplyr, distinct_ didn't need .keep_all
     if (any(colnames(ret) == ".keep_all")) {
       ret$.keep_all <- NULL
