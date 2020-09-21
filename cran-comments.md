@@ -23,4 +23,4 @@ Minor changes:
 
 0 errors | 0 warnings | 2 notes
 
-The Notes occur on win-builder and are about examples that take slightly more than 5 seconds to run, as well as UTF strings in the data that are generally part of author names.
+The Notes depend on the platform and are about examples that take slightly more than 5 seconds to run, as well as UTF strings in the data that are generally part of author names.

@@ -210,11 +210,11 @@ aristotle_books
 
 #### How were the metadata R files generated?
 
-See the [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog) on **05 May 2016**.
+See the [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw) directory for the scripts that generate these datasets. As of now, these were generated from [the Project Gutenberg catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **05 May 2016**.
 
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
-Yes! The package respects [these rules](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) and complies to the best of our ability. Namely:
+Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_access.html) and complies to the best of our ability. Namely:
 
 * Project Gutenberg allows wget to harvest Project Gutenberg using [this list of links](http://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits that page once to find the recommended mirror for the user's location.
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
