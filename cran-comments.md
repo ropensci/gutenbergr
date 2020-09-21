@@ -10,6 +10,10 @@ Major changes:
 
 Minor changes:
 
+* Added gutenberg_languages dataset with one-row-per-language-per-work, which substantially speeds up gutenberg_works.
+
+Miscellaneous:
+
 * Made changes to work with dplyr 1.0.0, removing filter_ and distinct_.
 * Fixed links to https
 
@@ -21,6 +25,6 @@ Minor changes:
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 notes
 
-The Notes depend on the platform and are about examples that take slightly more than 5 seconds to run, as well as UTF strings in the data that are generally part of author names.
+The only NOTE is that this is a new submission after the last was archived.

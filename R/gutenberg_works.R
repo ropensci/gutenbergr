@@ -78,27 +78,17 @@ gutenberg_works <- function(..., languages = "en",
   ret <- filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
-    lang_spl <- ret %>%
-      select(gutenberg_id, language) %>%
-      mutate(language = stringr::str_split(language, "/")) %>%
-      tidyr::unnest(language) %>%
-      group_by(gutenberg_id) %>%
-      mutate(total = n()) %>%
-      ungroup()
-
-    lang_filt <- lang_spl %>%
+    lang_filt <- gutenberg_languages %>%
       filter(language %in% languages) %>%
-      group_by(gutenberg_id) %>%
-      mutate(number = n()) %>%
-      ungroup()
+      count(gutenberg_id, total_languages)
 
     if (all_languages) {
       lang_filt <- lang_filt %>%
-        filter(number >= length(languages))
+        filter(n >= length(languages))
     }
     if (only_languages) {
       lang_filt <- lang_filt %>%
-        filter(total == number)
+        filter(total_languages <= n)
     }
 
     ret <- ret %>%

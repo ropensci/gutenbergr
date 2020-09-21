@@ -85,8 +85,6 @@ Since we see that it has `gutenberg_id` 768, we can download it with the `gutenb
 
 ```r
 wuthering_heights <- gutenberg_download(768)
-#>                                          768 
-#> "http://aleph.gutenberg.org/7/6/768/768.zip"
 wuthering_heights
 #> # A tibble: 12,085 x 2
 #>    gutenberg_id text                                                                     
@@ -110,8 +108,6 @@ wuthering_heights
 ```r
 # 1260 is the ID of Jane Eyre
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-#>                                              768                                             1260 
-#>     "http://aleph.gutenberg.org/7/6/768/768.zip" "http://aleph.gutenberg.org/1/2/6/1260/1260.zip"
 books
 #> # A tibble: 32,744 x 3
 #>    gutenberg_id text                                                                     
@@ -155,20 +151,6 @@ It can also take the output of `gutenberg_works` directly. For example, we could
 ```r
 aristotle_books <- gutenberg_works(author == "Aristotle") %>%
   gutenberg_download(meta_fields = "title")
-#>                                                 1974 
-#>     "http://aleph.gutenberg.org/1/9/7/1974/1974.zip" 
-#>                                                 2412 
-#>     "http://aleph.gutenberg.org/2/4/1/2412/2412.zip" 
-#>                                                 6762 
-#>     "http://aleph.gutenberg.org/6/7/6/6762/6762.zip" 
-#>                                                 6763 
-#>     "http://aleph.gutenberg.org/6/7/6/6763/6763.zip" 
-#>                                                 8438 
-#>     "http://aleph.gutenberg.org/8/4/3/8438/8438.zip" 
-#>                                                12699 
-#> "http://aleph.gutenberg.org/1/2/6/9/12699/12699.zip" 
-#>                                                26095 
-#> "http://aleph.gutenberg.org/2/6/0/9/26095/26095.zip"
 
 aristotle_books
 #> # A tibble: 39,950 x 3
@@ -220,7 +202,7 @@ Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_a
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We retrieve the .zip file rather than txt to minimize bandwidth on the mirror.
 
-Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic.
+Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/policy/robot_access.html) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic.
 
 ### Code of Conduct
 

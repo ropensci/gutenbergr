@@ -122,7 +122,7 @@ Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_a
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We retrieve the .zip file rather than txt to minimize bandwidth on the mirror.
 
-Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic.
+Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/policy/robot_access.html) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic.
 
 ### Code of Conduct
 

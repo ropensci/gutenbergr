@@ -80,10 +80,21 @@ gutenberg_authors <- gutenberg_authors %>%
             aliases = collapse_col(aliases)) %>%
   arrange(gutenberg_author_id)
 
+# Keep the languages as its own table
+gutenberg_languages <- gutenberg_metadata %>%
+  select(gutenberg_id, language) %>%
+  mutate(language = stringr::str_split(language, "/")) %>%
+  tidyr::unnest(language) %>%
+  group_by(gutenberg_id) %>%
+  mutate(total_languages = n()) %>%
+  ungroup()
+
 attr(gutenberg_metadata, "date_updated") <- updated
 attr(gutenberg_subjects, "date_updated") <- updated
 attr(gutenberg_authors, "date_updated") <- updated
+attr(gutenberg_languages, "date_updated") <- attr(gutenberg_metadata, "date_updated")
 
-devtools::use_data(gutenberg_metadata, overwrite = TRUE)
-devtools::use_data(gutenberg_subjects, overwrite = TRUE)
-devtools::use_data(gutenberg_authors, overwrite = TRUE)
+usethis::use_data(gutenberg_metadata, overwrite = TRUE)
+usethis::use_data(gutenberg_subjects, overwrite = TRUE)
+usethis::use_data(gutenberg_authors, overwrite = TRUE)
+usethis::use_data(gutenberg_languages, overwrite = TRUE)

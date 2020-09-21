@@ -1,6 +1,7 @@
 # gutenbergr 0.2.0
 
 * Changed to comply with CRAN policies for API packages. Tests that do connect to Project Gutenberg are skipped on CRAN, and are supplemented with tests that mock the connection.
+* Added gutenberg_languages dataset with one-row-per-language-per-work, which substantially speeds up gutenberg_works.
 * This adds a files argument to gutenberg_download that is generally used only for testing.
 * Made changes to work with dplyr 1.0.0, removing filter_ and distinct_.
 * Fixed links to https
@@ -29,7 +30,7 @@
 # gutenbergr 0.1.1
 
 * Transferred repo ownership to [ropenscilabs](https://github.com/ropenscilabs)
-* The license was changed from MIT to GPL-2. This is based on the realization that the catalog data is licensed under the GPL, and the package includes a processed version of the catalog data. (See [here](https://www.gutenberg.org/wiki/Gutenberg:Feeds#The_Complete_Project_Gutenberg_Catalog)).
+* The license was changed from MIT to GPL-2. This is based on the realization that the catalog data is licensed under the GPL, and the package includes a processed version of the catalog data. (See [here](https://www.gutenberg.org/ebooks/offline_catalogs.html)).
 * Updated datasets to 5/5/2016 and added a "date_updated" attribute to tell when they were last updated
 * Added `all_languages` and `only_languages` arguments to `gutenberg_works`, allowing fine-grained control of languages. (For example, "either English or French" or "both English and French")
 * Changed get_gutenberg_mirror to use xml2 directly, in order to handle AppVeyor

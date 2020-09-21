@@ -157,3 +157,29 @@
 #'
 #' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
 "gutenberg_authors"
+
+#' Metadata about Project Gutenberg languages
+#'
+#' Data frame with metadata about the languages of each Project
+#' Gutenberg work.
+#'
+#' @details To find the date on which this metadata was last updated,
+#' run \code{attr(gutenberg_languages, "date_updated")}.
+#'
+#' @format A tbl_df (see tibble or dplyr) with one row for each
+#' author, with the columns
+#' \describe{
+#'   \item{gutenberg_id}{Unique identifier for the work that can
+#'   be used to join with the \link{gutenberg_metadata} dataset}
+#'   \item{language}{Language ISO 639 code. Two
+#'   letter code if one exists, otherwise three letter.}
+#'   \item{total_languages}{Number of languages for this work.}
+#' }
+#'
+#' @examples
+#'
+#' # date last updated
+#' attr(gutenberg_languages, "date_updated")
+#'
+#' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
+"gutenberg_languages"
