@@ -20,7 +20,7 @@ Imports:
     urltools,
     stringr,
     lazyeval
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Suggests: 
     knitr,
     rmarkdown,
