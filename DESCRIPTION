@@ -21,6 +21,7 @@ Imports:
     stringr,
     lazyeval
 RoxygenNote: 7.2.1
+Encoding: UTF-8
 Suggests: 
     knitr,
     rmarkdown,
