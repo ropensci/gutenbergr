@@ -1,14 +1,14 @@
-# run this script to find out which of the Gutenberg works
-# have text files (as opposed to e.g. audiobooks)
+# R Script for finding out which of the Gutenberg works have text files
+# (as opposed to e.g. audiobooks)
 
-# This script substitutes previous UNIX MAC-only bash code
+# This script uses parallel computing and substitutes previous UNIX MAC-only bash code
 
-cache_dir="/tmp/cache/epub"
-flag_file="/tmp/ids_with_text.rds"
+cache_dir <- "/tmp/cache/epub"
+flag_file <- "/tmp/ids_with_text.rds"
 
-all_files <- fs::dir_ls(cache_dir, recurse = TRUE, 
-    glob = "*.rdf"
-)
+all_files <- fs::dir_ls(cache_dir,
+                        recurse = TRUE,
+                        glob = "*.rdf")
 
 read_single_rdf <- function(f_in) {
 

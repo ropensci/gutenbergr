@@ -1,13 +1,14 @@
 # Bash script for parsing metadata files from gutemberg.org
-# Runs on Ubuntu 20.04 / Linux Mint
-#  
+# Tested on Ubuntu 20.04 / Linux Mint
+#
 # REQUIREMENTS (Python):
-#   gitberg: 
+#   gitberg:
 #        1) download from https://github.com/gitenberg-dev/gitberg
-#        2) manual install: pip3 install .
+#        2) manual install (or use venv): pip3 install .
 
-# parse each file individually
-cash_dir="/tmp/cache/epub"
+# cache folder from previous script
+cache_dir="/tmp/cache/epub"
 
-python3 data-raw/py/gitenberg_meta.py $cash_dir
+# parse each rdf file from previous step
+python3 data-raw/py/gitenberg_meta.py $cache_dir
 

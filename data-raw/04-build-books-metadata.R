@@ -1,13 +1,11 @@
 ### Before running, you first need to run two scrips:
 
-# First:
-
-# 01-download-metadata.sh
-
-# 02-parse-metadata
+# -- Order of execution --
+# (BASH) 01-download-metadata.sh
+#   which downloads and untars catalog file from gutenberg.org
+# (BASH) 02-parse-metadata.sh
 #   which creates data-raw/metadata.json.gz, and
-
-# 03-parse-text-files.R
+# (R) 03-parse-text-files.R
 #   which creates "/tmp/ids_with_text.rds"
 
 library(purrr)
