@@ -1,4 +1,4 @@
-# Bash script for downloading and parsing metadata files from gutemberg.org
+# Bash script for downloading and parsing metadata files from gutenberg.org
 #
 # REQUIREMENTS:
 #   gitberg: 
