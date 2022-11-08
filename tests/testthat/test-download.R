@@ -15,7 +15,7 @@ test_that("gutenberg_get_mirror works", {
 
   # expect we can get something from it
   mirror_text <- readr::read_lines(m)
-  expect_true(str_detect(mirror_text[1], "DOCTYPE"))
+  expect_true(str_detect(mirror_text[1], "<html>"))
 })
 
 
