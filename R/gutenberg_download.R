@@ -40,7 +40,6 @@
 #' }
 #'
 #' @examples
-#'
 #' \dontrun{
 #' library(dplyr)
 #'
@@ -58,10 +57,8 @@
 #'
 #' austen
 #' austen %>%
-#'  count(title)
+#'   count(title)
 #' }
-#'
-#' @import dplyr
 #'
 #' @export
 gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
@@ -82,13 +79,14 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
   path <- id %>%
     stringr::str_sub(1, -2) %>%
     stringr::str_split("") %>%
-    sapply(stringr::str_c, collapse = "/")
+    purrr::map_chr(stringr::str_c, collapse = "/")
 
   path <- ifelse(nchar(id) == 1, "0", path)
 
   full_url <- stringr::str_c(mirror, path, id,
-                             stringr::str_c(id, ".zip"),
-                             sep = "/")
+    stringr::str_c(id, ".zip"),
+    sep = "/"
+  )
   names(full_url) <- id
 
   try_download <- function(url) {
@@ -98,13 +96,21 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
     }
     base_url <- stringr::str_replace(url, ".zip$", "")
     for (suffix in c("-8", "-0")) {
-      new_url <- paste0(base_url, suffix, ".zip")
+      new_url <- glue::glue("{base_url}{suffix}.zip")
       ret <- read_zip_url(new_url)
       if (!is.null(ret)) {
         return(ret)
       }
     }
-    warning("Could not download a book at ", url)
+
+    cli::cli_warn(
+      c(
+        "!" = "Could not download a book at {url}.",
+        "i" = "The book may have been archived.",
+        "i" = "Alternatively, You may need to select a different mirror.",
+        ">" = "See https://www.gutenberg.org/MIRRORS.ALL for options."
+      )
+    )
 
     NULL
   }
@@ -122,24 +128,28 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 
   ret <- downloaded %>%
     purrr::discard(is.null) %>%
-    purrr::map_df(~tibble(text = .), .id = "gutenberg_id") %>%
-    mutate(gutenberg_id = as.integer(gutenberg_id))
+    purrr::map_df(~ dplyr::tibble(text = .), .id = "gutenberg_id") %>%
+    dplyr::mutate(gutenberg_id = as.integer(gutenberg_id))
 
   if (strip) {
     ret <- ret %>%
-      group_by(gutenberg_id) %>%
-      do(tibble(text = gutenberg_strip(.$text, ...))) %>%
-      ungroup()
+      dplyr::group_by(gutenberg_id) %>%
+      dplyr::do(dplyr::tibble(text = gutenberg_strip(.$text, ...))) %>%
+      dplyr::ungroup()
   }
 
   if (length(meta_fields) > 0) {
     meta_fields <- unique(c("gutenberg_id", meta_fields))
 
-    utils::data("gutenberg_metadata", package = "gutenbergr", envir = environment())
+    utils::data(
+      "gutenberg_metadata",
+      package = "gutenbergr",
+      envir = environment()
+    )
     md <- gutenberg_metadata[meta_fields]
 
     ret <- ret %>%
-      inner_join(md, by = "gutenberg_id")
+      dplyr::inner_join(md, by = "gutenberg_id")
   }
 
   ret
@@ -174,20 +184,36 @@ gutenberg_strip <- function(text) {
   text[is.na(text)] <- ""
 
   starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END.*SMALL PRINT)"
-  text <- discard_start_while(text, !stringr::str_detect(text, starting_regex))[-1]
+  text <- discard_start_while(
+    text, !stringr::str_detect(text, starting_regex)
+  )[-1]
   # also discard rest of "paragraph"
   text <- discard_start_while(text, text != "")
 
-  ending_regex <- "^(End of .*Project Gutenberg.*|\\*\\*\\*.*END OF.*PROJECT GUTENBERG)"
+  ending_regex <- paste(
+    "^(End of .*Project Gutenberg.*",
+    "\\*\\*\\*.*END OF.*PROJECT GUTENBERG)",
+    sep = "|"
+  )
   text <- keep_while(text, !stringr::str_detect(text, ending_regex))
 
   # strip empty lines from start and end
   text <- discard_start_while(text, text == "")
 
   # also paragraphs at the start that are meta-data
-  start_paragraph_regex <- "(produced by|prepared by|transcribed from|project gutenberg|^special thanks|^note: )"
-  while (length(text) > 0 &&
-         stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)) {
+  start_paragraph_regex <- paste(
+    "(produced by",
+    "prepared by",
+    "transcribed from",
+    "project gutenberg",
+    "^special thanks",
+    "^note: )",
+    sep = "|"
+  )
+  while (
+    length(text) > 0 &&
+      stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
+  ) {
     # get rid of that paragraph, then the following whitespace
     text <- discard_start_while(text, text != "")
     text <- discard_start_while(text, text == "")
@@ -218,8 +244,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
   # figure out the mirror for this location from wget
   if (verbose) {
-    message("Determining mirror for Project Gutenberg from ",
-            "http://www.gutenberg.org/robot/harvest")
+    message(
+      "Determining mirror for Project Gutenberg from ",
+      "http://www.gutenberg.org/robot/harvest"
+    )
   }
   wget_url <- "http://www.gutenberg.org/robot/harvest?filetypes[]=txt"
   lines <- readr::read_lines(wget_url)
@@ -228,13 +256,13 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
-  mirror <- paste0(parsed$scheme, "://", parsed$domain)
+  mirror <- glue::glue("{parsed$scheme}://{parsed$domain}")
 
-  if (mirror == "http://www.gutenberg.lib.md.us") {
+  if (mirror == "http://www.gutenberg.lib.md.us") { # nocov start
     # this mirror is broken (PG has been contacted)
     # for now, replace:
     mirror <- "http://aleph.gutenberg.org"
-  }
+  } # nocov end
 
   if (verbose) {
     message("Using mirror ", mirror)

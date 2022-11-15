@@ -64,7 +64,6 @@ between books. Before doing an in-depth analysis you may want to check
 the start and end of each downloaded book.
 }
 \examples{
-
 \dontrun{
 library(dplyr)
 
@@ -82,7 +81,7 @@ austen <- gutenberg_works(author == "Austen, Jane") \%>\%
 
 austen
 austen \%>\%
- count(title)
+  count(title)
 }
 
 }
