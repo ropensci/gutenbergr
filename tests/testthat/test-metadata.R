@@ -1,5 +1,3 @@
-context("Gutenberg metadata")
-
 library(stringr)
 
 test_that("gutenberg_works does appropriate filtering by default", {
@@ -29,14 +27,18 @@ test_that("gutenberg_works does appropriate filtering by language", {
   expect_false(all(w_de_not_only$language == "de"))
   expect_true(all(str_detect(w_de_not_only$language, "de")))
 
-  w_en_fr_all <- gutenberg_works(languages = c("en", "fr"),
-                                 all_languages = TRUE)
+  w_en_fr_all <- gutenberg_works(
+    languages = c("en", "fr"),
+    all_languages = TRUE
+  )
   expect_true(all(w_en_fr_all$language == "en/fr"))
 
-  w_en_fr_all_not_only <- gutenberg_works(languages = c("en", "fr"),
-                                 all_languages = TRUE,
-                                 only_languages = FALSE,
-                                 rights = NULL)
+  w_en_fr_all_not_only <- gutenberg_works(
+    languages = c("en", "fr"),
+    all_languages = TRUE,
+    only_languages = FALSE,
+    rights = NULL
+  )
   expect_false(all(w_en_fr_all_not_only$language == "en/fr"))
   expect_true(any(w_en_fr_all_not_only$language == "en/fr"))
   expect_true(any(w_en_fr_all_not_only$language == "en/es/fr"))
@@ -47,8 +49,10 @@ test_that("gutenberg_works does appropriate filtering by language", {
 
 
 test_that("gutenberg_works gives error messages with named arguments", {
-  expect_error(gutenberg_works(author = "Dickens, Charles"),
-               "named arguments")
+  expect_error(
+    gutenberg_works(author = "Dickens, Charles"),
+    "named arguments"
+  )
 })
 
 

@@ -1,5 +1,3 @@
-context("Download books")
-
 # These tests are currently skipped on CRAN, which has issues connecting
 # to Project Gutenberg. See test-mock for tests that are performed without
 # connecting to PG.
@@ -19,7 +17,7 @@ test_that("gutenberg_get_mirror works", {
 })
 
 
-test_that("Can download Charles Dickens' Christmas Carol and Jane Austen's Persuasion", {
+test_that("Can download Dickens' Christmas Carol & Austen's Persuasion", {
   skip_on_cran()
   books <- gutenberg_download(c(46, 105), meta_fields = c("title", "author"))
 
@@ -29,15 +27,24 @@ test_that("Can download Charles Dickens' Christmas Carol and Jane Austen's Persu
 
   # should have meta-data about each
   expect_equal(c("gutenberg_id", "text", "title", "author"), colnames(books))
-  expect_equal(sum(books$gutenberg_id == 46), sum(books$author == "Dickens, Charles"))
-  expect_equal(sum(books$gutenberg_id == 105), sum(books$author == "Austen, Jane"))
+  expect_equal(
+    sum(books$gutenberg_id == 46),
+    sum(books$author == "Dickens, Charles")
+  )
+  expect_equal(
+    sum(books$gutenberg_id == 105),
+    sum(books$author == "Austen, Jane")
+  )
 
   # expect many mentions of protagonists Scrooge and Anne
   expect_gt(sum(str_detect(books$text, "Scrooge")), 300)
   expect_gt(sum(str_detect(books$text, "Anne")), 300)
 
   # expect that Gutenberg is not mentioned: footer and header were stripped
-  expect_equal(sum(str_detect(books$text, regex("gutenberg", ignore_case = TRUE))), 0)
+  expect_equal(
+    sum(str_detect(books$text, regex("gutenberg", ignore_case = TRUE))),
+    0
+  )
 })
 
 

@@ -1,7 +1,7 @@
 ---
 title: "gutenbergr: Search and download public domain texts from Project Gutenberg"
 author: "David Robinson"
-date: "`r Sys.Date()`"
+data: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{gutenbergr: Search and download public domain texts from Project Gutenberg}
@@ -9,8 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r echo = FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
+)
 ```
 
 The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](http://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest. Includes:
@@ -27,15 +32,15 @@ This package contains metadata for all Project Gutenberg works as R datasets, so
 
 The dataset `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc:
 
-```{r}
+```{r basics}
 library(gutenbergr)
+library(dplyr)
 gutenberg_metadata
 ```
 
 For example, you could find the Gutenberg ID of Wuthering Heights by doing:
 
-```{r}
-library(dplyr)
+```{r filter}
 
 gutenberg_metadata %>%
   filter(title == "Wuthering Heights")
@@ -43,13 +48,13 @@ gutenberg_metadata %>%
 
 In many analyses, you may want to filter just for English works, avoid duplicates, and include only books that have text that can be downloaded. The `gutenberg_works()` function does this pre-filtering:
 
-```{r}
+```{r works}
 gutenberg_works()
 ```
 
 It also allows you to perform filtering as an argument:
 
-```{r}
+```{r Austen}
 gutenberg_works(author == "Austen, Jane")
 
 # or with a regular expression
@@ -64,19 +69,20 @@ The meta-data currently in the package was last updated on **`r format(attr(gute
 
 The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that "Wuthering Heights" has ID 768 (see [the URL here](https://www.gutenberg.org/ebooks/768)), so `gutenberg_download(768)` downloads this text.
 
-```{r}
+```{r load 1 file}
 f768 <- system.file("extdata", "768.zip", package = "gutenbergr")
 wuthering_heights <- gutenberg_download(768,
-                                        files = f768,
-                                        mirror = "http://aleph.gutenberg.org")
+  files = f768,
+  mirror = "http://aleph.gutenberg.org"
+)
 ```
 
 
-```{r eval = FALSE}
+```{r load 1 from web, eval = FALSE}
 wuthering_heights <- gutenberg_download(768)
 ```
 
-```{r}
+```{r display wuthering}
 wuthering_heights
 ```
 
@@ -84,26 +90,27 @@ Notice it is returned as a tbl_df (a type of data frame) including two variables
 
 Provide a vector of IDs to download multiple books. For example, to download Jane Eyre (book [1260](https://www.gutenberg.org/ebooks/1260)) along with Wuthering Heights, do:
 
-```{r}
+```{r load 2 from file}
 f1260 <- system.file("extdata", "1260.zip", package = "gutenbergr")
 books <- gutenberg_download(c(768, 1260),
-                            meta_fields = "title",
-                            files = c(f768, f1260),
-                            mirror = "http://aleph.gutenberg.org")
+  meta_fields = "title",
+  files = c(f768, f1260),
+  mirror = "http://aleph.gutenberg.org"
+)
 ```
 
 
-```{r, eval = FALSE}
+```{r load 2 from web, eval = FALSE}
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 ```
 
-```{r}
+```{r display books}
 books
 ```
 
 Notice that the `meta_fields` argument allows us to add one or more additional fields from the `gutenberg_metadata` to the downloaded text, such as title or author.
 
-```{r}
+```{r count books}
 books %>%
   count(title)
 ```
@@ -112,13 +119,13 @@ books %>%
 
 You may want to select books based on information other than their title or author, such as their genre or topic. `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics. "lcc" means [Library of Congress Classification](https://www.loc.gov/catdir/cpso/lcco/), while "lcsh" means [Library of Congress subject headings](https://id.loc.gov/authorities/subjects.html):
 
-```{r}
+```{r subjects}
 gutenberg_subjects
 ```
 
 This is useful for extracting texts from a particular topic or genre, such as detective stories, or a particular character, such as Sherlock Holmes. The `gutenberg_id` column can then be used to download these texts or to link with other metadata.
 
-```{r}
+```{r filter subjects}
 gutenberg_subjects %>%
   filter(subject == "Detective and mystery stories")
 
@@ -128,7 +135,7 @@ gutenberg_subjects %>%
 
 `gutenberg_authors` contains information about each author, such as aliases and birth/death year:
 
-```{r}
+```{r authors}
 gutenberg_authors
 ```
 
@@ -136,7 +143,7 @@ gutenberg_authors
 
 What's next after retrieving a book's text? Well, having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
 
-```{r}
+```{r tidytext}
 library(tidytext)
 
 words <- books %>%

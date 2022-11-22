@@ -1,12 +1,14 @@
-context("Utility functions")
-
 test_that("read_zip_url can download and read a zip file", {
   skip_on_cran()
 
   # read Bill of Rights (small file)
   z <- read_zip_url("http://gutenberg.pglaf.org/0/2/2.zip")
 
-  expect_true(any(z == "Congress shall make no law respecting an establishment of religion,"))
+  expect_true(
+    any(
+      z == "Congress shall make no law respecting an establishment of religion,"
+    )
+  )
 })
 
 

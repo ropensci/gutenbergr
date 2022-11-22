@@ -15,8 +15,9 @@ gutenberg_works(
 )
 }
 \arguments{
-\item{...}{Additional filters, given as expressions using the variables
-in the \link{gutenberg_metadata} dataset (e.g. \code{author == "Austen, Jane"})}
+\item{...}{Additional filters, given as expressions using the variables in
+the \link{gutenberg_metadata} dataset (e.g. \code{author == "Austen,
+Jane"})}
 
 \item{languages}{Vector of languages to include}
 
@@ -28,30 +29,29 @@ without text (e.g. audiobooks) cannot be downloaded with
 public domain in the US or "None", while excluding works under copyright.
 NULL allows any value of Rights}
 
-\item{distinct}{Whether to return only one distinct combination of each
-title and gutenberg_author_id. If multiple occur (that fulfill the other
+\item{distinct}{Whether to return only one distinct combination of each title
+and gutenberg_author_id. If multiple occur (that fulfill the other
 conditions), it uses the one with the lowest ID}
 
 \item{all_languages}{Whether, if multiple languages are given, all of them
-need to be present in a work. For example, if \code{c("en", "fr")} are given,
-whether only \code{en/fr} as opposed to English or French works should be
-returned}
+need to be present in a work. For example, if \code{c("en", "fr")} are
+given, whether only \code{en/fr} as opposed to English or French works
+should be returned}
 
 \item{only_languages}{Whether to exclude works that have other languages
 besides the ones provided. For example, whether to include \code{en/fr}
 when English works are requested}
 }
 \value{
-A tbl_df (see the tibble or dplyr packages) with one row for
-each work, in the same format as \link{gutenberg_metadata}.
+A tbl_df (see the tibble or dplyr packages) with one row for each
+  work, in the same format as \link{gutenberg_metadata}.
 }
 \description{
 Get a table of Gutenberg work metadata that has been filtered by some common
-(settable) defaults, along with the option to add additional filters.
-This function is for convenience when working with common conditions
-when pulling a set of books to analyze.
-For more detailed filtering of the entire Project Gutenberg
-metadata, use the \link{gutenberg_metadata} and related datasets.
+(settable) defaults, along with the option to add additional filters. This
+function is for convenience when working with common conditions when pulling
+a set of books to analyze. For more detailed filtering of the entire Project
+Gutenberg metadata, use the \link{gutenberg_metadata} and related datasets.
 }
 \details{
 By default, returns

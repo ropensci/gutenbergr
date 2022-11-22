@@ -5,8 +5,8 @@
 \alias{gutenberg_metadata}
 \title{Gutenberg metadata about each work}
 \format{
-A tbl_df (see tibble or dplyr) with one row for each work in Project Gutenberg
-and the following columns:
+A tbl_df (see tibble or dplyr) with one row for each work in Project
+  Gutenberg and the following columns:
 \describe{
   \item{gutenberg_id}{Numeric ID, used to retrieve works from
   Project Gutenberg}
@@ -20,8 +20,8 @@ and the following columns:
   \item{gutenberg_bookshelf}{Which collection or collections this
   is found in, separated by / if multiple}
   \item{rights}{Generally one of three options: "Public domain in the USA."
-  (the most common by far), "Copyrighted. Read the copyright notice inside this book
-  for details.", or "None"}
+  (the most common by far), "Copyrighted. Read the copyright notice inside
+  this book for details.", or "None"}
   \item{has_text}{Whether there is a file containing digits followed by
   \code{.txt} in Project Gutenberg for this record (as opposed to, for
   example, audiobooks). If not, cannot be retrieved with
@@ -32,13 +32,13 @@ and the following columns:
 gutenberg_metadata
 }
 \description{
-Selected fields of metadata about each of the Project Gutenberg
-works. These were collected using the gitenberg Python package,
-particularly the \code{pg_rdf_to_json} function.
+Selected fields of metadata about each of the Project Gutenberg works. These
+were collected using the gitenberg Python package, particularly the
+\code{pg_rdf_to_json} function.
 }
 \details{
-To find the date on which this metadata was last updated,
-run \code{attr(gutenberg_metadata, "date_updated")}.
+To find the date on which this metadata was last updated, run
+  \code{attr(gutenberg_metadata, "date_updated")}.
 }
 \examples{
 
@@ -50,14 +50,17 @@ gutenberg_metadata
 gutenberg_metadata \%>\%
   count(author, sort = TRUE)
 
-# look for Shakespeare, excluding collections (containing "Works") and translations
+# look for Shakespeare, excluding collections (containing "Works") and
+# translations
 shakespeare_metadata <- gutenberg_metadata \%>\%
-  filter(author == "Shakespeare, William",
-         language == "en",
-         !str_detect(title, "Works"),
-         has_text,
-         !str_detect(rights, "Copyright")) \%>\%
-         distinct(title)
+  filter(
+    author == "Shakespeare, William",
+    language == "en",
+    !str_detect(title, "Works"),
+    has_text,
+    !str_detect(rights, "Copyright")
+  ) \%>\%
+  distinct(title)
 
 \dontrun{
 shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
@@ -66,8 +69,10 @@ shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 # note that the gutenberg_works() function filters for English
 # non-copyrighted works and does de-duplication by default:
 
-shakespeare_metadata2 <- gutenberg_works(author == "Shakespeare, William",
-                                         !str_detect(title, "Works"))
+shakespeare_metadata2 <- gutenberg_works(
+  author == "Shakespeare, William",
+  !str_detect(title, "Works")
+)
 
 # date last updated
 attr(gutenberg_metadata, "date_updated")
@@ -75,6 +80,6 @@ attr(gutenberg_metadata, "date_updated")
 }
 \seealso{
 \link{gutenberg_works}, \link{gutenberg_authors},
-\link{gutenberg_subjects}
+  \link{gutenberg_subjects}
 }
 \keyword{datasets}

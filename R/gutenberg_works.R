@@ -1,34 +1,34 @@
 #' Get a filtered table of Gutenberg work metadata
 #'
 #' Get a table of Gutenberg work metadata that has been filtered by some common
-#' (settable) defaults, along with the option to add additional filters.
-#' This function is for convenience when working with common conditions
-#' when pulling a set of books to analyze.
-#' For more detailed filtering of the entire Project Gutenberg
-#' metadata, use the \link{gutenberg_metadata} and related datasets.
+#' (settable) defaults, along with the option to add additional filters. This
+#' function is for convenience when working with common conditions when pulling
+#' a set of books to analyze. For more detailed filtering of the entire Project
+#' Gutenberg metadata, use the \link{gutenberg_metadata} and related datasets.
 #'
-#' @param ... Additional filters, given as expressions using the variables
-#' in the \link{gutenberg_metadata} dataset (e.g. \code{author == "Austen, Jane"})
+#' @param ... Additional filters, given as expressions using the variables in
+#'   the \link{gutenberg_metadata} dataset (e.g. \code{author == "Austen,
+#'   Jane"})
 #' @param languages Vector of languages to include
 #' @param only_text Whether the works must have Gutenberg text attached. Works
-#' without text (e.g. audiobooks) cannot be downloaded with
-#' \code{\link{gutenberg_download}}
+#'   without text (e.g. audiobooks) cannot be downloaded with
+#'   \code{\link{gutenberg_download}}
 #' @param rights Values to allow in the \code{rights} field. By default allows
-#' public domain in the US or "None", while excluding works under copyright.
-#' NULL allows any value of Rights
-#' @param distinct Whether to return only one distinct combination of each
-#' title and gutenberg_author_id. If multiple occur (that fulfill the other
-#' conditions), it uses the one with the lowest ID
+#'   public domain in the US or "None", while excluding works under copyright.
+#'   NULL allows any value of Rights
+#' @param distinct Whether to return only one distinct combination of each title
+#'   and gutenberg_author_id. If multiple occur (that fulfill the other
+#'   conditions), it uses the one with the lowest ID
 #' @param all_languages Whether, if multiple languages are given, all of them
-#' need to be present in a work. For example, if \code{c("en", "fr")} are given,
-#' whether only \code{en/fr} as opposed to English or French works should be
-#' returned
+#'   need to be present in a work. For example, if \code{c("en", "fr")} are
+#'   given, whether only \code{en/fr} as opposed to English or French works
+#'   should be returned
 #' @param only_languages Whether to exclude works that have other languages
-#' besides the ones provided. For example, whether to include \code{en/fr}
-#' when English works are requested
+#'   besides the ones provided. For example, whether to include \code{en/fr}
+#'   when English works are requested
 #'
-#' @return A tbl_df (see the tibble or dplyr packages) with one row for
-#' each work, in the same format as \link{gutenberg_metadata}.
+#' @return A tbl_df (see the tibble or dplyr packages) with one row for each
+#'   work, in the same format as \link{gutenberg_metadata}.
 #'
 #' @details By default, returns
 #'
@@ -71,9 +71,14 @@ gutenberg_works <- function(..., languages = "en",
                             only_languages = TRUE) {
   dots <- lazyeval::lazy_dots(...)
   if (length(dots) > 0 && any(names(dots) != "")) {
-    stop("Use == expressions, not named arguments, as extra arguments to ",
-         "gutenberg_works. E.g. use gutenberg_works(author == 'Dickens, Charles') ",
-         "not gutenberg_works(author = 'Dickens, Charles').")
+    cli::cli_abort(
+      c(
+        x = "We detected a named input.",
+        i = "Use == expressions, not named arguments.",
+        i = "For example, use gutenberg_works(author == 'Dickens, Charles'),",
+        i = "not gutenberg_works(author = 'Dickens, Charles')."
+      )
+    )
   }
   ret <- filter(gutenberg_metadata, ...)
 
@@ -108,7 +113,7 @@ gutenberg_works <- function(..., languages = "en",
     ret <- distinct(ret, title, gutenberg_author_id, .keep_all = TRUE)
     # in older versions of dplyr, distinct_ didn't need .keep_all
     if (any(colnames(ret) == ".keep_all")) {
-      ret$.keep_all <- NULL
+      ret$.keep_all <- NULL # nocov
     }
   }
 
