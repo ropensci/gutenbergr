@@ -86,7 +86,7 @@ wuthering_heights <- gutenberg_download(768)
 wuthering_heights
 ```
 
-Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/768/768.txt)) have been stripped away.
+Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line.
 
 Provide a vector of IDs to download multiple books. For example, to download Jane Eyre (book [1260](https://www.gutenberg.org/ebooks/1260)) along with Wuthering Heights, do:
 
