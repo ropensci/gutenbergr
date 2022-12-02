@@ -32,7 +32,6 @@ Suggests:
     ggplot2,
     knitr,
     rmarkdown,
-    spelling,
     testthat,
     tidyr,
     tidytext
