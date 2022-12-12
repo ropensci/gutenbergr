@@ -40,7 +40,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #'
 #' # download The Count of Monte Cristo
@@ -168,7 +168,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' @return A character vector with Project Gutenberg headers and footers removed
 #'
 #' @examples
-#'\dontrun{
+#'\donttest{
 #' library(dplyr)
 #' book <- gutenberg_works(title == "Pride and Prejudice") %>%
 #'   gutenberg_download(strip = FALSE)

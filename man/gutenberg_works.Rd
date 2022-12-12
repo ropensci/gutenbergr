@@ -64,7 +64,7 @@ By default, returns
 }
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 
 gutenberg_works()

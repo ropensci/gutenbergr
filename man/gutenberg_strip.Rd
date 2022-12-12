@@ -19,7 +19,7 @@ will also not strip tables of contents, prologues, or other text
 that appears at the start of a book.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 book <- gutenberg_works(title == "Pride and Prejudice") \%>\%
   gutenberg_download(strip = FALSE)

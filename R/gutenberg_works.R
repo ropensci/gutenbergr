@@ -40,7 +40,7 @@
 #' }
 #'
 #' @examples
-#'\dontrun{
+#'\donttest{
 #' library(dplyr)
 #'
 #' gutenberg_works()

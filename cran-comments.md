@@ -1,29 +1,30 @@
 # gutenbergr 0.2.2
 
-This is a re-submission and maintainer change after gutenbergr 0.2.1 was archived, which complies with the CRAN policies.
+This release is a re-submission and maintainer change after gutenbergr 0.2.1 was archived.
 
 ## Changes
+
+Major changes:
 
 * New package maintainer: Myfanwy Johnston <mrowlan1@gmail.com>
 
 Minor changes:
 
 * Updated package metadata.
-* Updated documentation to comply 
 
 Miscellaneous:
 
-* Removed broken link
+* Documentation updates and fixes throughout (updated to latest version of roxygen2, resolved missing return value and examples, removed/updated broken urls)
+* On advice to minimize server time in test environments, some gutenberg_download() and gutenberg_works() examples are now wrapped in donttest{}.
 
 ## Test environments
 
 * local OS X install, R 4.2.1
-* Ubuntu Linux 20.04.1 LTS, R-release, GCC
-    2 NOTEs: new submission, elapsed server time
-
-* Windows Server 2022, R-release, 32/64 bit
-    2 NOTEs: new submission, 18981 marked UTF-8 strings. 
-    The UTF-8 strings are in the data from gutenberg.org
+    2 NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
+* Ubuntu 22.04.1 LTS (release & development)
+    1 NOTE: installed package size
+* Windows Server 2022, 10.0.20348
+    1 NOTE: installed package size
 
 ## R CMD check results
 
