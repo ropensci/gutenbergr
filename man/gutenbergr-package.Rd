@@ -22,7 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item David Robinson
+  \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 
 }

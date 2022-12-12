@@ -163,6 +163,10 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' will also not strip tables of contents, prologues, or other text
 #' that appears at the start of a book.
 #'
+#' @param text A character vector with lines of a book
+#'
+#' @return A character vector with Project Gutenberg headers and footers removed
+#'
 #' @examples
 #'\dontrun{
 #' library(dplyr)
@@ -177,7 +181,6 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' head(text_stripped, 10)
 #' tail(text_stripped, 10)
 #'}
-#' @param text A character vector with lines of a book
 #'
 #' @export
 gutenberg_strip <- function(text) {
@@ -234,6 +237,10 @@ gutenberg_strip <- function(text) {
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg
 #' mirror that was chosen
+#'
+#' @return A character vector of the url for mirror to be used
+#' @examples
+#' gutenberg_get_mirror()
 #'
 #' @export
 gutenberg_get_mirror <- function(verbose = TRUE) {
