@@ -1,3 +1,9 @@
+# gutenbergr 0.2.2 (2022-12-03)
+
+* Updated metadata (#32, #29)
+* minor bug fixes and improvements, including removing broken url and updating documentation to comply with CRAN roxygen2 requirements (#30, #31, #35, #28).
+* Changed maintainer (#30)
+
 # gutenbergr 0.2.0
 
 * Changed to comply with CRAN policies for API packages. Tests that do connect to Project Gutenberg are skipped on CRAN, and are supplemented with tests that mock the connection.

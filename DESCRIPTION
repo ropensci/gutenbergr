@@ -1,14 +1,16 @@
 Package: gutenbergr
 Type: Package
 Title: Download and Process Public Domain Works from Project Gutenberg
-Version: 0.2.1
-Authors@R: person("David", "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cre"))
+Version: 0.2.2
+Authors@R: c(person(given = "Myfanwy", family = "Johnston", role = c("aut", "cre"), 
+    email = "mrowlan1@gmail.com"),
+    person(given = "David", family = "Robinson", role = "aut"))
 Description: Download and process public domain works in the Project
     Gutenberg collection <http://www.gutenberg.org/>. Includes metadata for
     all Project Gutenberg works, so that they can be searched and retrieved.
 License: GPL-2
 LazyData: TRUE
-Maintainer: David Robinson <admiral.david@gmail.com>
+Maintainer: Myfanwy Johnston <mrowlan1@gmail.com>
 URL: https://docs.ropensci.org/gutenbergr/, https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
 VignetteBuilder: knitr

@@ -1,30 +1,32 @@
-# gutenbergr 0.2.0
+# gutenbergr 0.2.2
 
-This is a re-submission after gutenbergr 0.1.5 was archived, which complies with the CRAN policies. My sincere apologies for not fixing the issue sooner, and I hope it can be returned to CRAN.
+This is a re-submission and maintainer change after gutenbergr 0.2.1 was archived, which complies with the CRAN policies.
 
 ## Changes
 
-Major changes:
-
-* Fixed to comply with CRAN policies for API packages. Tests that do connect to Project Gutenberg are skipped on CRAN, and are supplemented with tests that mock the connection.
+* New package maintainer: Myfanwy Johnston <mrowlan1@gmail.com>
 
 Minor changes:
 
-* Added gutenberg_languages dataset with one-row-per-language-per-work, which substantially speeds up gutenberg_works.
+* Updated package metadata.
+* Updated documentation to comply 
 
 Miscellaneous:
 
-* Made changes to work with dplyr 1.0.0, removing filter_ and distinct_.
-* Fixed links to https
+* Removed broken link
 
 ## Test environments
 
-* local OS X install, R 4.0.2
-* Ubuntu 16.04.6 LTS (on travis-ci)
-* win-builder (devel and release)
+* local OS X install, R 4.2.1
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+    2 NOTEs: new submission, elapsed server time
+
+* Windows Server 2022, R-release, 32/64 bit
+    2 NOTEs: new submission, 18981 marked UTF-8 strings. 
+    The UTF-8 strings are in the data from gutenberg.org
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
+0 errors | 0 warnings | 2 notes
 
-The only NOTE is that this is a new submission after the last was archived.
+The only NOTEs are that this is a new submission after the last was archived, and that installed size is  5.0Mb. This due to the data requirements of the package; that said, we reduced the number of test files in this release and are developing options that would further reduce the size of the installed package in the next release.
