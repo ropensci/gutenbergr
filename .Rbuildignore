@@ -4,10 +4,10 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^\.travis\.yml$
-^CONDUCT\.md$
 ^cran-comments\.md$
 ^appveyor\.yml$
 ^doc$
 ^Meta$
 ^CRAN-RELEASE$
 ^\.github$
+^CODE_OF_CONDUCT\.md$
