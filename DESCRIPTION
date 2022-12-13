@@ -1,12 +1,12 @@
 Package: gutenbergr
 Type: Package
 Title: Download and Process Public Domain Works from Project Gutenberg
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: c(person(given = "Myfanwy", family = "Johnston", role = c("aut", "cre"), 
     email = "mrowlan1@gmail.com"),
     person(given = "David", family = "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cph")))
 Description: Download and process public domain works in the Project
-    Gutenberg collection <http://www.gutenberg.org/>. Includes metadata for
+    Gutenberg collection <https://www.gutenberg.org/>. Includes metadata for
     all Project Gutenberg works, so that they can be searched and retrieved.
 License: GPL-2
 LazyData: TRUE
