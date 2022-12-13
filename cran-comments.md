@@ -20,14 +20,19 @@ Miscellaneous:
 ## Test environments
 
 * local OS X install, R 4.2.1
-    2 NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
-* Ubuntu 22.04.1 LTS (release & development)
-    1 NOTE: installed package size
+    NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
+
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+    NOTEs: new submission, installed package size, examples with CPU (user + system) or elapsed time > 5s
+
+* Fedora Linux, R-devel, clang, gfortran
+    NOTEs: new submission, installed package size, examples with CPU (user + system) or elapsed time > 5s, Skipping checking HTML validation: no command 'tidy' found
+
 * Windows Server 2022, 10.0.20348
-    1 NOTE: installed package size
+    NOTE: installed package size
 
 ## R CMD check results
 
 0 errors | 0 warnings | 2 notes
 
-The only NOTEs are that this is a new submission after the last was archived, and that installed size is  5.0Mb. This due to the data requirements of the package; that said, we reduced the number of test files in this release and are developing options that would further reduce the size of the installed package in the next release.
+The NOTEs are: 1) new submission after the package was archived, and 2) installed size is  5.0Mb. This due to the data requirements of the package and the text files from Project Gutenberg for use in the examples; that said, we have reduced the number of files in this release and will strive to further reduce the size of the installed package in the next release.
