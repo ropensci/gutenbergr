@@ -23,7 +23,7 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/ropensci/gutenbergr.svg?branch=master)](https://travis-ci.org/ropensci/gutenbergr)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)
 [![Build status](https://ci.appveyor.com/api/projects/status/lqb7hngtj5epsmd1?svg=true)](https://ci.appveyor.com/project/ropensci/gutenbergr-dujv9)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://codecov.io/github/ropensci/gutenbergr?branch=master)
 [![rOpenSci peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
@@ -118,14 +118,14 @@ See the [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw) 
 
 Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_access.html) and complies to the best of our ability. Namely:
 
-* Project Gutenberg allows wget to harvest Project Gutenberg using [this list of links](http://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits that page once to find the recommended mirror for the user's location.
-* We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `http://www.gutenberg.lib.md.us/8/84/84.zip`.
+* Project Gutenberg allows wget to harvest Project Gutenberg using [this list of links](https://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits that page once to find the recommended mirror for the user's location.
+* We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `https://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We retrieve the .zip file rather than txt to minimize bandwidth on the mirror.
 
 Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/policy/robot_access.html) to use wget or set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic.
 
 ### Code of Conduct
 
-This project is released with a [Contributor Code of Conduct](https://github.com/ropensci/gutenbergr/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that the gutenbergr project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 [![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)

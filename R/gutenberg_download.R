@@ -232,7 +232,7 @@ gutenberg_strip <- function(text) {
 #'
 #' Get the recommended mirror for Gutenberg files by accessing
 #' the wget harvest path, which is
-#' \url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
+#' \url{https://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
 #' Also sets the global \code{gutenberg_mirror} options.
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg
@@ -253,10 +253,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   if (verbose) {
     message(
       "Determining mirror for Project Gutenberg from ",
-      "http://www.gutenberg.org/robot/harvest"
+      "https://www.gutenberg.org/robot/harvest"
     )
   }
-  wget_url <- "http://www.gutenberg.org/robot/harvest?filetypes[]=txt"
+  wget_url <- "https://www.gutenberg.org/robot/harvest?filetypes[]=txt"
   lines <- readr::read_lines(wget_url)
   a <- lines[stringr::str_detect(lines, stringr::fixed("<a href="))][1]
   mirror_full_url <- stringr::str_match(a, "href=\"(.*?)\"")[2]
@@ -265,10 +265,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- glue::glue("{parsed$scheme}://{parsed$domain}")
 
-  if (mirror == "http://www.gutenberg.lib.md.us") { # nocov start
+  if (mirror == "https://www.gutenberg.lib.md.us") { # nocov start
     # this mirror is broken (PG has been contacted)
     # for now, replace:
-    mirror <- "http://aleph.gutenberg.org"
+    mirror <- "https://aleph.gutenberg.org"
   } # nocov end
 
   if (verbose) {

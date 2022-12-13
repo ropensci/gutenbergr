@@ -10,7 +10,7 @@
 
 [![Build
 Status](https://travis-ci.org/ropensci/gutenbergr.svg?branch=master)](https://travis-ci.org/ropensci/gutenbergr)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/lqb7hngtj5epsmd1?svg=true)](https://ci.appveyor.com/project/ropensci/gutenbergr-dujv9)
 [![Coverage
@@ -219,12 +219,12 @@ to the best of our ability. Namely:
 
 - Project Gutenberg allows wget to harvest Project Gutenberg using [this
   list of
-  links](http://www.gutenberg.org/robot/harvest?filetypes%5B%5D=html).
+  links](https://www.gutenberg.org/robot/harvest?filetypes%5B%5D=html).
   The gutenbergr package visits that page once to find the recommended
   mirror for the user’s location.
 - We retrieve the book text directly from that mirror using links in the
   same format. For example, Frankenstein (book 84) is retrieved from
-  `http://www.gutenberg.lib.md.us/8/84/84.zip`.
+  `https://www.gutenberg.lib.md.us/8/84/84.zip`.
 - We retrieve the .zip file rather than txt to minimize bandwidth on the
   mirror.
 
@@ -237,8 +237,9 @@ a single work, or works for a particular author or topic.
 
 ### Code of Conduct
 
-This project is released with a [Contributor Code of
-Conduct](https://github.com/ropensci/gutenbergr/blob/master/CONDUCT.md).
-By participating in this project you agree to abide by its terms.
+Please note that the gutenbergr project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
