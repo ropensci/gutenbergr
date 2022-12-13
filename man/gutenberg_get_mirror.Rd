@@ -14,10 +14,7 @@ mirror that was chosen}
 A character vector of the url for mirror to be used
 }
 \description{
-Get the recommended mirror for Gutenberg files by accessing
-the wget harvest path, which is
-\url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
-Also sets the global \code{gutenberg_mirror} options.
+Get the recommended mirror for Gutenberg files and set the global \code{gutenberg_mirror} options.
 }
 \examples{
 gutenberg_get_mirror()

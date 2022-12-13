@@ -230,10 +230,7 @@ gutenberg_strip <- function(text) {
 
 #' Get the recommended mirror for Gutenberg files
 #'
-#' Get the recommended mirror for Gutenberg files by accessing
-#' the wget harvest path, which is
-#' \url{https://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
-#' Also sets the global \code{gutenberg_mirror} options.
+#' Get the recommended mirror for Gutenberg files and set the global \code{gutenberg_mirror} options.
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg
 #' mirror that was chosen
