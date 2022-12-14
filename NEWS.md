@@ -1,3 +1,7 @@
+# gutenbergr 0.2.3 (2022-12-13)
+
+* minor patches for broken urls to comply with CRAN checks.
+
 # gutenbergr 0.2.2 (2022-12-03)
 
 * Updated metadata (#32, #29)
