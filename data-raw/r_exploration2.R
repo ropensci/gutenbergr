@@ -9,18 +9,18 @@ dplyr::glimpse(gutenberg_authors)
 dplyr::glimpse(gutenberg_languages)
 dplyr::glimpse(gutenberg_subjects)
 
-# temp_zip <- tempfile(fileext = ".tar.bz2")
-# on.exit(unlink(temp_zip))
-# utils::download.file(
-#   url = "https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2",
-#   destfile = temp_zip,
-#   mode = "wb"
-# )
+temp_zip <- tempfile(fileext = ".tar.bz2")
+on.exit(unlink(temp_zip))
+utils::download.file(
+  url = "https://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2",
+  destfile = temp_zip,
+  mode = "wb"
+)
 temp_dir <- tempdir()
-# utils::untar(
-#   tarfile = temp_zip,
-#   exdir = temp_dir
-# )
+utils::untar(
+  tarfile = temp_zip,
+  exdir = temp_dir
+)
 cache_dir <- fs::path(temp_dir, "cache", "epub")
 rdf_paths <- fs::dir_ls(cache_dir, recurse = TRUE, glob = "*.rdf")
 
@@ -36,10 +36,10 @@ all_metadata <- purrr::map(
       xml2::xml_find_first(".//pgterms:ebook")
     # Parse author data. Some files have 0 authors, and some have > 1.
 
-    # authors_all <- xml2::xml_find_all(meta, ".//dcterms:creator/pgterms:agent")
+    authors_all <- xml2::xml_find_all(meta, ".//dcterms:creator/pgterms:agent")
 
     # Just get the first one to match the old file
-    author <- xml2::xml_find_first(meta, ".//dcterms:creator/pgterms:agent")
+    # author <- xml2::xml_find_first(meta, ".//dcterms:creator/pgterms:agent")
 
     parse_author <- function(author) {
       author <- xml2::as_list(author)
@@ -84,12 +84,12 @@ all_metadata <- purrr::map(
       )
     }
 
-    author_data <- parse_author(author)
+    # author_data <- parse_author(author)
 
-    # author_data <- purrr::map_dfr(
-    #   authors_all,
-    #   parse_author
-    # )
+    author_data <- purrr::map_dfr(
+      authors_all,
+      parse_author
+    )
 
     return(
       list(

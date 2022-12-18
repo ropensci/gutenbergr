@@ -1,7 +1,7 @@
 Package: gutenbergr
 Type: Package
 Title: Download and Process Public Domain Works from Project Gutenberg
-Version: 0.2.3
+Version: 0.2.3.9000
 Authors@R: c(person(given = "Myfanwy", family = "Johnston", role = c("aut", "cre"), 
     email = "mrowlan1@gmail.com"),
     person(given = "David", family = "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cph")))

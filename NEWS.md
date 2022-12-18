@@ -1,3 +1,7 @@
+# New Version
+
+* Update data scraping process to use R end-to-end (@jonthegeek, #36).
+
 # gutenbergr 0.2.3 (2022-12-13)
 
 * minor patches for broken urls to comply with CRAN checks.
