@@ -64,7 +64,7 @@ By default, returns
 }
 }
 \examples{
-
+\donttest{
 library(dplyr)
 
 gutenberg_works()
@@ -85,5 +85,5 @@ gutenberg_works(languages = c("en", "es"), all_languages = TRUE) \%>\%
 
 gutenberg_works(languages = c("en", "es"), only_languages = FALSE) \%>\%
   count(language, sort = TRUE)
-
+}
 }

@@ -18,7 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: David Robinson \email{admiral.david@gmail.com}
+\strong{Maintainer}: Myfanwy Johnston \email{mrowlan1@gmail.com}
+
+Authors:
+\itemize{
+  \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
+}
 
 }
 \keyword{internal}

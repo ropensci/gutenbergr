@@ -9,6 +9,9 @@ gutenberg_strip(text)
 \arguments{
 \item{text}{A character vector with lines of a book}
 }
+\value{
+A character vector with Project Gutenberg headers and footers removed
+}
 \description{
 Strip header and footer content from a Project Gutenberg book. This
 is based on some formatting guesses so it may not be perfect. It
@@ -16,7 +19,7 @@ will also not strip tables of contents, prologues, or other text
 that appears at the start of a book.
 }
 \examples{
-
+\donttest{
 library(dplyr)
 book <- gutenberg_works(title == "Pride and Prejudice") \%>\%
   gutenberg_download(strip = FALSE)
@@ -28,5 +31,6 @@ text_stripped <- gutenberg_strip(book$text)
 
 head(text_stripped, 10)
 tail(text_stripped, 10)
+}
 
 }

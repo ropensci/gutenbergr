@@ -1,6 +1,6 @@
 ---
 title: "gutenbergr: Search and download public domain texts from Project Gutenberg"
-author: "David Robinson"
+author: "David Robinson, Myfanwy Johnston"
 data: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -38,12 +38,12 @@ library(dplyr)
 gutenberg_metadata
 ```
 
-For example, you could find the Gutenberg ID of Wuthering Heights by doing:
+For example, you could find the Gutenberg ID(s) of Jane Austen's _Persuasion_ by doing:
 
 ```{r filter}
 
 gutenberg_metadata %>%
-  filter(title == "Wuthering Heights")
+  filter(title == "Persuasion")
 ```
 
 In many analyses, you may want to filter just for English works, avoid duplicates, and include only books that have text that can be downloaded. The `gutenberg_works()` function does this pre-filtering:
@@ -67,41 +67,41 @@ The meta-data currently in the package was last updated on **`r format(attr(gute
 
 ### Downloading books by ID
 
-The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that "Wuthering Heights" has ID 768 (see [the URL here](https://www.gutenberg.org/ebooks/768)), so `gutenberg_download(768)` downloads this text.
+The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that one version of _Persuasion_ has ID 105 (see [the URL here](https://www.gutenberg.org/ebooks/105)), so `gutenberg_download(105)` downloads this text.
 
-```{r load 1 file}
-f768 <- system.file("extdata", "768.zip", package = "gutenbergr")
-wuthering_heights <- gutenberg_download(768,
-  files = f768,
+```{r load 1 file, echo=FALSE}
+f105 <- system.file("extdata", "105.zip", package = "gutenbergr")
+persuasion <- gutenberg_download(105,
+  files = f105,
   mirror = "http://aleph.gutenberg.org"
 )
 ```
 
 
 ```{r load 1 from web, eval = FALSE}
-wuthering_heights <- gutenberg_download(768)
+persuasion <- gutenberg_download(105)
 ```
 
-```{r display wuthering}
-wuthering_heights
+```{r display persuasion}
+persuasion
 ```
 
-Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line. Notice that the header and footer added by Project Gutenberg (visible [here](http://www.gutenberg.org/files/768/768.txt)) have been stripped away.
+Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line.
 
-Provide a vector of IDs to download multiple books. For example, to download Jane Eyre (book [1260](https://www.gutenberg.org/ebooks/1260)) along with Wuthering Heights, do:
+You can also provide `gutenberg_download()` a vector of IDs to download multiple books. For example, to download _Renascence, and Other Poems_ (book [109](https://www.gutenberg.org/ebooks/109)) along with _Persuasion_, do:
 
-```{r load 2 from file}
-f1260 <- system.file("extdata", "1260.zip", package = "gutenbergr")
-books <- gutenberg_download(c(768, 1260),
+```{r load 2 from file, echo=FALSE}
+f109 <- system.file("extdata", "109.zip", package = "gutenbergr")
+books <- gutenberg_download(c(109, 105),
   meta_fields = "title",
-  files = c(f768, f1260),
+  files = c(f109, f105),
   mirror = "http://aleph.gutenberg.org"
 )
 ```
 
 
 ```{r load 2 from web, eval = FALSE}
-books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+books <- gutenberg_download(c(109, 105), meta_fields = "title")
 ```
 
 ```{r display books}

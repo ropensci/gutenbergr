@@ -40,7 +40,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #'
 #' # download The Count of Monte Cristo
@@ -163,8 +163,12 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' will also not strip tables of contents, prologues, or other text
 #' that appears at the start of a book.
 #'
-#' @examples
+#' @param text A character vector with lines of a book
 #'
+#' @return A character vector with Project Gutenberg headers and footers removed
+#'
+#' @examples
+#'\donttest{
 #' library(dplyr)
 #' book <- gutenberg_works(title == "Pride and Prejudice") %>%
 #'   gutenberg_download(strip = FALSE)
@@ -176,8 +180,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #'
 #' head(text_stripped, 10)
 #' tail(text_stripped, 10)
-#'
-#' @param text A character vector with lines of a book
+#'}
 #'
 #' @export
 gutenberg_strip <- function(text) {
@@ -227,13 +230,14 @@ gutenberg_strip <- function(text) {
 
 #' Get the recommended mirror for Gutenberg files
 #'
-#' Get the recommended mirror for Gutenberg files by accessing
-#' the wget harvest path, which is
-#' \url{http://www.gutenberg.org/robot/harvest?filetypes[]=txt}.
-#' Also sets the global \code{gutenberg_mirror} options.
+#' Get the recommended mirror for Gutenberg files and set the global \code{gutenberg_mirror} options.
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg
 #' mirror that was chosen
+#'
+#' @return A character vector of the url for mirror to be used
+#' @examples
+#' gutenberg_get_mirror()
 #'
 #' @export
 gutenberg_get_mirror <- function(verbose = TRUE) {
@@ -246,10 +250,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   if (verbose) {
     message(
       "Determining mirror for Project Gutenberg from ",
-      "http://www.gutenberg.org/robot/harvest"
+      "https://www.gutenberg.org/robot/harvest"
     )
   }
-  wget_url <- "http://www.gutenberg.org/robot/harvest?filetypes[]=txt"
+  wget_url <- "https://www.gutenberg.org/robot/harvest?filetypes[]=txt"
   lines <- readr::read_lines(wget_url)
   a <- lines[stringr::str_detect(lines, stringr::fixed("<a href="))][1]
   mirror_full_url <- stringr::str_match(a, "href=\"(.*?)\"")[2]
@@ -258,10 +262,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- glue::glue("{parsed$scheme}://{parsed$domain}")
 
-  if (mirror == "http://www.gutenberg.lib.md.us") { # nocov start
+  if (mirror == "https://www.gutenberg.lib.md.us") { # nocov start
     # this mirror is broken (PG has been contacted)
     # for now, replace:
-    mirror <- "http://aleph.gutenberg.org"
+    mirror <- "https://aleph.gutenberg.org"
   } # nocov end
 
   if (verbose) {

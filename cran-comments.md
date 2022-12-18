@@ -1,30 +1,38 @@
-# gutenbergr 0.2.0
+# gutenbergr 0.2.3
 
-This is a re-submission after gutenbergr 0.1.5 was archived, which complies with the CRAN policies. My sincere apologies for not fixing the issue sooner, and I hope it can be returned to CRAN.
+This release is a re-submission and maintainer change after gutenbergr 0.2.1 was archived.
 
 ## Changes
 
 Major changes:
 
-* Fixed to comply with CRAN policies for API packages. Tests that do connect to Project Gutenberg are skipped on CRAN, and are supplemented with tests that mock the connection.
+* New package maintainer: Myfanwy Johnston <mrowlan1@gmail.com>
 
 Minor changes:
 
-* Added gutenberg_languages dataset with one-row-per-language-per-work, which substantially speeds up gutenberg_works.
+* Updated package metadata.
 
 Miscellaneous:
 
-* Made changes to work with dplyr 1.0.0, removing filter_ and distinct_.
-* Fixed links to https
+* Documentation updates and fixes throughout (updated to latest version of roxygen2, resolved missing return value and examples, removed/updated broken urls)
+* On advice to minimize server time in test environments, some gutenberg_download() and gutenberg_works() examples are now wrapped in donttest{}.
 
 ## Test environments
 
-* local OS X install, R 4.0.2
-* Ubuntu 16.04.6 LTS (on travis-ci)
-* win-builder (devel and release)
+* local OS X install, R 4.2.1
+    NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
+
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+    NOTEs: new submission, installed package size, examples with CPU (user + system) or elapsed time > 5s
+
+* Fedora Linux, R-devel, clang, gfortran
+    NOTEs: new submission, installed package size, examples with CPU (user + system) or elapsed time > 5s, Skipping checking HTML validation: no command 'tidy' found
+
+* Windows Server 2022, 10.0.20348
+    NOTE: marked UTF-8 strings; see above
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
+0 errors | 0 warnings | 2 notes
 
-The only NOTE is that this is a new submission after the last was archived.
+The NOTEs are: 1) new submission after the package was archived, and 2) installed size is  5.0Mb. This due to the data requirements of the package and the text files from Project Gutenberg for use in the examples. We reduced the number of files in this release and will strive to further reduce the size of the installed package in the next release.
