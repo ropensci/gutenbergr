@@ -7,14 +7,15 @@
 gutenberg_get_mirror(verbose = TRUE)
 }
 \arguments{
-\item{verbose}{Whether to show messages about the Project Gutenberg
-mirror that was chosen}
+\item{verbose}{Whether to show messages about the Project Gutenberg mirror
+that was chosen}
 }
 \value{
 A character vector of the url for mirror to be used
 }
 \description{
-Get the recommended mirror for Gutenberg files and set the global \code{gutenberg_mirror} options.
+Get the recommended mirror for Gutenberg files and set the global
+\code{gutenberg_mirror} options.
 }
 \examples{
 gutenberg_get_mirror()

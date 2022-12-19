@@ -15,7 +15,7 @@ author, with the columns
   \item{birthdate}{Year of birth}
   \item{deathdate}{Year of death}
   \item{wikipedia}{Link to Wikipedia article on the author. If there
-  are multiple, they are "/"-delimited}
+  are multiple, they are "|"-delimited}
   \item{aliases}{Character vector of aliases. If there
   are multiple, they are "/"-delimited}
 }
