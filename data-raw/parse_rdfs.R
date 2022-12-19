@@ -3,7 +3,6 @@ library(dplyr)
 library(gutenbergr)
 library(here)
 library(purrr)
-library(rlang)
 library(stringr)
 library(tibble)
 library(xml2)
@@ -40,6 +39,16 @@ gutenberg_authors <- new_gutenberg_authors
 gutenberg_subjects <- new_gutenberg_subjects
 gutenberg_languages <- new_gutenberg_languages
 gutenberg_metadata <- new_gutenberg_metadata
+
+# The old updated date was just a fancy way to get the timestamp of when it was
+# downloaded. Since we're doing this on the scale of months not seconds, using
+# the time right now makes sense.
+updated <- lubridate::date(lubridate::now(tzone = "UTC"))
+
+attr(gutenberg_authors, "date_updated") <- updated
+attr(gutenberg_languages, "date_updated") <- updated
+attr(gutenberg_metadata, "date_updated") <- updated
+attr(gutenberg_subjects, "date_updated") <- updated
 
 usethis::use_data(gutenberg_authors, overwrite = TRUE, compress = "xz")
 usethis::use_data(gutenberg_languages, overwrite = TRUE, compress = "bzip2")

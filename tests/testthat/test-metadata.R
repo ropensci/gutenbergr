@@ -56,12 +56,14 @@ test_that("gutenberg_works gives error messages with named arguments", {
 })
 
 
-test_that("All three datasets have a date-updated", {
+test_that("All four datasets have a date-updated", {
   d1 <- attr(gutenberg_metadata, "date_updated")
   d2 <- attr(gutenberg_subjects, "date_updated")
   d3 <- attr(gutenberg_authors, "date_updated")
+  d4 <- attr(gutenberg_languages, "date_updated")
 
   expect_is(d1, "Date")
   expect_is(d2, "Date")
   expect_is(d3, "Date")
+  expect_is(d4, "Date")
 })
