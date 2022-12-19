@@ -17,17 +17,17 @@ all_metadata <- purrr::map(
   parse_all_metadata
 )
 
-new_gutenberg_authors <- purrr::map_dfr(all_metadata, ~.x$authors) |>
+new_gutenberg_authors <- purrr::map_dfr(all_metadata, ~ .x$authors) |>
   dplyr::distinct(gutenberg_author_id, .keep_all = TRUE) |>
   dplyr::arrange(gutenberg_author_id)
 
-new_gutenberg_languages <- purrr::map_dfr(all_metadata, ~.x$languages) |>
+new_gutenberg_languages <- purrr::map_dfr(all_metadata, ~ .x$languages) |>
   dplyr::arrange(gutenberg_id, language)
 
-new_gutenberg_metadata <- purrr::map_dfr(all_metadata, ~.x$metadata) |>
+new_gutenberg_metadata <- purrr::map_dfr(all_metadata, ~ .x$metadata) |>
   dplyr::arrange(gutenberg_id, gutenberg_author_id)
 
-new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~.x$subjects) |>
+new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~ .x$subjects) |>
   dplyr::arrange(gutenberg_id)
 
 waldo::compare(nrow(gutenberg_authors), nrow(new_gutenberg_authors))
