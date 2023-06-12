@@ -168,7 +168,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #' @return A character vector with Project Gutenberg headers and footers removed
 #'
 #' @examples
-#'\donttest{
+#' \donttest{
 #' library(dplyr)
 #' book <- gutenberg_works(title == "Pride and Prejudice") %>%
 #'   gutenberg_download(strip = FALSE)
@@ -180,7 +180,7 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
 #'
 #' head(text_stripped, 10)
 #' tail(text_stripped, 10)
-#'}
+#' }
 #'
 #' @export
 gutenberg_strip <- function(text) {
@@ -230,10 +230,11 @@ gutenberg_strip <- function(text) {
 
 #' Get the recommended mirror for Gutenberg files
 #'
-#' Get the recommended mirror for Gutenberg files and set the global \code{gutenberg_mirror} options.
+#' Get the recommended mirror for Gutenberg files and set the global
+#' \code{gutenberg_mirror} options.
 #'
-#' @param verbose Whether to show messages about the Project Gutenberg
-#' mirror that was chosen
+#' @param verbose Whether to show messages about the Project Gutenberg mirror
+#'   that was chosen
 #'
 #' @return A character vector of the url for mirror to be used
 #' @examples
