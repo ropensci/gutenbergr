@@ -39,8 +39,8 @@
 #'   \item{text}{A character vector}
 #' }
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
+#'
 #' library(dplyr)
 #'
 #' # download The Count of Monte Cristo
@@ -58,7 +58,7 @@
 #' austen
 #' austen %>%
 #'   count(title)
-#' }
+#'
 #'
 #' @export
 gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
