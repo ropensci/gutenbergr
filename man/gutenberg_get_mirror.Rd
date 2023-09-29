@@ -18,6 +18,8 @@ Get the recommended mirror for Gutenberg files and set the global
 \code{gutenberg_mirror} options.
 }
 \examples{
-gutenberg_get_mirror()
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
+gutenberg_get_mirror()
+\dontshow{\}) # examplesIf}
 }

@@ -1,4 +1,5 @@
 test_that("Can parse local files", {
+  skip_on_cran()
   mock_files <- system.file("extdata",
     c("109.zip", "105.zip"),
     package = "gutenbergr"
