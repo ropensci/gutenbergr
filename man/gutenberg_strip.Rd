@@ -19,7 +19,8 @@ will also not strip tables of contents, prologues, or other text
 that appears at the start of a book.
 }
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 library(dplyr)
 book <- gutenberg_works(title == "Pride and Prejudice") \%>\%
   gutenberg_download(strip = FALSE)
@@ -31,6 +32,6 @@ text_stripped <- gutenberg_strip(book$text)
 
 head(text_stripped, 10)
 tail(text_stripped, 10)
-}
 
+\dontshow{\}) # examplesIf}
 }
