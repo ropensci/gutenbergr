@@ -4,17 +4,17 @@
 ## gutenbergr: R package to search and download public domain texts from Project Gutenberg
 
 **Authors:** [David Robinson](http://varianceexplained.org/)<br/>
-**License:** [GPL-2](https://opensource.org/licenses/GPL-2.0)
+**License:** [GPL-2](https://opensource.org/license/gpl-2-0/)
 
 <!-- badges: start -->
 
 [![Build
-Status](https://travis-ci.org/ropensci/gutenbergr.svg?branch=master)](https://travis-ci.org/ropensci/gutenbergr)
+Status](https://app.travis-ci.com/ropensci/gutenbergr.svg?branch=master)](https://app.travis-ci.com/ropensci/gutenbergr)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/lqb7hngtj5epsmd1?svg=true)](https://ci.appveyor.com/project/ropensci/gutenbergr-dujv9)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://codecov.io/github/ropensci/gutenbergr?branch=master)
+Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=master)
 [![rOpenSci
 peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
 [![Project Status: Active – The project has reached a stable, usable
@@ -106,7 +106,7 @@ wuthering_heights
 #>  8          768 "CHAPTER I"        
 #>  9          768 ""                 
 #> 10          768 ""                 
-#> # … with 12,332 more rows
+#> # ℹ 12,332 more rows
 ```
 
 `gutenberg_download` can download multiple books when given multiple
@@ -130,7 +130,7 @@ books
 #>  8          768 "CHAPTER I"         Wuthering Heights
 #>  9          768 ""                  Wuthering Heights
 #> 10          768 ""                  Wuthering Heights
-#> # … with 33,333 more rows
+#> # ℹ 33,333 more rows
 
 books %>%
   count(title)
@@ -150,7 +150,7 @@ aristotle_books <- gutenberg_works(author == "Aristotle") %>%
   gutenberg_download(meta_fields = "title")
 
 aristotle_books
-#> # A tibble: 43,801 × 3
+#> # A tibble: 17,147 × 3
 #>    gutenberg_id text                                                                    
 #>           <int> <chr>                                                                   
 #>  1         1974 "THE POETICS OF ARISTOTLE"                                              
@@ -175,7 +175,7 @@ aristotle_books
 #>  8 The Poetics of Aristotle
 #>  9 The Poetics of Aristotle
 #> 10 The Poetics of Aristotle
-#> # … with 43,791 more rows
+#> # ℹ 17,137 more rows
 ```
 
 ### FAQ
@@ -208,8 +208,8 @@ See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for the scripts that generate these datasets. As of now, these
 were generated from [the Project Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **04
-November 2022**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **19
+December 2022**.
 
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
