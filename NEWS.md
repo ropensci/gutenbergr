@@ -1,3 +1,5 @@
+# gutenbergr 0.2.4
+
 # New Version
 
 * Update data scraping process to use R end-to-end (@jonthegeek, #36).
