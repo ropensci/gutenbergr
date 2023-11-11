@@ -20,6 +20,7 @@ peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/rope
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-CMD-check](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Download and process public domain works from the [Project

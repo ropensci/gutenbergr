@@ -1,4 +1,4 @@
-## gutenbergr 2.3.9100
+## gutenbergr 2.3.4
 
 This release is a re-submission after gutenbergr 2.3.0 was archived.
 
@@ -6,7 +6,7 @@ This release is a re-submission after gutenbergr 2.3.0 was archived.
 
 Minor changes:
 
-* Some examples in `gutenberg_download()` have been updated to `@examplesIf interactive()` to address graceful failure while preserving the interactive intent of the functions.
+* Some examples in `gutenberg_download()`, `gutenberg_works.R`, and `data.R` have been updated to `@examplesIf interactive()` and/or wrapped in `/donttest` to address graceful failure while preserving the interactive intent of the functions.
 * urls in the README have been updated where necessary
 
 ## R CMD check results
@@ -25,9 +25,9 @@ Minor changes:
 * Windows Server 2022 x64 (build 20348)
     NOTE: New submission
 
-Package was archived on CRAN
+New submission
 
-Version contains large components (0.2.3.9100)
+Package was archived on CRAN
 
 CRAN repository db overrides:
   X-CRAN-Comment: Archived on 2023-08-10 for policy violation.
