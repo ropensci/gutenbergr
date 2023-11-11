@@ -41,6 +41,7 @@ To find the date on which this metadata was last updated, run
   \code{attr(gutenberg_metadata, "date_updated")}.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 library(dplyr)
 library(stringr)
@@ -62,7 +63,7 @@ shakespeare_metadata <- gutenberg_metadata \%>\%
   ) \%>\%
   distinct(title)
 
-\dontrun{
+\donttest{
 shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 }
 
@@ -76,7 +77,7 @@ shakespeare_metadata2 <- gutenberg_works(
 
 # date last updated
 attr(gutenberg_metadata, "date_updated")
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{gutenberg_works}, \link{gutenberg_authors},

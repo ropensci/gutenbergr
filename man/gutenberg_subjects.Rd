@@ -33,6 +33,7 @@ To find the date on which this metadata was last updated,
 run \code{attr(gutenberg_subjects, "date_updated")}.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 library(dplyr)
 library(stringr)
@@ -52,7 +53,7 @@ sherlock_holmes_metadata <- gutenberg_works() \%>\%
 
 sherlock_holmes_metadata
 
-\dontrun{
+\donttest{
 holmes_books <- gutenberg_download(sherlock_holmes_metadata$gutenberg_id)
 
 holmes_books
@@ -60,7 +61,7 @@ holmes_books
 
 # date last updated
 attr(gutenberg_subjects, "date_updated")
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{gutenberg_metadata}, \link{gutenberg_authors}

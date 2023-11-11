@@ -30,7 +30,7 @@
 #'   \code{\link{gutenberg_download}}}
 #' }
 #'
-#' @examples
+#' @examplesIf interactive()
 #'
 #' library(dplyr)
 #' library(stringr)
@@ -52,7 +52,7 @@
 #'   ) %>%
 #'   distinct(title)
 #'
-#' \dontrun{
+#' \donttest{
 #' shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
 #' }
 #'
@@ -96,7 +96,7 @@
 #' To find the date on which this metadata was last updated,
 #' run \code{attr(gutenberg_subjects, "date_updated")}.
 #'
-#' @examples
+#' @examplesIf interactive()
 #'
 #' library(dplyr)
 #' library(stringr)
@@ -116,7 +116,7 @@
 #'
 #' sherlock_holmes_metadata
 #'
-#' \dontrun{
+#' \donttest{
 #' holmes_books <- gutenberg_download(sherlock_holmes_metadata$gutenberg_id)
 #'
 #' holmes_books

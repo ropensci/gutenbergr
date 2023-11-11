@@ -64,6 +64,7 @@ By default, returns
 }
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(dplyr)
 
@@ -86,4 +87,5 @@ gutenberg_works(languages = c("en", "es"), all_languages = TRUE) \%>\%
 gutenberg_works(languages = c("en", "es"), only_languages = FALSE) \%>\%
   count(language, sort = TRUE)
 }
+\dontshow{\}) # examplesIf}
 }

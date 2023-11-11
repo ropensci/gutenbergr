@@ -39,7 +39,7 @@
 #'   \item{At most one distinct field for each title/author pair}
 #' }
 #'
-#' @examples
+#' @examplesIf interactive()
 #' \donttest{
 #' library(dplyr)
 #'
