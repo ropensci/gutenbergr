@@ -39,4 +39,5 @@ VignetteBuilder:
 Encoding: UTF-8
 Language: en-US
 LazyData: TRUE
+LazyDataCompression: xz
 RoxygenNote: 7.2.3
