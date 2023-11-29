@@ -29,6 +29,7 @@ new_gutenberg_authors <- purrr::map(all_metadata, ~ .x$authors) |>
 
 new_gutenberg_languages <- purrr::map(all_metadata, ~ .x$languages) |>
   purrr::list_rbind() |>
+  dplyr::distinct() |>
   dplyr::arrange(gutenberg_id, language)
 
 new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
@@ -36,6 +37,7 @@ new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
   dplyr::arrange(gutenberg_id, gutenberg_author_id)
 
 new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~ .x$subjects) |>
+  dplyr::distinct() |>
   dplyr::arrange(gutenberg_id)
 
 # waldo::compare(nrow(gutenberg_authors), nrow(new_gutenberg_authors))
