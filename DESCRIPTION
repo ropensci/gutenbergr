@@ -29,7 +29,6 @@ Imports:
     urltools
 Suggests: 
     curl,
-    ggplot2,
     knitr,
     rmarkdown,
     testthat,
