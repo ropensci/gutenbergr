@@ -13,7 +13,7 @@ download_raw_data <- function() {
     tarfile = temp_zip,
     exdir = temp_dir
   )
-  return(fs::path(temp_dir, "cache", "epub"))
+  return(fs::path(temp_dir, "cache"))
 }
 
 parse_all_metadata <- function(file) {
@@ -27,10 +27,8 @@ parse_all_metadata <- function(file) {
 
   # Parse author data. Some files have 0 authors, and some have > 1.
   authors_all <- xml2::xml_find_all(meta, ".//dcterms:creator/pgterms:agent")
-  author_data <- purrr::map_dfr(
-    authors_all,
-    parse_author
-  )
+  author_data <- purrr::map(authors_all, parse_author) |>
+    purrr::list_rbind()
 
   # Languages are relatively simple.
   languages <- meta |>
@@ -46,16 +44,15 @@ parse_all_metadata <- function(file) {
     meta,
     ".//dcterms:subject/rdf:Description"
   )
-  subject_data <- tibble::tibble(
-    subject_type = character(0),
-    subject = character(0)
+
+  subjects_minimum <- list(
+    tibble::tibble(subject_type = character(0), subject = character(0))
+  )
+  subject_data <- c(
+    subjects_minimum,
+    purrr::map(subjects_all, parse_subject)
   ) |>
-    dplyr::bind_rows(
-      purrr::map_dfr(
-        subjects_all,
-        parse_subject
-      )
-    ) |>
+    purrr::list_rbind() |>
     dplyr::mutate(
       gutenberg_id = gutenberg_id,
       .before = subject_type
@@ -70,20 +67,16 @@ parse_all_metadata <- function(file) {
     xml2::xml_text(trim = TRUE) |>
     paste(collapse = "/")
 
-  formats <- xml2::xml_find_all(
+  has_text <- xml2::xml_find_all(
     meta, ".//pgterms:file"
   ) |>
-    xml2::xml_attr("about")
-  txt_filename <- paste0("/", gutenberg_id, ".txt")
+    xml2::xml_attr("about") |>
+    stringr::str_detect("txt") |>
+    any()
 
   rights <- xml2::xml_find_first(meta, "dcterms:rights") |>
     xml2::xml_text()
 
-  has_text <- any(
-    stringr::str_detect(formats, stringr::fixed(txt_filename))
-  )
-
-  # Prep authors for the full metadata.
   if (nrow(author_data)) {
     metadata <- tibble::tibble(
       gutenberg_id = gutenberg_id,
@@ -137,9 +130,7 @@ parse_author <- function(author) {
     xml2::xml_text() |>
     as.integer()
 
-  # There can be more than one wikipedia URL. We used to "/" delimit them, but
-  # that makes it very difficult to separate them back out. I'm using "|"
-  # instead, and updating the documentation.
+  # There can be more than one wikipedia URL.
   wikipedia <- author |>
     xml2::xml_find_all("pgterms:webpage") |>
     xml2::xml_attr("resource") |>

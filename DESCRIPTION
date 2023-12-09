@@ -1,20 +1,22 @@
 Package: gutenbergr
-Type: Package
 Title: Download and Process Public Domain Works from Project Gutenberg
 Version: 0.2.4.9000
-Authors@R: c(person(given = "Myfanwy", family = "Johnston", role = c("aut", "cre"), 
-    email = "mrowlan1@gmail.com"),
-    person(given = "David", family = "Robinson", email = "admiral.david@gmail.com", role = c("aut", "cph")))
+Authors@R: c(
+    person("Harmon", "Jon", , "jonthegeek@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-4781-4346")),
+    person("Myfanwy", "Johnston", , "mrowlan1@gmail.com", role = "aut"),
+    person("David", "Robinson", , "admiral.david@gmail.com", role = c("aut", "cph"))
+  )
 Description: Download and process public domain works in the Project
-    Gutenberg collection <https://www.gutenberg.org/>. Includes metadata for
-    all Project Gutenberg works, so that they can be searched and retrieved.
+    Gutenberg collection <https://www.gutenberg.org/>. Includes metadata
+    for all Project Gutenberg works, so that they can be searched and
+    retrieved.
 License: GPL-2
-LazyData: TRUE
-Maintainer: Myfanwy Johnston <mrowlan1@gmail.com>
-URL: https://docs.ropensci.org/gutenbergr/, https://github.com/ropensci/gutenbergr
+URL: https://docs.ropensci.org/gutenbergr/,
+    https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
-VignetteBuilder: knitr
-Depends: R (>= 2.10)
+Depends: 
+    R (>= 2.10)
 Imports:
     cli,
     dplyr,
@@ -25,14 +27,17 @@ Imports:
     readr,
     stringr,
     urltools
-RoxygenNote: 7.2.3
-Encoding: UTF-8
 Suggests: 
     curl,
-    ggplot2,
     knitr,
     rmarkdown,
     testthat,
     tidyr,
     tidytext
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
 Language: en-US
+LazyData: TRUE
+LazyDataCompression: xz
+RoxygenNote: 7.2.3

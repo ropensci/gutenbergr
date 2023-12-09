@@ -9,6 +9,11 @@ library(xml2)
 
 source(here::here("data-raw", "parsers.R"))
 
+# Grab the timestamp when we *started* this process. Don't update again until
+# the source data is after this timestamp. Note that we don't actually *use*
+# this timestamp yet, other than to inform users.
+updated <- lubridate::date(lubridate::now(tzone = "UTC"))
+
 cache_dir <- download_raw_data()
 rdf_paths <- unname(fs::dir_ls(cache_dir, recurse = TRUE, glob = "*.rdf"))
 
@@ -17,33 +22,40 @@ all_metadata <- purrr::map(
   parse_all_metadata
 )
 
-new_gutenberg_authors <- purrr::map_dfr(all_metadata, ~ .x$authors) |>
+new_gutenberg_authors <- purrr::map(all_metadata, ~ .x$authors) |>
+  purrr::list_rbind() |>
   dplyr::distinct(gutenberg_author_id, .keep_all = TRUE) |>
   dplyr::arrange(gutenberg_author_id)
 
-new_gutenberg_languages <- purrr::map_dfr(all_metadata, ~ .x$languages) |>
+new_gutenberg_languages <- purrr::map(all_metadata, ~ .x$languages) |>
+  purrr::list_rbind() |>
+  dplyr::distinct() |>
   dplyr::arrange(gutenberg_id, language)
 
-new_gutenberg_metadata <- purrr::map_dfr(all_metadata, ~ .x$metadata) |>
+new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
+  purrr::list_rbind() |>
   dplyr::arrange(gutenberg_id, gutenberg_author_id)
 
 new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~ .x$subjects) |>
+  dplyr::distinct() |>
   dplyr::arrange(gutenberg_id)
 
-waldo::compare(nrow(gutenberg_authors), nrow(new_gutenberg_authors))
-waldo::compare(nrow(gutenberg_subjects), nrow(new_gutenberg_subjects))
-waldo::compare(nrow(gutenberg_languages), nrow(new_gutenberg_languages))
-waldo::compare(nrow(gutenberg_metadata), nrow(new_gutenberg_metadata))
+# waldo::compare(nrow(gutenberg_authors), nrow(new_gutenberg_authors))
+# waldo::compare(nrow(gutenberg_subjects), nrow(new_gutenberg_subjects))
+# waldo::compare(nrow(gutenberg_languages), nrow(new_gutenberg_languages))
+# waldo::compare(nrow(gutenberg_metadata), nrow(new_gutenberg_metadata))
+# dplyr::distinct(new_gutenberg_metadata, gutenberg_id, has_text) |>
+#   dplyr::left_join(
+#     dplyr::distinct(gutenberg_metadata, gutenberg_id, has_text),
+#     by = "gutenberg_id"
+#   ) |>
+#   dplyr::filter(has_text.x != has_text.y) |>
+#   dplyr::filter(!has_text.x)
 
 gutenberg_authors <- new_gutenberg_authors
 gutenberg_subjects <- new_gutenberg_subjects
 gutenberg_languages <- new_gutenberg_languages
 gutenberg_metadata <- new_gutenberg_metadata
-
-# The old updated date was just a fancy way to get the timestamp of when it was
-# downloaded. Since we're doing this on the scale of months not seconds, using
-# the time right now makes sense.
-updated <- lubridate::date(lubridate::now(tzone = "UTC"))
 
 attr(gutenberg_authors, "date_updated") <- updated
 attr(gutenberg_languages, "date_updated") <- updated
@@ -69,9 +81,9 @@ rm(
   new_gutenberg_subjects,
   cache_dir,
   rdf_paths,
-  temp_dir,
   download_raw_data,
   parse_all_metadata,
   parse_author,
-  parse_subject
+  parse_subject,
+  updated
 )

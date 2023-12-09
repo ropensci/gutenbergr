@@ -1,5 +1,3 @@
-library(stringr)
-
 test_that("gutenberg_works does appropriate filtering by default", {
   w <- gutenberg_works()
 
@@ -25,7 +23,7 @@ test_that("gutenberg_works does appropriate filtering by language", {
 
   w_de_not_only <- gutenberg_works(languages = "de", only_languages = FALSE)
   expect_false(all(w_de_not_only$language == "de"))
-  expect_true(all(str_detect(w_de_not_only$language, "de")))
+  expect_true(all(stringr::str_detect(w_de_not_only$language, "de")))
 
   w_en_fr_all <- gutenberg_works(
     languages = c("en", "fr"),

@@ -18,10 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Myfanwy Johnston \email{mrowlan1@gmail.com}
+\strong{Maintainer}: Harmon Jon \email{jonthegeek@gmail.com} (\href{https://orcid.org/0000-0003-4781-4346}{ORCID})
 
 Authors:
 \itemize{
+  \item Myfanwy Johnston \email{mrowlan1@gmail.com}
   \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 
