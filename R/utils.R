@@ -16,6 +16,24 @@ read_zip_url <- function(url) {
 }
 
 
+#' Read a file from a .txt URL
+#'
+#' Download, read, and delete a .txt file
+#'
+#' @param url URL to a txt file
+read_txt_url <- function(url) {
+  f <- function(tmp) {
+    utils::download.file(url, tmp, quiet = TRUE)
+    readr::read_lines(tmp)
+  }
+  tmp <- tempfile(fileext = "txt")
+  ret <- suppressWarnings(purrr::possibly(f, NULL)(tmp))
+  unlink(tmp)
+
+  ret
+}
+
+
 #' Discard all values at the start of .x while .p is true
 #'
 #' @param .x Vector
