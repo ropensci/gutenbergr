@@ -1,14 +1,15 @@
-#' Read a file from a .zip URL
+#' Read a file from a URL
 #'
-#' Download, read, and delete a .zip file
+#' Download, read, and delete file
 #'
-#' @param url URL to a .zip file
-read_zip_url <- function(url) {
+#' @param url URL to a file
+#' @param ext Extension of the file to read
+read_url <- function(url, ext = c(".zip", ".txt")) {
   f <- function(tmp) {
     utils::download.file(url, tmp, quiet = TRUE)
     readr::read_lines(tmp)
   }
-  tmp <- tempfile(fileext = ".zip")
+  tmp <- tempfile(fileext = ext)
   ret <- suppressWarnings(purrr::possibly(f, NULL)(tmp))
   unlink(tmp)
 
@@ -16,21 +17,19 @@ read_zip_url <- function(url) {
 }
 
 
-#' Read a file from a .txt URL
+#' Loop through potential file URLs
 #'
-#' Download, read, and delete a .txt file
-#'
-#' @param url URL to a txt file
-read_txt_url <- function(url) {
-  f <- function(tmp) {
-    utils::download.file(url, tmp, quiet = TRUE)
-    readr::read_lines(tmp)
+#' @param url URL to a file
+#' @param ext Extension of the file to read
+cycle_through_urls <- function(url, ext = c(".zip", ".txt")) {
+  for (suffix in c("-8", "-0")) {
+    new_url <- glue::glue("{url}{suffix}.zip")
+    ret <- read_url(new_url, ".zip")
+    if (!is.null(ret)) {
+      return(ret)
+    }
   }
-  tmp <- tempfile(fileext = "txt")
-  ret <- suppressWarnings(purrr::possibly(f, NULL)(tmp))
-  unlink(tmp)
-
-  ret
+  NULL
 }
 
 
