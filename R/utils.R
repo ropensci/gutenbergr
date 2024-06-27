@@ -6,10 +6,8 @@
 #' @param ext Extension of the file to read
 read_url <- function(url, ext = c(".zip", ".txt")) {
   f <- function(tmp) {
-    if (.Platform$OS.type == "windows" && ext == ".txt") {
-      return(readr::read_lines(url))
-    }
-    utils::download.file(url, tmp, quiet = TRUE)
+    mode <- dplyr::if_else(.Platform$OS.type == "windows", "wb", "w")
+    utils::download.file(url, tmp, mode = mode, quiet = TRUE)
     readr::read_lines(tmp)
   }
   tmp <- tempfile(fileext = ext)
