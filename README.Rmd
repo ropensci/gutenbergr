@@ -22,10 +22,8 @@ gutenbergr: R package to search and download public domain texts from Project Gu
 **License:** [GPL-2](https://opensource.org/license/gpl-2-0/)
 
 <!-- badges: start -->
-[![Build Status](https://app.travis-ci.com/ropensci/gutenbergr.svg?branch=master)](https://app.travis-ci.com/ropensci/gutenbergr)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)]( https://CRAN.R-project.org/package=gutenbergr)
-[![Build status](https://ci.appveyor.com/api/projects/status/lqb7hngtj5epsmd1?svg=true)](https://ci.appveyor.com/project/ropensci/gutenbergr-dujv9)
-[![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/main.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=main)
 [![rOpenSci peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml)

@@ -8,13 +8,9 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://app.travis-ci.com/ropensci/gutenbergr.svg?branch=master)](https://app.travis-ci.com/ropensci/gutenbergr)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/lqb7hngtj5epsmd1?svg=true)](https://ci.appveyor.com/project/ropensci/gutenbergr-dujv9)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/master.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=master)
+Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/main.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=main)
 [![rOpenSci
 peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
 [![Project Status: Active – The project has reached a stable, usable
@@ -151,7 +147,7 @@ aristotle_books <- gutenberg_works(author == "Aristotle") %>%
   gutenberg_download(meta_fields = "title")
 
 aristotle_books
-#> # A tibble: 17,147 × 3
+#> # A tibble: 43,801 × 3
 #>    gutenberg_id text                                                                    
 #>           <int> <chr>                                                                   
 #>  1         1974 "THE POETICS OF ARISTOTLE"                                              
@@ -176,7 +172,7 @@ aristotle_books
 #>  8 The Poetics of Aristotle
 #>  9 The Poetics of Aristotle
 #> 10 The Poetics of Aristotle
-#> # ℹ 17,137 more rows
+#> # ℹ 43,791 more rows
 ```
 
 ### FAQ
@@ -209,8 +205,8 @@ See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for the scripts that generate these datasets. As of now, these
 were generated from [the Project Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **19
-December 2022**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **29
+November 2023**.
 
 #### Do you respect the rules regarding robot access to Project Gutenberg?
 
