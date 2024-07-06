@@ -82,35 +82,19 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
     purrr::map_chr(stringr::str_c, collapse = "/")
 
   path <- ifelse(nchar(id) == 1, "0", path)
-
-  full_url <- stringr::str_c(mirror, path, id,
-                             stringr::str_c(id, ".zip"),
-                             sep = "/"
-  )
+  full_url <- stringr::str_c(mirror, path, id, id, sep = "/")
   names(full_url) <- id
 
   try_download <- function(url) {
-    # Try cycling through zip options
-    ret <- read_url(url, ".zip")
-    if (!is.null(ret)) {
-      return(ret)
-    }
-
-    base_url <- stringr::str_replace(url, ".zip$", "")
-
-    ret <- cycle_through_urls(base_url, ".zip")
-    if (!is.null(ret)) {
-      return(ret)
-    }
-
-    # If no zip options found, try txt options
-    ret <- read_url(url, ".txt")
-    if (!is.null(ret)) {
-      return(ret)
-    }
-    ret <- cycle_through_urls(base_url, ".txt")
-    if (!is.null(ret)) {
-      return(ret)
+    # Try cycling through zip then txt options
+    for (ext in c(".zip", ".txt")) {
+      for (suffix in c("", "-8", "-0")) {
+        new_url <- glue::glue("{url}{suffix}{ext}")
+        ret <- read_url(new_url, ext)
+        if (!is.null(ret)) {
+          return(ret)
+        }
+      }
     }
 
     cli::cli_warn(

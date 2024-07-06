@@ -6,7 +6,7 @@
 #' @param ext Extension of the file to read
 read_url <- function(url, ext = c(".zip", ".txt")) {
   f <- function(tmp) {
-    mode <- dplyr::if_else(.Platform$OS.type == "windows", "wb", "w")
+    mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
     utils::download.file(url, tmp, mode = mode, quiet = TRUE)
     readr::read_lines(tmp)
   }
@@ -15,22 +15,6 @@ read_url <- function(url, ext = c(".zip", ".txt")) {
   unlink(tmp)
 
   ret
-}
-
-
-#' Loop through potential file URLs
-#'
-#' @param url URL to a file
-#' @param ext Extension of the file to read
-cycle_through_urls <- function(url, ext = c(".zip", ".txt")) {
-  for (suffix in c("-8", "-0")) {
-    new_url <- glue::glue("{url}{suffix}{ext}")
-    ret <- read_url(new_url, ext)
-    if (!is.null(ret)) {
-      return(ret)
-    }
-  }
-  NULL
 }
 
 
