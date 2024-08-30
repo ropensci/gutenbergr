@@ -82,24 +82,18 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
     purrr::map_chr(stringr::str_c, collapse = "/")
 
   path <- ifelse(nchar(id) == 1, "0", path)
-
-  full_url <- stringr::str_c(mirror, path, id,
-    stringr::str_c(id, ".zip"),
-    sep = "/"
-  )
+  full_url <- stringr::str_c(mirror, path, id, id, sep = "/")
   names(full_url) <- id
 
   try_download <- function(url) {
-    ret <- read_zip_url(url)
-    if (!is.null(ret)) {
-      return(ret)
-    }
-    base_url <- stringr::str_replace(url, ".zip$", "")
-    for (suffix in c("-8", "-0")) {
-      new_url <- glue::glue("{base_url}{suffix}.zip")
-      ret <- read_zip_url(new_url)
-      if (!is.null(ret)) {
-        return(ret)
+    # Try cycling through zip then txt options
+    for (ext in c(".zip", ".txt")) {
+      for (suffix in c("", "-8", "-0")) {
+        new_url <- glue::glue("{url}{suffix}{ext}")
+        ret <- read_url(new_url, ext)
+        if (!is.null(ret)) {
+          return(ret)
+        }
       }
     }
 
@@ -215,7 +209,7 @@ gutenberg_strip <- function(text) {
   )
   while (
     length(text) > 0 &&
-      stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
+    stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
   ) {
     # get rid of that paragraph, then the following whitespace
     text <- discard_start_while(text, text != "")
@@ -280,3 +274,4 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
   return(mirror)
 }
+
