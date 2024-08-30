@@ -3,14 +3,9 @@
 #' Quietly download, read, and delete file
 #'
 #' @param url URL to a file
-#' @param ext Extension of the file to read
 #' @keywords internal
-read_url <- function(url, ext = c(".zip", ".txt")) {
-  if (missing(ext)) {
-    ext <- stringr::str_extract(url, "\\.[^.]+$")
-  }
-  ext <- match.arg(ext)
-  return(suppressWarnings(purrr::possibly(dl_and_read)(url, ext)))
+read_url <- function(url) {
+  return(suppressWarnings(purrr::possibly(dl_and_read)(url)))
 }
 
 
@@ -20,9 +15,9 @@ read_url <- function(url, ext = c(".zip", ".txt")) {
 #'
 #' @return A character vector with one element for each line.
 #' @keywords internal
-dl_and_read <- function(url, ext) { # nocov start
+dl_and_read <- function(url) { # nocov start
   mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
-  tmp <- tempfile(fileext = ext)
+  tmp <- tempfile()
   on.exit(unlink(tmp))
   utils::download.file(url, tmp, mode = mode, quiet = TRUE)
   readr::read_lines(tmp)
@@ -61,4 +56,10 @@ keep_while <- function(.x, .p) {
 #' @keywords internal
 discard_end_while <- function(.x, .p) {
   rev(discard_start_while(rev(.x), rev(.p)))
+}
+
+maybe_message <- function(verbose, message, ..., call = rlang::caller_env()) {
+  if (verbose) {
+    cli::cli_inform(message, ..., .envir = call)
+  }
 }

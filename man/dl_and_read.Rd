@@ -4,12 +4,10 @@
 \alias{dl_and_read}
 \title{Download and read a file}
 \usage{
-dl_and_read(url, tmp)
+dl_and_read(url)
 }
 \arguments{
 \item{url}{URL to a file}
-
-\item{tmp}{Path to a temporary file.}
 }
 \value{
 A character vector with one element for each line.

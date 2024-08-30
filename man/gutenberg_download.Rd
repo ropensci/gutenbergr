@@ -8,81 +8,56 @@ gutenberg_download(
   gutenberg_id,
   mirror = NULL,
   strip = TRUE,
-  meta_fields = NULL,
-  verbose = TRUE,
-  files = NULL,
-  ...
+  meta_fields = character(),
+  verbose = TRUE
 )
 }
 \arguments{
-\item{gutenberg_id}{A vector of Project Gutenberg ID, or a data frame
+\item{gutenberg_id}{A vector of Project Gutenberg IDs, or a data frame
 containing a \code{gutenberg_id} column, such as from the results of
-a \code{gutenberg_works()} call}
+\code{\link[=gutenberg_works]{gutenberg_works()}}.}
 
-\item{mirror}{Optionally a mirror URL to retrieve the books from. By
-default uses the mirror from \code{\link{gutenberg_get_mirror}}}
+\item{mirror}{A mirror URL to retrieve the books from. By default uses the
+mirror from \code{\link[=gutenberg_get_mirror]{gutenberg_get_mirror()}}.}
 
-\item{strip}{Whether to strip suspected headers and footers using the
-\code{\link{gutenberg_strip}} function}
+\item{strip}{Whether to strip suspected headers and footers using
+\code{\link[=gutenberg_strip]{gutenberg_strip()}}.}
 
-\item{meta_fields}{Additional fields, such as \code{title} and \code{author},
-to add from \link{gutenberg_metadata} describing each book. This is useful
-when returning multiple}
+\item{meta_fields}{Additional fields describing each book, such as \code{title}
+and \code{author}, to add from \link{gutenberg_metadata}.}
 
-\item{verbose}{Whether to show messages about the Project Gutenberg
-mirror that was chosen}
-
-\item{files}{A vector of .zip file paths. If given, this reads from the
-files rather than from the site. This is mostly used for testing when
-the Project Gutenberg website may not be available.}
-
-\item{...}{Extra arguments passed to \code{\link{gutenberg_strip}}, currently
-unused}
+\item{verbose}{Whether to show messages about the Project Gutenberg mirror
+that was chosen}
 }
 \value{
-A two column tbl_df (a type of data frame; see tibble or
-dplyr packages) with one row for each line of the text or texts,
-with columns
+A two column \code{tbl_df} (see \code{\link[tibble:tibble]{tibble::tibble()}}) with one row for each
+line of the text or texts, with columns
 \describe{
-  \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
-  each text}
-  \item{text}{A character vector}
+\item{gutenberg_id}{Integer column with the Project Gutenberg ID of
+each text}
+\item{text}{A character vector of lines of text}
 }
 }
 \description{
-Download one or more works by their Project Gutenberg IDs into
-a data frame with one row per line per work. This can be used to download
-a single work of interest or multiple at a time. You can look up the
-Gutenberg IDs of a work using the \code{gutenberg_works()} function or
-the \code{gutenberg_metadata} dataset.
-}
-\details{
-Note that if \code{strip = TRUE}, this tries to remove the
-Gutenberg header and footer using the \code{\link{gutenberg_strip}}
-function. This is not an exact process since headers and footers differ
-between books. Before doing an in-depth analysis you may want to check
-the start and end of each downloaded book.
+Download one or more works by their Project Gutenberg IDs into a data frame
+with one row per line per work. This can be used to download a single work of
+interest or multiple at a time. You can look up the Gutenberg IDs of a work
+using \code{\link[=gutenberg_works]{gutenberg_works()}} or the \link{gutenberg_metadata} dataset.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+  # download The Count of Monte Cristo
+  gutenberg_download(1184)
 
-library(dplyr)
+  # download two books: Wuthering Heights and Jane Eyre
+  books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+  books
+  dplyr::count(books, title)
 
-# download The Count of Monte Cristo
-gutenberg_download(1184)
-
-# download two books: Wuthering Heights and Jane Eyre
-books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-books
-books \%>\% count(title)
-
-# download all books from Jane Austen
-austen <- gutenberg_works(author == "Austen, Jane") \%>\%
-  gutenberg_download(meta_fields = "title")
-
-austen
-austen \%>\%
-  count(title)
-
+  # download all books from Jane Austen
+  austen <- gutenberg_works(author == "Austen, Jane") \%>\%
+    gutenberg_download(meta_fields = "title")
+  austen
+  dplyr::count(austen, title)
 \dontshow{\}) # examplesIf}
 }

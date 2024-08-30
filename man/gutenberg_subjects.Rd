@@ -8,11 +8,11 @@
 A tbl_df (see tibble or dplyr) with one row for each pairing
 of work and subject, with columns:
 \describe{
-  \item{gutenberg_id}{ID describing a work that can be joined with
-  \link{gutenberg_metadata}}
-  \item{subject_type}{Either "lcc" (Library of Congress Classification) or
-  "lcsh" (Library of Congress Subject Headings)}
-  \item{subject}{Subject}
+\item{gutenberg_id}{ID describing a work that can be joined with
+\link{gutenberg_metadata}}
+\item{subject_type}{Either "lcc" (Library of Congress Classification) or
+"lcsh" (Library of Congress Subject Headings)}
+\item{subject}{Subject}
 }
 }
 \usage{

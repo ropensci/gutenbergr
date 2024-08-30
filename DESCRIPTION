@@ -16,7 +16,7 @@ URL: https://docs.ropensci.org/gutenbergr/,
     https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 Imports:
     cli,
     dplyr,
@@ -25,7 +25,9 @@ Imports:
     magrittr,
     purrr,
     readr,
+    rlang,
     stringr,
+    tibble,
     urltools
 Suggests: 
     curl,
@@ -33,11 +35,13 @@ Suggests:
     rmarkdown,
     testthat,
     tidyr,
-    tidytext
+    tidytext,
+    withr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Language: en-US
 LazyData: TRUE
 LazyDataCompression: xz
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

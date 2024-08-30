@@ -188,3 +188,23 @@
 #'
 #' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
 "gutenberg_languages"
+
+
+#' Sample Book Downloads
+#'
+#' A tibble of book text for two sample books, generated using
+#' [gutenberg_download()].
+#'
+#' @details This code was used to download the books:
+#' `gutenberg_download(c(109, 105), meta_fields = c("title", "author"))`
+#'
+#' @format A tbl_df (from [tibble::tibble()]) with one row for each
+#' line of text from each book, with columns:
+#' \describe{
+#'   \item{gutenberg_id}{Unique identifier for the work that can
+#'   be used to join with the \link{gutenberg_metadata} dataset.}
+#'   \item{text}{A character vector of lines of text.}
+#'   \item{title}{The title of this work.}
+#'   \item{author}{The author of this work.}
+#' }
+"sample_books"

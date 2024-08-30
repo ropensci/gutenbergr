@@ -8,11 +8,11 @@
 A tbl_df (see tibble or dplyr) with one row for each
 author, with the columns
 \describe{
-  \item{gutenberg_id}{Unique identifier for the work that can
-  be used to join with the \link{gutenberg_metadata} dataset}
-  \item{language}{Language ISO 639 code. Two
-  letter code if one exists, otherwise three letter.}
-  \item{total_languages}{Number of languages for this work.}
+\item{gutenberg_id}{Unique identifier for the work that can
+be used to join with the \link{gutenberg_metadata} dataset}
+\item{language}{Language ISO 639 code. Two
+letter code if one exists, otherwise three letter.}
+\item{total_languages}{Number of languages for this work.}
 }
 }
 \usage{

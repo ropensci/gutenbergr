@@ -1,9 +1,0 @@
-This is a test file.
-
-Project Gutenberg is down while I'm writing this test, so I'm faking content.
-
-This is the line the test looks for:
-The CALL of CTHULHU
-
-But I want other text
-So it has to read everything to find that one thing.

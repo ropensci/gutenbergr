@@ -11,7 +11,7 @@ gutenberg_get_mirror(verbose = TRUE)
 that was chosen}
 }
 \value{
-A character vector of the url for mirror to be used
+A character vector with the url for the chosen mirror.
 }
 \description{
 Get the recommended mirror for Gutenberg files and set the global

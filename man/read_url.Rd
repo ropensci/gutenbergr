@@ -4,14 +4,12 @@
 \alias{read_url}
 \title{Read a file from a URL}
 \usage{
-read_url(url, ext = c(".zip", ".txt"))
+read_url(url)
 }
 \arguments{
 \item{url}{URL to a file}
-
-\item{ext}{Extension of the file to read}
 }
 \description{
-Download, read, and delete file
+Quietly download, read, and delete file
 }
 \keyword{internal}
