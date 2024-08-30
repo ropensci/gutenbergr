@@ -14,3 +14,4 @@ read_url(url, ext = c(".zip", ".txt"))
 \description{
 Download, read, and delete file
 }
+\keyword{internal}

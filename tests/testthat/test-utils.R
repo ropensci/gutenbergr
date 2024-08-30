@@ -1,45 +1,42 @@
 test_that("read_url can download and read a zip file", {
-  skip_on_cran()
-
+  local_dl_and_read()
   # read Bill of Rights (small file)
   z <- read_url("http://gutenberg.pglaf.org/0/2/2.zip", ".zip")
-
-  expect_true(
-    any(
-      z == "Congress shall make no law respecting an establishment of religion,"
-    )
-  )
+  expect_true(any(z == "Ratified December 15, 1791"))
 })
 
-
-test_that("read_url returns NULL on non-existent zip file", {
-  skip_on_cran()
-  z2 <- read_url("http://gutenberg.pglaf.org/0/2/THISISNOTAFILE.zip", ".zip")
-
-  expect_null(z2)
+test_that("read_url can guess zip ext", {
+  local_dl_and_read()
+  z <- read_url("http://gutenberg.pglaf.org/0/2/2.zip")
+  expect_true(any(z == "Ratified December 15, 1791"))
 })
 
+test_that("read_url silently returns NULL on non-existent zip file", {
+  local_dl_and_read()
+  z <- read_url("http://gutenberg.pglaf.org/0/2/THISISNOTAFILE.zip", ".zip")
+  expect_no_warning(expect_null(z))
+})
 
 test_that("read_url can download and read a txt file", {
-  skip_on_cran()
-
-  z3 <- read_url("https://www.gutenberg.org/cache/epub/68283/pg68283.txt", ".txt")
-
-  expect_true(
-    any(
-      z3 == "The CALL of CTHULHU"
-    )
+  local_dl_and_read()
+  z <- read_url(
+    "https://www.gutenberg.org/cache/epub/68283/pg68283.txt",
+    ".txt"
   )
+  expect_true(any(z == "The CALL of CTHULHU"))
 })
 
+test_that("read_url can guess txt ext", {
+  local_dl_and_read()
+  z <- read_url("https://www.gutenberg.org/cache/epub/68283/pg68283.txt")
+  expect_true(any(z == "The CALL of CTHULHU"))
+})
 
 test_that("read_url returns NULL on non-existent txt file", {
-  skip_on_cran()
-  z4 <- read_url("http://gutenberg.pglaf.org/0/2/23.txt", ".txt")
-
-  expect_null(z4)
+  local_dl_and_read()
+  z <- read_url("http://gutenberg.pglaf.org/0/2/THISISNOTAFILE.txt", ".txt")
+  expect_no_warning(expect_null(z))
 })
-
 
 test_that("keep_while works", {
   x <- c("a", "b", "c", "d")
