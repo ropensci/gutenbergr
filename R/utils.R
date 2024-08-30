@@ -1,14 +1,17 @@
-#' Read a file from a .zip URL
+#' Read a file from a URL
 #'
-#' Download, read, and delete a .zip file
+#' Download, read, and delete file
 #'
-#' @param url URL to a .zip file
-read_zip_url <- function(url) {
+#' @param url URL to a file
+#' @param ext Extension of the file to read
+read_url <- function(url, ext = c(".zip", ".txt")) {
+  ext <- match.arg(ext)
   f <- function(tmp) {
-    utils::download.file(url, tmp, quiet = TRUE)
+    mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
+    utils::download.file(url, tmp, mode = mode, quiet = TRUE)
     readr::read_lines(tmp)
   }
-  tmp <- tempfile(fileext = ".zip")
+  tmp <- tempfile(fileext = ext)
   ret <- suppressWarnings(purrr::possibly(f, NULL)(tmp))
   unlink(tmp)
 
