@@ -13,8 +13,7 @@ Description: Download and process public domain works in the Project
     retrieved.
 License: GPL-2
 URL: https://docs.ropensci.org/gutenbergr/,
-    https://github.com/ropensci/gutenbergr,
-    http://ropensci.github.io/gutenbergr/
+    https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
 Depends: 
     R (>= 2.10)
