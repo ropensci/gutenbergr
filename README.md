@@ -1,22 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## gutenbergr: R package to search and download public domain texts from Project Gutenberg
-
-**Authors:** [David Robinson](http://varianceexplained.org/)<br/>
-**License:** [GPL-2](https://opensource.org/license/gpl-2-0/)
+# gutenbergr
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/gutenbergr/main.svg)](https://app.codecov.io/github/ropensci/gutenbergr?branch=main)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 [![rOpenSci
 peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/ropensci/software-review/issues/41)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/ropensci/gutenbergr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/gutenbergr)
 <!-- badges: end -->
 
 Download and process public domain works from the [Project
@@ -34,22 +32,32 @@ Gutenberg](https://www.gutenberg.org/) collection. Includes
   - `gutenberg_subjects` contains pairings of works with Library of
     Congress subjects and topics
 
-### Installation
+## Installation
 
-Install the package with:
+<div class=".pkgdown-release">
+
+Install the released version of gutenbergr from
+[CRAN](https://cran.r-project.org/):
 
 ``` r
 install.packages("gutenbergr")
 ```
 
-Or install the development version using
-[devtools](https://github.com/r-lib/devtools) with:
+</div>
+
+<div class=".pkgdown-devel">
+
+Install the development version of gutenbergr from
+[GitHub](https://github.com/):
 
 ``` r
-devtools::install_github("ropensci/gutenbergr")
+# install.packages("pak")
+pak::pak("ropensci/gutenbergr")
 ```
 
-### Examples
+</div>
+
+## Examples
 
 The `gutenberg_works()` function retrieves, by default, a table of
 metadata for all unique English-language Project Gutenberg works that
@@ -175,9 +183,9 @@ aristotle_books
 #> # ℹ 43,791 more rows
 ```
 
-### FAQ
+## FAQ
 
-#### What do I do with the text once I have it?
+### What do I do with the text once I have it?
 
 - The [Natural Language Processing CRAN
   View](https://CRAN.R-project.org/view=NaturalLanguageProcessing)
@@ -199,7 +207,7 @@ aristotle_books
   gender from first names) packages useful. (Note that humaniformat has
   a `format_reverse` function for reversing “Last, First” names).
 
-#### How were the metadata R files generated?
+### How were the metadata R files generated?
 
 See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
@@ -208,7 +216,7 @@ were generated from [the Project Gutenberg
 catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **29
 November 2023**.
 
-#### Do you respect the rules regarding robot access to Project Gutenberg?
+### Do you respect the rules regarding robot access to Project Gutenberg?
 
 Yes! The package respects [these
 rules](https://www.gutenberg.org/policy/robot_access.html) and complies
@@ -232,7 +240,7 @@ recommendation](https://www.gutenberg.org/policy/robot_access.html) to
 use wget or set up a mirror. This package is recommended for downloading
 a single work, or works for a particular author or topic.
 
-### Code of Conduct
+## Code of Conduct
 
 Please note that the gutenbergr project is released with a [Contributor
 Code of
