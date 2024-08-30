@@ -5,6 +5,7 @@
 #' @param url URL to a file
 #' @param ext Extension of the file to read
 read_url <- function(url, ext = c(".zip", ".txt")) {
+  ext <- match.arg(ext)
   f <- function(tmp) {
     mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
     utils::download.file(url, tmp, mode = mode, quiet = TRUE)
