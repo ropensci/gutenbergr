@@ -29,3 +29,12 @@ test_that("gutenberg_get_mirror uses existing option", {
     gutenberg_get_mirror(), "mirror"
   )
 })
+
+test_that("gutenberg_get_all_mirrors works", {
+  local_dl_and_read()
+  mirrors <- gutenberg_get_all_mirrors()
+  expect_true(inherits(mirrors, "data.frame"))
+  expect_true(inherits(mirrors, "tbl_df"))
+  expect_equal(ncol(mirrors), 6)
+  expect_true(nrow(mirrors) > 10)
+})

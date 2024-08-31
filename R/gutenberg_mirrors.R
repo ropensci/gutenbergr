@@ -44,3 +44,45 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   options(gutenberg_mirror = mirror)
   return(mirror)
 }
+
+
+#' Get all mirror data from Project Gutenberg
+#'
+#' Get all the mirror data from \url{https://www.gutenberg.org/MIRRORS.ALL}
+#'
+#' @return A tbl_df of Project Gutenberg mirrors and related data
+#' \describe{
+#'
+#'   \item{continent}{Continent where the mirror is located}
+#'
+#'   \item{nation}{Nation where the mirror is located}
+#'
+#'   \item{location}{Location of the mirror}
+#'
+#'   \item{provider}{Provider of the mirror}
+#'
+#'   \item{url}{URL of the mirror}
+#'
+#'   \item{note}{Special notes}
+#' }
+#' @examplesIf interactive()
+#'
+#' gutenberg_get_all_mirrors()
+#'
+#' @export
+gutenberg_get_all_mirrors <- function() {
+  mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
+  mirrors_md <- read_url(mirrors_url)
+  tmp <- tempfile(fileext = ".md")
+  writeLines(mirrors_md, tmp)
+  mirrors <- suppressWarnings(
+    readr::read_delim(
+      tmp,
+      delim = "|",
+      trim_ws = TRUE
+    ) |>
+      dplyr::slice(2:(dplyr::n() - 1))
+  )
+
+  return(mirrors)
+}

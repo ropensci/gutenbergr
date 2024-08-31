@@ -1,5 +1,7 @@
 # gutenbergr (development version)
 
+* `gutenberg_get_all_mirrors()` has been added to retrieve mirror data (@jrdnbradford, #58)
+
 # gutenbergr 0.2.4
 
 * Update data scraping process to use R end-to-end (@jonthegeek, #36).
