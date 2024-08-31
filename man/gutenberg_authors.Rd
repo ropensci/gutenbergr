@@ -8,16 +8,16 @@
 A tbl_df (see tibble or dplyr) with one row for each
 author, with the columns
 \describe{
-  \item{gutenberg_author_id}{Unique identifier for the author that can
-  be used to join with the \link{gutenberg_metadata} dataset}
-  \item{author}{The \code{agent_name} field from the original metadata}
-  \item{alias}{Alias}
-  \item{birthdate}{Year of birth}
-  \item{deathdate}{Year of death}
-  \item{wikipedia}{Link to Wikipedia article on the author. If there
-  are multiple, they are "|"-delimited}
-  \item{aliases}{Character vector of aliases. If there
-  are multiple, they are "/"-delimited}
+\item{gutenberg_author_id}{Unique identifier for the author that can
+be used to join with the \link{gutenberg_metadata} dataset}
+\item{author}{The \code{agent_name} field from the original metadata}
+\item{alias}{Alias}
+\item{birthdate}{Year of birth}
+\item{deathdate}{Year of death}
+\item{wikipedia}{Link to Wikipedia article on the author. If there
+are multiple, they are "|"-delimited}
+\item{aliases}{Character vector of aliases. If there
+are multiple, they are "/"-delimited}
 }
 }
 \usage{

@@ -1,102 +1,128 @@
 #' Download one or more works using a Project Gutenberg ID
 #'
-#' Download one or more works by their Project Gutenberg IDs into
-#' a data frame with one row per line per work. This can be used to download
-#' a single work of interest or multiple at a time. You can look up the
-#' Gutenberg IDs of a work using the \code{gutenberg_works()} function or
-#' the \code{gutenberg_metadata} dataset.
+#' Download one or more works by their Project Gutenberg IDs into a data frame
+#' with one row per line per work. This can be used to download a single work of
+#' interest or multiple at a time. You can look up the Gutenberg IDs of a work
+#' using [gutenberg_works()] or the \link{gutenberg_metadata} dataset.
 #'
-#' @param gutenberg_id A vector of Project Gutenberg ID, or a data frame
-#' containing a \code{gutenberg_id} column, such as from the results of
-#' a \code{gutenberg_works()} call
-#' @param mirror Optionally a mirror URL to retrieve the books from. By
-#' default uses the mirror from \code{\link{gutenberg_get_mirror}}
-#' @param strip Whether to strip suspected headers and footers using the
-#' \code{\link{gutenberg_strip}} function
-#' @param meta_fields Additional fields, such as \code{title} and \code{author},
-#' to add from \link{gutenberg_metadata} describing each book. This is useful
-#' when returning multiple
-#' @param verbose Whether to show messages about the Project Gutenberg
-#' mirror that was chosen
-#' @param files A vector of .zip file paths. If given, this reads from the
-#' files rather than from the site. This is mostly used for testing when
-#' the Project Gutenberg website may not be available.
-#' @param ... Extra arguments passed to \code{\link{gutenberg_strip}}, currently
-#' unused
+#' @param gutenberg_id A vector of Project Gutenberg IDs, or a data frame
+#'   containing a `gutenberg_id` column, such as from the results of
+#'   [gutenberg_works()].
+#' @param mirror A mirror URL to retrieve the books from. By default uses the
+#'   mirror from [gutenberg_get_mirror()].
+#' @param strip Whether to strip suspected headers and footers using
+#'   [gutenberg_strip()].
+#' @param meta_fields Additional fields describing each book, such as `title`
+#'   and `author`, to add from \link{gutenberg_metadata}.
+#' @param verbose Whether to show messages about the Project Gutenberg mirror
+#'   that was chosen
 #'
-#' @details Note that if \code{strip = TRUE}, this tries to remove the
-#' Gutenberg header and footer using the \code{\link{gutenberg_strip}}
-#' function. This is not an exact process since headers and footers differ
-#' between books. Before doing an in-depth analysis you may want to check
-#' the start and end of each downloaded book.
-#'
-#' @return A two column tbl_df (a type of data frame; see tibble or
-#' dplyr packages) with one row for each line of the text or texts,
-#' with columns
+#' @return A two column `tbl_df` (see [tibble::tibble()]) with one row for each
+#'   line of the text or texts, with columns
 #' \describe{
 #'   \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
 #'   each text}
-#'   \item{text}{A character vector}
+#'   \item{text}{A character vector of lines of text}
 #' }
 #'
 #' @examplesIf interactive()
+#'   # download The Count of Monte Cristo
+#'   gutenberg_download(1184)
 #'
-#' library(dplyr)
+#'   # download two books: Wuthering Heights and Jane Eyre
+#'   books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+#'   books
+#'   dplyr::count(books, title)
 #'
-#' # download The Count of Monte Cristo
-#' gutenberg_download(1184)
-#'
-#' # download two books: Wuthering Heights and Jane Eyre
-#' books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-#' books
-#' books %>% count(title)
-#'
-#' # download all books from Jane Austen
-#' austen <- gutenberg_works(author == "Austen, Jane") %>%
-#'   gutenberg_download(meta_fields = "title")
-#'
-#' austen
-#' austen %>%
-#'   count(title)
-#'
+#'   # download all books from Jane Austen
+#'   austen <- gutenberg_works(author == "Austen, Jane") %>%
+#'     gutenberg_download(meta_fields = "title")
+#'   austen
+#'   dplyr::count(austen, title)
 #'
 #' @export
-gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
-                               meta_fields = NULL, verbose = TRUE,
-                               files = NULL, ...) {
-  if (is.null(mirror)) {
-    mirror <- gutenberg_get_mirror(verbose = verbose)
+gutenberg_download <- function(gutenberg_id,
+                               mirror = NULL,
+                               strip = TRUE,
+                               meta_fields = character(),
+                               verbose = TRUE) {
+  url <- gutenberg_url(gutenberg_id, mirror, verbose)
+  downloaded <- purrr::map(url, try_gutenberg_download)
+  downloaded <- purrr::discard(downloaded, is.null)
+  if (strip) {
+    downloaded <- purrr::map(downloaded, gutenberg_strip)
   }
+  ret <- purrr::list_rbind(c(
+    list(empty = tibble::tibble(gutenberg_id = integer(), text = character())),
+    purrr::imap(
+      downloaded,
+      ~ tibble::tibble(text = .x, gutenberg_id = as.integer(.y))
+    )
+  ))
 
-  if (inherits(gutenberg_id, "data.frame")) {
-    # extract the gutenberg_id column. This is useful for working
-    # with the output of gutenberg_works()
+  gutenberg_add_metadata(ret, meta_fields)
+}
+
+#' Construct a Project Gutenberg url
+#'
+#' @inheritParams gutenberg_download
+#'
+#' @return A named character vector of urls
+#' @keywords internal
+gutenberg_url <- function(gutenberg_id, mirror, verbose) {
+  gutenberg_id <- flatten_gutenberg_id(gutenberg_id)
+  mirror <- mirror %||% gutenberg_get_mirror(verbose = verbose)
+  path <- gutenberg_path_from_id(gutenberg_id)
+  rlang::set_names(
+    stringr::str_c(mirror, path, gutenberg_id, gutenberg_id, sep = "/"),
+    gutenberg_id
+  )
+}
+
+#' Subset gutenberg_id from df if necessary
+#'
+#' @inheritParams gutenberg_download
+#' @return A character vector of gutenberg_ids.
+#' @keywords internal
+flatten_gutenberg_id <- function(gutenberg_id) {
+  if (is.data.frame(gutenberg_id)) {
+    # Useful for output of gutenberg_works()
     gutenberg_id <- gutenberg_id[["gutenberg_id"]]
   }
+  as.character(gutenberg_id)
+}
 
-  id <- as.character(gutenberg_id)
+#' Construct a Project Gutenberg path from an ID
+#'
+#' @inheritParams gutenberg_download
+#' @return A character vector of paths.
+#' @keywords internal
+gutenberg_path_from_id <- function(gutenberg_id) {
+  path <- stringr::str_replace_all(
+    stringr::str_sub(gutenberg_id, 1, -2), # Drop last character.
+    "(.)(?!$)", # Insert / after each character accept the last one.
+    "\\1/"
+  )
+  path[nchar(gutenberg_id) == 1] <- "0"
+  path
+}
 
-  path <- id %>%
-    stringr::str_sub(1, -2) %>%
-    stringr::str_split("") %>%
-    purrr::map_chr(stringr::str_c, collapse = "/")
-
-  path <- ifelse(nchar(id) == 1, "0", path)
-  full_url <- stringr::str_c(mirror, path, id, id, sep = "/")
-  names(full_url) <- id
-
-  try_download <- function(url) {
-    # Try cycling through zip then txt options
-    for (ext in c(".zip", ".txt")) {
-      for (suffix in c("", "-8", "-0")) {
-        new_url <- glue::glue("{url}{suffix}{ext}")
-        ret <- read_url(new_url, ext)
-        if (!is.null(ret)) {
-          return(ret)
-        }
-      }
-    }
-
+#' Try to download book using various URLs
+#'
+#' @param url The base URL of a book.
+#'
+#' @return A character vector of lines of text or NULL if the book could not be
+#'   downloaded.
+#' @keywords internal
+try_gutenberg_download <- function(url) {
+  suffix <- c("", "-8", "-0")
+  ext <- c(".zip", ".txt")
+  possible_urls <- glue::glue_data(
+    expand.grid(url = url, suffix = suffix, ext = ext),
+    "{url}{suffix}{ext}"
+  )
+  ret <- read_next(possible_urls)
+  if (is.null(ret)) {
     cli::cli_warn(
       c(
         "!" = "Could not download a book at {url}.",
@@ -105,132 +131,32 @@ gutenberg_download <- function(gutenberg_id, mirror = NULL, strip = TRUE,
         ">" = "See https://www.gutenberg.org/MIRRORS.ALL for options."
       )
     )
-
-    NULL
   }
-
-  # run this on all requested books
-  if (!is.null(files)) {
-    # Read from local files instead (used for testing)
-    downloaded <- files %>%
-      stats::setNames(id) %>%
-      purrr::map(readr::read_lines)
-  } else {
-    downloaded <- full_url %>%
-      purrr::map(try_download)
-  }
-
-  ret <- downloaded %>%
-    purrr::discard(is.null) %>%
-    purrr::map_df(~ dplyr::tibble(text = .), .id = "gutenberg_id") %>%
-    dplyr::mutate(gutenberg_id = as.integer(gutenberg_id))
-
-  if (strip) {
-    ret <- ret %>%
-      dplyr::group_by(gutenberg_id) %>%
-      dplyr::do(dplyr::tibble(text = gutenberg_strip(.$text, ...))) %>%
-      dplyr::ungroup()
-  }
-
-  if (length(meta_fields) > 0) {
-    meta_fields <- unique(c("gutenberg_id", meta_fields))
-
-    utils::data(
-      "gutenberg_metadata",
-      package = "gutenbergr",
-      envir = environment()
-    )
-    md <- gutenberg_metadata[meta_fields]
-
-    ret <- ret %>%
-      dplyr::inner_join(md, by = "gutenberg_id")
-  }
-
-  ret
+  return(ret)
 }
 
-
-#' Strip header and footer content from a Project Gutenberg book
+#' Loop through paths to find a file
 #'
-#' Strip header and footer content from a Project Gutenberg book. This
-#' is based on some formatting guesses so it may not be perfect. It
-#' will also not strip tables of contents, prologues, or other text
-#' that appears at the start of a book.
+#' @param possible_urls URLs to try.
 #'
-#' @param text A character vector with lines of a book
-#'
-#' @return A character vector with Project Gutenberg headers and footers removed
-#'
-#' @examplesIf interactive()
-#'
-#' library(dplyr)
-#' book <- gutenberg_works(title == "Pride and Prejudice") %>%
-#'   gutenberg_download(strip = FALSE)
-#'
-#' head(book$text, 10)
-#' tail(book$text, 10)
-#'
-#' text_stripped <- gutenberg_strip(book$text)
-#'
-#' head(text_stripped, 10)
-#' tail(text_stripped, 10)
-#'
-#'
-#' @export
-gutenberg_strip <- function(text) {
-  text[is.na(text)] <- ""
-
-  starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END.*SMALL PRINT)"
-  text <- discard_start_while(
-    text, !stringr::str_detect(text, starting_regex)
-  )[-1]
-  # also discard rest of "paragraph"
-  text <- discard_start_while(text, text != "")
-
-  ending_regex <- paste(
-    "^(End of .*Project Gutenberg.*",
-    "\\*\\*\\*.*END OF.*PROJECT GUTENBERG)",
-    sep = "|"
-  )
-  text <- keep_while(text, !stringr::str_detect(text, ending_regex))
-
-  # strip empty lines from start and end
-  text <- discard_start_while(text, text == "")
-
-  # also paragraphs at the start that are meta-data
-  start_paragraph_regex <- paste(
-    "(produced by",
-    "prepared by",
-    "transcribed from",
-    "project gutenberg",
-    "^special thanks",
-    "^note: )",
-    sep = "|"
-  )
-  while (
-    length(text) > 0 &&
-    stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
-  ) {
-    # get rid of that paragraph, then the following whitespace
-    text <- discard_start_while(text, text != "")
-    text <- discard_start_while(text, text == "")
+#' @return A character vector of lines of text or NULL if the book could not be
+#'   downloaded.
+#' @keywords internal
+read_next <- function(possible_urls) {
+  if (length(possible_urls)) {
+    read_url(possible_urls[[1]]) %||% read_next(possible_urls[-1])
   }
-
-  text <- discard_end_while(text, text == "")
-
-  text
 }
-
 
 #' Get the recommended mirror for Gutenberg files
 #'
 #' Get the recommended mirror for Gutenberg files and set the global
-#' \code{gutenberg_mirror} options.
+#' `gutenberg_mirror` options.
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg mirror
 #'   that was chosen
 #'
-#' @return A character vector of the url for mirror to be used
+#' @return A character vector with the url for the chosen mirror.
 #'
 #' @examplesIf interactive()
 #'
@@ -244,34 +170,36 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   }
 
   # figure out the mirror for this location from wget
-  if (verbose) {
-    message(
-      "Determining mirror for Project Gutenberg from ",
-      "https://www.gutenberg.org/robot/harvest"
-    )
-  }
-  wget_url <- "https://www.gutenberg.org/robot/harvest?filetypes[]=txt"
-  lines <- readr::read_lines(wget_url)
-  a <- lines[stringr::str_detect(lines, stringr::fixed("<a href="))][1]
+  harvest_url <- "https://www.gutenberg.org/robot/harvest"
+  maybe_message(
+    verbose,
+    "Determining mirror for Project Gutenberg from {harvest_url}."
+  )
+  wget_url <- glue::glue("{harvest_url}?filetypes[]=txt")
+  lines <- read_url(wget_url)
+  a <- stringr::str_subset(lines, stringr::fixed("<a href="))[1]
   mirror_full_url <- stringr::str_match(a, "href=\"(.*?)\"")[2]
 
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
-  mirror <- glue::glue("{parsed$scheme}://{parsed$domain}")
-
-  if (mirror == "https://www.gutenberg.lib.md.us") { # nocov start
-    # this mirror is broken (PG has been contacted)
-    # for now, replace:
-    mirror <- "https://aleph.gutenberg.org"
-  } # nocov end
-
-  if (verbose) {
-    message("Using mirror ", mirror)
+  if (parsed$domain == "www.gutenberg.lib.md.us") {
+    # Broken mirror. PG has been contacted. For now, replace:
+    parsed$domain <- "aleph.gutenberg.org" # nocov
   }
+
+  mirror <- unclass(glue::glue_data(parsed, "{scheme}://{domain}"))
+  maybe_message(verbose, "Using mirror {mirror}.")
 
   # set option for next time
   options(gutenberg_mirror = mirror)
-
   return(mirror)
 }
 
+gutenberg_add_metadata <- function(gutenberg_tbl, meta_fields) {
+  meta_fields <- union("gutenberg_id", meta_fields)
+  dplyr::left_join(
+    gutenberg_tbl,
+    gutenbergr::gutenberg_metadata[meta_fields],
+    by = "gutenberg_id"
+  )
+}

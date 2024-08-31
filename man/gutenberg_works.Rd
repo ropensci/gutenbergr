@@ -17,7 +17,7 @@ gutenberg_works(
 \arguments{
 \item{...}{Additional filters, given as expressions using the variables in
 the \link{gutenberg_metadata} dataset (e.g. \code{author == "Austen,
-Jane"})}
+  Jane"})}
 
 \item{languages}{Vector of languages to include}
 
@@ -44,7 +44,7 @@ when English works are requested}
 }
 \value{
 A tbl_df (see the tibble or dplyr packages) with one row for each
-  work, in the same format as \link{gutenberg_metadata}.
+work, in the same format as \link{gutenberg_metadata}.
 }
 \description{
 Get a table of Gutenberg work metadata that has been filtered by some common
@@ -57,10 +57,10 @@ Gutenberg metadata, use the \link{gutenberg_metadata} and related datasets.
 By default, returns
 
 \itemize{
-  \item{English-language works}
-  \item{That are in text format in Gutenberg (as opposed to audio)}
-  \item{Whose text is not under copyright}
-  \item{At most one distinct field for each title/author pair}
+\item{English-language works}
+\item{That are in text format in Gutenberg (as opposed to audio)}
+\item{Whose text is not under copyright}
+\item{At most one distinct field for each title/author pair}
 }
 }
 \examples{

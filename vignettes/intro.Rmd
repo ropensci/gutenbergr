@@ -18,6 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r packages-used}
+library(gutenbergr)
+library(dplyr)
+library(stringr)
+library(tidytext)
+```
+
 The gutenbergr package helps you download and process public domain works from the [Project Gutenberg](http://www.gutenberg.org/) collection. This includes both tools for downloading books (and stripping header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find words of interest. Includes:
 
 * A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: e.g., `gutenberg_download(84)` downloads the text of Frankenstein.
@@ -33,15 +40,12 @@ This package contains metadata for all Project Gutenberg works as R datasets, so
 The dataset `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc:
 
 ```{r basics}
-library(gutenbergr)
-library(dplyr)
 gutenberg_metadata
 ```
 
 For example, you could find the Gutenberg ID(s) of Jane Austen's _Persuasion_ by doing:
 
 ```{r filter}
-
 gutenberg_metadata %>%
   filter(title == "Persuasion")
 ```
@@ -58,8 +62,6 @@ It also allows you to perform filtering as an argument:
 gutenberg_works(author == "Austen, Jane")
 
 # or with a regular expression
-
-library(stringr)
 gutenberg_works(str_detect(author, "Austen"))
 ```
 
@@ -72,7 +74,6 @@ The function `gutenberg_download()` downloads one or more works from Project Gut
 ```{r load 1 file, echo=FALSE}
 f105 <- system.file("extdata", "105.zip", package = "gutenbergr")
 persuasion <- gutenberg_download(105,
-  files = f105,
   mirror = "http://aleph.gutenberg.org"
 )
 ```
@@ -91,17 +92,12 @@ Notice it is returned as a tbl_df (a type of data frame) including two variables
 You can also provide `gutenberg_download()` a vector of IDs to download multiple books. For example, to download _Renascence, and Other Poems_ (book [109](https://www.gutenberg.org/ebooks/109)) along with _Persuasion_, do:
 
 ```{r load 2 from file, echo=FALSE}
-f109 <- system.file("extdata", "109.zip", package = "gutenbergr")
-books <- gutenberg_download(c(109, 105),
-  meta_fields = "title",
-  files = c(f109, f105),
-  mirror = "http://aleph.gutenberg.org"
-)
+books <- gutenbergr::sample_books
 ```
 
 
 ```{r load 2 from web, eval = FALSE}
-books <- gutenberg_download(c(109, 105), meta_fields = "title")
+books <- gutenberg_download(c(109, 105), meta_fields = c("title", "author"))
 ```
 
 ```{r display books}
@@ -144,8 +140,6 @@ gutenberg_authors
 What's next after retrieving a book's text? Well, having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
 
 ```{r tidytext}
-library(tidytext)
-
 words <- books %>%
   unnest_tokens(word, text)
 
