@@ -41,7 +41,7 @@ test_that("gutenberg_url constructs a url from an id", {
   )
 })
 
-test_that("flatten_gutenber_id works", {
+test_that("flatten_gutenberg_id works", {
   expect_identical(
     flatten_gutenberg_id(c(1, 23, 456)),
     c("1", "23", "456")
