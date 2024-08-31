@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 ## Datasets to use in examples, tests, and vignettes.
 devtools::load_all(".")
 sample_books <- gutenberg_download(
