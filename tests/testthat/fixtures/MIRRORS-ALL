@@ -1,0 +1,21 @@
+   continent   |    nation     |      location       |                   provider                   |                                     url                                      |                                                                 note                                                                 
+---------------+---------------+---------------------+----------------------------------------------+------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------
+ Europe        | Great Britain | Kent                | UK Mirror Service                            | http://www.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/ | 
+ Europe        | Great Britain | Kent                | UK Mirror Service                            | ftp://ftp.mirrorservice.org/sites/ftp.ibiblio.org/pub/docs/books/gutenberg/  | 
+ Europe        | Great Britain | Kent                | UK Mirror Service                            | rsync://rsync.mirrorservice.org/gutenberg/                                   | 
+ Europe        | Portugal      | Braga               | Universidade do Minho                        | http://eremita.di.uminho.pt/gutenberg/                                       | 
+ Europe        | Portugal      | Braga               | Universidade do Minho                        | ftp://eremita.di.uminho.pt/pub/gutenberg/                                    | 
+ North America | Canada        | Waterloo            | University of Waterloo Computer Science Club | http://mirror.csclub.uwaterloo.ca/gutenberg/                                 | 
+ North America | United States | Buffalo, NY         | Jake Nabasny                                 | https://gutenberg.nabasny.com/                                               | 
+ North America | United States | Chapel Hill         | iBiblio                                      | https://www.gutenberg.org/dirs/                                              | Main Project Gutenberg Collection Site
+ North America | United States | Chapel Hill         | iBiblio                                      | ftp://ftp.ibiblio.org/pub/docs/books/gutenberg/                              | Main Project Gutenberg FTP Site.
+ North America | United States | Pikeville, Kentucky | SandyRiver.NET                               | https://mirror2.sandyriver.net/pub/gutenberg                                 | High speed mirror on a 10Gb network connection. Also available by http, and by rsync to rsync://mirror2.sandyriver.net/pub/gutenberg
+ North America | United States | Salt Lake City      | Xmission ISP - FTP                           | ftp://mirrors.xmission.com/gutenberg/                                        | 
+ North America | United States | Salt Lake City      | Xmission ISP - HTTP                          | http://mirrors.xmission.com/gutenberg/                                       | 
+ North America | United States | San Diego           | Project Gutenberg                            | ftp://gutenberg.pglaf.org                                                    | High-speed mirror. Includes cache/generated files (epub, mobi, etc.).
+ North America | United States | San Diego           | Project Gutenberg                            | https://aleph.gutenberg.org/                                                 | High-speed mirror. Includes cache/generated files (epub, mobi, etc.). Also available via rsync and ftp.
+ North America | United States | San Diego           | Project Gutenberg                            | https://gutenberg.pglaf.org/                                                 | High-speed mirror. Includes cache/generated files (epub, mobi, etc.).
+ North America | United States | San Diego           | Project Gutenberg                            | gopher://gopher.pglaf.org/                                                   | Gopher server.
+ North America | United States | San Diego           | Project Gutenberg                            | rsync://gutenberg.pglaf.org/gutenberg                                        | High-speed mirror. Includes cache/generated files (epub, mobi, etc.).
+(17 rows)
+
