@@ -230,8 +230,8 @@ to the best of our ability. Namely:
 - We retrieve the book text directly from that mirror using links in the
   same format. For example, Frankenstein (book 84) is retrieved from
   `https://www.gutenberg.lib.md.us/8/84/84.zip`.
-- We retrieve the .zip file rather than txt to minimize bandwidth on the
-  mirror.
+- We give priority to retrieving the `.zip` file to minimize bandwidth
+  on the mirror. `.txt` files are only retrieved if there is no `.zip`.
 
 Still, this package is *not* the right way to download the entire
 Project Gutenberg corpus (or all from a particular language). For that,
