@@ -1,6 +1,8 @@
 # gutenbergr (development version)
 
-* `gutenberg_get_all_mirrors()` has been added to retrieve mirror data (@jrdnbradford, #58)
+* `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55).
+* New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
+* The package infrastructure has been updated to make the package more robust and maintainable.
 
 # gutenbergr 0.2.4
 
@@ -14,7 +16,7 @@
 
 * Updated metadata (#32, #29)
 * minor bug fixes and improvements, including removing broken url and updating documentation to comply with CRAN roxygen2 requirements (#30, #31, #35, #28).
-* Changed maintainer (#30)
+* Changed maintainer (#30).
 
 # gutenbergr 0.2.0
 

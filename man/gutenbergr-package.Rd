@@ -23,6 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Myfanwy Johnston \email{mrowlan1@gmail.com}
+  \item Jordan Bradford \email{jrdnbradford@gmail.com}
   \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 

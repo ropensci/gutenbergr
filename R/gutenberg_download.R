@@ -129,7 +129,8 @@ try_gutenberg_download <- function(url) {
         "i" = "The book may have been archived.",
         "i" = "Alternatively, You may need to select a different mirror.",
         ">" = "See https://www.gutenberg.org/MIRRORS.ALL for options."
-      )
+      ),
+      class = "gutenbergr-warning-download_failure"
     )
   }
   return(ret)

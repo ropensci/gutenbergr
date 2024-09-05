@@ -69,17 +69,19 @@ gutenberg_works <- function(..., languages = "en",
                             distinct = TRUE,
                             all_languages = FALSE,
                             only_languages = TRUE) {
-  dots <- lazyeval::lazy_dots(...)
-  if (length(dots) > 0 && any(names(dots) != "")) {
-    cli::cli_abort(
-      c(
-        x = "We detected a named input.",
-        i = "Use == expressions, not named arguments.",
-        i = "For example, use gutenberg_works(author == 'Dickens, Charles'),",
-        i = "not gutenberg_works(author = 'Dickens, Charles')."
+  rlang::check_dots_unnamed(
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          x = "We detected a named input.",
+          i = "Use == expressions, not named arguments.",
+          i = "For example, use gutenberg_works(author == 'Dickens, Charles'),",
+          i = "not gutenberg_works(author = 'Dickens, Charles')."
+        ),
+        call = rlang::env_parent()
       )
-    )
-  }
+    }
+  )
   ret <- filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
