@@ -46,7 +46,7 @@ gutenberg_metadata
 For example, you could find the Gutenberg ID(s) of Jane Austen's _Persuasion_ by doing:
 
 ```{r filter}
-gutenberg_metadata %>%
+gutenberg_metadata |>
   filter(title == "Persuasion")
 ```
 
@@ -107,7 +107,7 @@ books
 Notice that the `meta_fields` argument allows us to add one or more additional fields from the `gutenberg_metadata` to the downloaded text, such as title or author.
 
 ```{r count books}
-books %>%
+books |>
   count(title)
 ```
 
@@ -122,10 +122,10 @@ gutenberg_subjects
 This is useful for extracting texts from a particular topic or genre, such as detective stories, or a particular character, such as Sherlock Holmes. The `gutenberg_id` column can then be used to download these texts or to link with other metadata.
 
 ```{r filter subjects}
-gutenberg_subjects %>%
+gutenberg_subjects |>
   filter(subject == "Detective and mystery stories")
 
-gutenberg_subjects %>%
+gutenberg_subjects |>
   filter(grepl("Holmes, Sherlock", subject))
 ```
 
@@ -140,13 +140,13 @@ gutenberg_authors
 What's next after retrieving a book's text? Well, having the book as a data frame is especially useful for working with the [tidytext](https://github.com/juliasilge/tidytext) package for text analysis.
 
 ```{r tidytext}
-words <- books %>%
+words <- books |>
   unnest_tokens(word, text)
 
 words
 
-word_counts <- words %>%
-  anti_join(stop_words, by = "word") %>%
+word_counts <- words |>
+  anti_join(stop_words, by = "word") |>
   count(title, word, sort = TRUE)
 
 word_counts

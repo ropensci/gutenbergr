@@ -37,19 +37,19 @@
 #'
 #' gutenberg_metadata
 #'
-#' gutenberg_metadata %>%
+#' gutenberg_metadata |>
 #'   count(author, sort = TRUE)
 #'
 #' # look for Shakespeare, excluding collections (containing "Works") and
 #' # translations
-#' shakespeare_metadata <- gutenberg_metadata %>%
+#' shakespeare_metadata <- gutenberg_metadata |>
 #'   filter(
 #'     author == "Shakespeare, William",
 #'     language == "en",
 #'     !str_detect(title, "Works"),
 #'     has_text,
 #'     !str_detect(rights, "Copyright")
-#'   ) %>%
+#'   ) |>
 #'   distinct(title)
 #'
 #' \donttest{
@@ -101,17 +101,17 @@
 #' library(dplyr)
 #' library(stringr)
 #'
-#' gutenberg_subjects %>%
-#'   filter(subject_type == "lcsh") %>%
+#' gutenberg_subjects |>
+#'   filter(subject_type == "lcsh") |>
 #'   count(subject, sort = TRUE)
 #'
-#' sherlock_holmes_subjects <- gutenberg_subjects %>%
+#' sherlock_holmes_subjects <- gutenberg_subjects |>
 #'   filter(str_detect(subject, "Holmes, Sherlock"))
 #'
 #' sherlock_holmes_subjects
 #'
-#' sherlock_holmes_metadata <- gutenberg_works() %>%
-#'   filter(author == "Doyle, Arthur Conan") %>%
+#' sherlock_holmes_metadata <- gutenberg_works() |>
+#'   filter(author == "Doyle, Arthur Conan") |>
 #'   semi_join(sherlock_holmes_subjects, by = "gutenberg_id")
 #'
 #' sherlock_holmes_metadata

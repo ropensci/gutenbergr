@@ -71,7 +71,7 @@ could find the book’s ID by filtering:
 library(dplyr)
 library(gutenbergr)
 
-gutenberg_works() %>%
+gutenberg_works() |>
   filter(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
@@ -137,7 +137,7 @@ books
 #> 10          768 ""                  Wuthering Heights
 #> # ℹ 33,333 more rows
 
-books %>%
+books |>
   count(title)
 #> # A tibble: 2 × 2
 #>   title                           n
@@ -151,7 +151,7 @@ we could get the text of all Aristotle’s works, each annotated with both
 `gutenberg_id` and `title`, using:
 
 ``` r
-aristotle_books <- gutenberg_works(author == "Aristotle") %>%
+aristotle_books <- gutenberg_works(author == "Aristotle") |>
   gutenberg_download(meta_fields = "title")
 
 aristotle_books

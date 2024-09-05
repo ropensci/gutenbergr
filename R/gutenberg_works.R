@@ -50,16 +50,16 @@
 #'
 #' # language specifications
 #'
-#' gutenberg_works(languages = "es") %>%
+#' gutenberg_works(languages = "es") |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es")) %>%
+#' gutenberg_works(languages = c("en", "es")) |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es"), all_languages = TRUE) %>%
+#' gutenberg_works(languages = c("en", "es"), all_languages = TRUE) |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es"), only_languages = FALSE) %>%
+#' gutenberg_works(languages = c("en", "es"), only_languages = FALSE) |>
 #'   count(language, sort = TRUE)
 #' }
 #' @export
@@ -82,37 +82,37 @@ gutenberg_works <- function(..., languages = "en",
       )
     }
   )
-  ret <- filter(gutenberg_metadata, ...)
+  ret <- dplyr::filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
-    lang_filt <- gutenberg_languages %>%
-      filter(language %in% languages) %>%
-      count(gutenberg_id, total_languages)
+    lang_filt <- gutenberg_languages |>
+      dplyr::filter(language %in% languages) |>
+      dplyr::count(gutenberg_id, total_languages)
 
     if (all_languages) {
-      lang_filt <- lang_filt %>%
-        filter(n >= length(languages))
+      lang_filt <- lang_filt |>
+        dplyr::filter(n >= length(languages))
     }
     if (only_languages) {
-      lang_filt <- lang_filt %>%
-        filter(total_languages <= n)
+      lang_filt <- lang_filt |>
+        dplyr::filter(total_languages <= n)
     }
 
-    ret <- ret %>%
-      filter(gutenberg_id %in% lang_filt$gutenberg_id)
+    ret <- ret |>
+      dplyr::filter(gutenberg_id %in% lang_filt$gutenberg_id)
   }
 
   if (!is.null(rights)) {
     .rights <- rights
-    ret <- filter(ret, rights %in% .rights)
+    ret <- dplyr::filter(ret, rights %in% .rights)
   }
 
   if (only_text) {
-    ret <- filter(ret, has_text)
+    ret <- dplyr::filter(ret, has_text)
   }
 
   if (distinct) {
-    ret <- distinct(ret, title, gutenberg_author_id, .keep_all = TRUE)
+    ret <- dplyr::distinct(ret, title, gutenberg_author_id, .keep_all = TRUE)
     # in older versions of dplyr, distinct_ didn't need .keep_all
     if (any(colnames(ret) == ".keep_all")) {
       ret$.keep_all <- NULL # nocov

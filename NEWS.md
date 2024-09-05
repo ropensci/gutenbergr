@@ -1,8 +1,9 @@
 # gutenbergr (development version)
 
-* `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55).
+* `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55, #70).
 * New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
-* The package infrastructure has been updated to make the package more robust and maintainable.
+* The package infrastructure has been updated to make the package more robust and maintainable (#60, #64, #69).
+* We now use the base R pipe (`|>`) in code and examples, not the magrittr pipe (`%>%`) (@jonthegeek, #75).
 
 # gutenbergr 0.2.4
 
