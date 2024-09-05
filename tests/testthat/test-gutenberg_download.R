@@ -29,3 +29,15 @@ test_that("gutenberg_download works", {
   )
   expect_identical(test_result, gutenbergr::sample_books)
 })
+
+test_that("try_gutenberg_download errors informatively with no return", {
+  local_mocked_bindings(
+    read_next = function(url) {
+      return(NULL)
+    }
+  )
+  expect_warning(
+    try_gutenberg_download("https://example.com"),
+    class = "gutenbergr-warning-download_failure"
+  )
+})
