@@ -22,7 +22,6 @@ Imports:
     cli,
     dplyr,
     glue,
-    magrittr,
     purrr,
     readr,
     rlang,

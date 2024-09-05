@@ -38,17 +38,17 @@ run \code{attr(gutenberg_subjects, "date_updated")}.
 library(dplyr)
 library(stringr)
 
-gutenberg_subjects \%>\%
-  filter(subject_type == "lcsh") \%>\%
+gutenberg_subjects |>
+  filter(subject_type == "lcsh") |>
   count(subject, sort = TRUE)
 
-sherlock_holmes_subjects <- gutenberg_subjects \%>\%
+sherlock_holmes_subjects <- gutenberg_subjects |>
   filter(str_detect(subject, "Holmes, Sherlock"))
 
 sherlock_holmes_subjects
 
-sherlock_holmes_metadata <- gutenberg_works() \%>\%
-  filter(author == "Doyle, Arthur Conan") \%>\%
+sherlock_holmes_metadata <- gutenberg_works() |>
+  filter(author == "Doyle, Arthur Conan") |>
   semi_join(sherlock_holmes_subjects, by = "gutenberg_id")
 
 sherlock_holmes_metadata

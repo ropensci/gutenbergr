@@ -50,16 +50,16 @@
 #'
 #' # language specifications
 #'
-#' gutenberg_works(languages = "es") %>%
+#' gutenberg_works(languages = "es") |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es")) %>%
+#' gutenberg_works(languages = c("en", "es")) |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es"), all_languages = TRUE) %>%
+#' gutenberg_works(languages = c("en", "es"), all_languages = TRUE) |>
 #'   count(language, sort = TRUE)
 #'
-#' gutenberg_works(languages = c("en", "es"), only_languages = FALSE) %>%
+#' gutenberg_works(languages = c("en", "es"), only_languages = FALSE) |>
 #'   count(language, sort = TRUE)
 #' }
 #' @export
@@ -85,20 +85,20 @@ gutenberg_works <- function(..., languages = "en",
   ret <- filter(gutenberg_metadata, ...)
 
   if (!is.null(languages)) {
-    lang_filt <- gutenberg_languages %>%
-      filter(language %in% languages) %>%
+    lang_filt <- gutenberg_languages |>
+      filter(language %in% languages) |>
       count(gutenberg_id, total_languages)
 
     if (all_languages) {
-      lang_filt <- lang_filt %>%
+      lang_filt <- lang_filt |>
         filter(n >= length(languages))
     }
     if (only_languages) {
-      lang_filt <- lang_filt %>%
+      lang_filt <- lang_filt |>
         filter(total_languages <= n)
     }
 
-    ret <- ret %>%
+    ret <- ret |>
       filter(gutenberg_id %in% lang_filt$gutenberg_id)
   }
 

@@ -66,7 +66,7 @@ Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find 
 library(dplyr)
 library(gutenbergr)
 
-gutenberg_works() %>%
+gutenberg_works() |>
   filter(title == "Wuthering Heights")
 
 # or just:
@@ -87,14 +87,14 @@ wuthering_heights
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 books
 
-books %>%
+books |>
   count(title)
 ```
 
 It can also take the output of `gutenberg_works` directly. For example, we could get the text of all Aristotle's works, each annotated with both `gutenberg_id` and `title`, using:
 
 ```{r}
-aristotle_books <- gutenberg_works(author == "Aristotle") %>%
+aristotle_books <- gutenberg_works(author == "Aristotle") |>
   gutenberg_download(meta_fields = "title")
 
 aristotle_books

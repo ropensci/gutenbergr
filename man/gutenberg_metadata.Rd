@@ -48,19 +48,19 @@ library(stringr)
 
 gutenberg_metadata
 
-gutenberg_metadata \%>\%
+gutenberg_metadata |>
   count(author, sort = TRUE)
 
 # look for Shakespeare, excluding collections (containing "Works") and
 # translations
-shakespeare_metadata <- gutenberg_metadata \%>\%
+shakespeare_metadata <- gutenberg_metadata |>
   filter(
     author == "Shakespeare, William",
     language == "en",
     !str_detect(title, "Works"),
     has_text,
     !str_detect(rights, "Copyright")
-  ) \%>\%
+  ) |>
   distinct(title)
 
 \donttest{

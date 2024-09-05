@@ -75,16 +75,16 @@ gutenberg_works(author == "Shakespeare, William")
 
 # language specifications
 
-gutenberg_works(languages = "es") \%>\%
+gutenberg_works(languages = "es") |>
   count(language, sort = TRUE)
 
-gutenberg_works(languages = c("en", "es")) \%>\%
+gutenberg_works(languages = c("en", "es")) |>
   count(language, sort = TRUE)
 
-gutenberg_works(languages = c("en", "es"), all_languages = TRUE) \%>\%
+gutenberg_works(languages = c("en", "es"), all_languages = TRUE) |>
   count(language, sort = TRUE)
 
-gutenberg_works(languages = c("en", "es"), only_languages = FALSE) \%>\%
+gutenberg_works(languages = c("en", "es"), only_languages = FALSE) |>
   count(language, sort = TRUE)
 }
 \dontshow{\}) # examplesIf}

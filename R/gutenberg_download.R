@@ -35,7 +35,7 @@
 #'   dplyr::count(books, title)
 #'
 #'   # download all books from Jane Austen
-#'   austen <- gutenberg_works(author == "Austen, Jane") %>%
+#'   austen <- gutenberg_works(author == "Austen, Jane") |>
 #'     gutenberg_download(meta_fields = "title")
 #'   austen
 #'   dplyr::count(austen, title)
