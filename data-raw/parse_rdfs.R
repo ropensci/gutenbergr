@@ -1,10 +1,10 @@
 library(fs)
 library(dplyr)
-library(gutenbergr)
 library(here)
 library(purrr)
 library(stringr)
 library(tibble)
+# library(tictoc)
 library(xml2)
 
 source(here::here("data-raw", "parsers.R"))
@@ -14,6 +14,7 @@ source(here::here("data-raw", "parsers.R"))
 # this timestamp yet, other than to inform users.
 updated <- lubridate::date(lubridate::now(tzone = "UTC"))
 
+# tictoc::tic()
 cache_dir <- download_raw_data()
 rdf_paths <- unname(fs::dir_ls(cache_dir, recurse = TRUE, glob = "*.rdf"))
 
@@ -39,18 +40,6 @@ new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
 new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~ .x$subjects) |>
   dplyr::distinct() |>
   dplyr::arrange(gutenberg_id)
-
-# waldo::compare(nrow(gutenberg_authors), nrow(new_gutenberg_authors))
-# waldo::compare(nrow(gutenberg_subjects), nrow(new_gutenberg_subjects))
-# waldo::compare(nrow(gutenberg_languages), nrow(new_gutenberg_languages))
-# waldo::compare(nrow(gutenberg_metadata), nrow(new_gutenberg_metadata))
-# dplyr::distinct(new_gutenberg_metadata, gutenberg_id, has_text) |>
-#   dplyr::left_join(
-#     dplyr::distinct(gutenberg_metadata, gutenberg_id, has_text),
-#     by = "gutenberg_id"
-#   ) |>
-#   dplyr::filter(has_text.x != has_text.y) |>
-#   dplyr::filter(!has_text.x)
 
 gutenberg_authors <- new_gutenberg_authors
 gutenberg_subjects <- new_gutenberg_subjects
@@ -87,3 +76,4 @@ rm(
   parse_subject,
   updated
 )
+# tictoc::toc()
