@@ -72,15 +72,8 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #' @export
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
-  mirrors_md <- read_url(mirrors_url)
-  tmp <- tempfile(fileext = ".md")
-  writeLines(mirrors_md, tmp)
-  mirrors <- suppressWarnings(
-    readr::read_delim(
-      tmp,
-      delim = "|",
-      trim_ws = TRUE
-    ) |>
+  mirrors <- suppressWarnings( # Table has extra row that causes vroom warning
+    readMDTable::read_md_table(mirrors_url, warn = FALSE) |>
       dplyr::slice(2:(dplyr::n() - 1))
   )
 
