@@ -23,6 +23,7 @@ Imports:
     dplyr,
     glue,
     purrr,
+    readMDTable,
     readr,
     rlang,
     stringr,
