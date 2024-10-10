@@ -149,7 +149,13 @@ read_next <- function(possible_urls) {
   }
 }
 
-
+#' Join metadata fields to Gutenberg works
+#'
+#' @param gutenberg_tbl A two column `tbl_df` from `gutenberg_download`.
+#' @inheritParams gutenberg_download
+#'
+#' @return A `tbl_df` of the Gutenberg works with joined metadata.
+#' @keywords internal
 gutenberg_add_metadata <- function(gutenberg_tbl, meta_fields) {
   meta_fields <- union("gutenberg_id", meta_fields)
   dplyr::left_join(
