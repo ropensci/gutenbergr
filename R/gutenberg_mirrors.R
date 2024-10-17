@@ -32,11 +32,6 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
-  if (parsed$domain == "www.gutenberg.lib.md.us") {
-    # Broken mirror. PG has been contacted. For now, replace:
-    parsed$domain <- "aleph.gutenberg.org" # nocov
-  }
-
   mirror <- unclass(glue::glue_data(parsed, "{scheme}://{domain}"))
   maybe_message(verbose, "Using mirror {mirror}.")
 
