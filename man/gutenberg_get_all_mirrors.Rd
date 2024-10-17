@@ -24,7 +24,13 @@ A tbl_df of Project Gutenberg mirrors and related data
 }
 }
 \description{
-Get all the mirror data from \url{https://www.gutenberg.org/MIRRORS.ALL}
+Get all mirror data from
+\url{https://www.gutenberg.org/MIRRORS.ALL}.
+This only includes mirrors reported to Project
+Gutenberg and verified to be relatively stable.
+For more information on mirroring and getting
+your own mirror listed, see
+\url{https://www.gutenberg.org/help/mirroring.html}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
