@@ -32,11 +32,6 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
-  if (parsed$domain == "www.gutenberg.lib.md.us") {
-    # Broken mirror. PG has been contacted. For now, replace:
-    parsed$domain <- "aleph.gutenberg.org" # nocov
-  }
-
   mirror <- unclass(glue::glue_data(parsed, "{scheme}://{domain}"))
   maybe_message(verbose, "Using mirror {mirror}.")
 
@@ -48,7 +43,13 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 
 #' Get all mirror data from Project Gutenberg
 #'
-#' Get all the mirror data from \url{https://www.gutenberg.org/MIRRORS.ALL}
+#' Get all mirror data from
+#' \url{https://www.gutenberg.org/MIRRORS.ALL}.
+#' This only includes mirrors reported to Project
+#' Gutenberg and verified to be relatively stable.
+#' For more information on mirroring and getting
+#' your own mirror listed, see
+#' \url{https://www.gutenberg.org/help/mirroring.html}.
 #'
 #' @return A tbl_df of Project Gutenberg mirrors and related data
 #' \describe{
