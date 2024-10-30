@@ -23,7 +23,8 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   harvest_url <- "https://www.gutenberg.org/robot/harvest"
   maybe_message(
     verbose,
-    "Determining mirror for Project Gutenberg from {harvest_url}."
+    "Determining mirror for Project Gutenberg from {harvest_url}.",
+    class = "mirror-finding"
   )
   wget_url <- glue::glue("{harvest_url}?filetypes[]=txt")
   lines <- read_url(wget_url)
@@ -33,7 +34,11 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   # parse and leave out the path
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- unclass(glue::glue_data(parsed, "{scheme}://{domain}"))
-  maybe_message(verbose, "Using mirror {mirror}.")
+  maybe_message(
+    verbose,
+    "Using mirror {mirror}.",
+    class = "mirror-found"
+  )
 
   # set option for next time
   options(gutenberg_mirror = mirror)

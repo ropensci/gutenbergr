@@ -58,8 +58,17 @@ discard_end_while <- function(.x, .p) {
   rev(discard_start_while(rev(.x), rev(.p)))
 }
 
-maybe_message <- function(verbose, message, ..., call = rlang::caller_env()) {
+maybe_message <- function(verbose,
+                          message,
+                          class = NULL,
+                          ...,
+                          call = rlang::caller_env()) {
   if (verbose) {
-    cli::cli_inform(message, ..., .envir = call)
+    if (length(class)) {
+      class <- paste0("gutenbergr-msg-", class)
+    } else {
+      class <- "gutenbergr-msg"
+    }
+    cli::cli_inform(message, class = class, ..., .envir = call)
   }
 }
