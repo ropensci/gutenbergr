@@ -2,11 +2,16 @@ test_that("gutenberg_get_mirror works with no option set", {
   local_dl_and_read()
   withr::local_options(gutenberg_mirror = NULL)
   expect_message(
-    expect_identical(
-      gutenberg_get_mirror(),
-      "http://aleph.gutenberg.org"
+    expect_message(
+      expect_identical(
+        gutenberg_get_mirror(),
+        "http://aleph.gutenberg.org"
+      ),
+      "Determining mirror",
+      class = "gutenbergr-msg-mirror-finding"
     ),
-    "Determining mirror"
+    "Using mirror",
+    class = "gutenbergr-msg-mirror-found"
   )
   expect_no_message(
     expect_identical(

@@ -55,7 +55,7 @@ gutenberg_strip <- function(text) {
   )
   while (
     length(text) > 0 &&
-    stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
+      stringr::str_detect(stringr::str_to_lower(text[1]), start_paragraph_regex)
   ) {
     # get rid of that paragraph, then the following whitespace
     text <- discard_start_while(text, text != "")

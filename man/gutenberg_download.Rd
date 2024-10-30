@@ -46,18 +46,18 @@ using \code{\link[=gutenberg_works]{gutenberg_works()}} or the \link{gutenberg_m
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-  # download The Count of Monte Cristo
-  gutenberg_download(1184)
+# download The Count of Monte Cristo
+gutenberg_download(1184)
 
-  # download two books: Wuthering Heights and Jane Eyre
-  books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-  books
-  dplyr::count(books, title)
+# download two books: Wuthering Heights and Jane Eyre
+books <- gutenberg_download(c(768, 1260), meta_fields = "title")
+books
+dplyr::count(books, title)
 
-  # download all books from Jane Austen
-  austen <- gutenberg_works(author == "Austen, Jane") |>
-    gutenberg_download(meta_fields = "title")
-  austen
-  dplyr::count(austen, title)
+# download all books from Jane Austen
+austen <- gutenberg_works(author == "Austen, Jane") |>
+  gutenberg_download(meta_fields = "title")
+austen
+dplyr::count(austen, title)
 \dontshow{\}) # examplesIf}
 }
