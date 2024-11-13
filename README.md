@@ -77,9 +77,9 @@ gutenberg_works() |>
 #>   gutenberg_id title             author        gutenberg_author_id language
 #>          <int> <chr>             <chr>                       <int> <chr>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf                                 rights                    has_text
-#>   <chr>                                               <chr>                     <lgl>   
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books Public domain in the USA. TRUE
+#>   gutenberg_bookshelf                                                                rights has_text
+#>   <chr>                                                                              <chr>  <lgl>   
+#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
@@ -87,9 +87,9 @@ gutenberg_works(title == "Wuthering Heights")
 #>   gutenberg_id title             author        gutenberg_author_id language
 #>          <int> <chr>             <chr>                       <int> <chr>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf                                 rights                    has_text
-#>   <chr>                                               <chr>                     <lgl>   
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books Public domain in the USA. TRUE
+#>   gutenberg_bookshelf                                                                rights has_text
+#>   <chr>                                                                              <chr>  <lgl>   
+#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 ```
 
 Since we see that it has `gutenberg_id` 768, we can download it with the
@@ -213,8 +213,8 @@ See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for the scripts that generate these datasets. As of now, these
 were generated from [the Project Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **29
-November 2023**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **14
+September 2024**.
 
 ### Do you respect the rules regarding robot access to Project Gutenberg?
 
@@ -222,8 +222,8 @@ Yes! The package respects [these
 rules](https://www.gutenberg.org/policy/robot_access.html) and complies
 to the best of our ability. Namely:
 
-- Project Gutenberg allows wget to harvest Project Gutenberg using [this
-  list of
+- Project Gutenberg allows harvesting with automated software using
+  [this list of
   links](https://www.gutenberg.org/robot/harvest?filetypes%5B%5D=html).
   The gutenbergr package visits that page once to find the recommended
   mirror for the user’s location.
@@ -237,8 +237,10 @@ Still, this package is *not* the right way to download the entire
 Project Gutenberg corpus (or all from a particular language). For that,
 follow [their
 recommendation](https://www.gutenberg.org/policy/robot_access.html) to
-use wget or set up a mirror. This package is recommended for downloading
-a single work, or works for a particular author or topic.
+set up a mirror. This package is recommended for downloading a single
+work, or works for a particular author or topic. See their [Terms of
+Service](https://www.gutenberg.org/policy/terms_of_use.html) for
+details.
 
 ## Code of Conduct
 

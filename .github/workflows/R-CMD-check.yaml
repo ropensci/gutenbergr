@@ -48,10 +48,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Install wget (Windows only)
-        if: runner.os == 'Windows'
-        run: choco install wget -y --no-progress
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
