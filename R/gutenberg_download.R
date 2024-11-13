@@ -176,7 +176,7 @@ gutenberg_add_metadata <- function(gutenberg_tbl, meta_fields) {
 }
 
 
-#' Check is `wget` is installed
+#' Check if `wget` is installed
 #'
 #' @return Boolean. Is `wget` installed?
 #' @keywords internal
