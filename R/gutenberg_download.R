@@ -46,6 +46,16 @@ gutenberg_download <- function(gutenberg_id,
                                strip = TRUE,
                                meta_fields = character(),
                                verbose = TRUE) {
+
+  if (!check_wget()) {
+    cli::cli_abort(
+      c(
+        "!" = "wget is not installed",
+        "!" = "See https://www.gutenberg.org/policy/robot_access.html"
+      ),
+      class = "gutenbergr-warning-download_failure"
+    )
+  }
   url <- gutenberg_url(gutenberg_id, mirror, verbose)
   downloaded <- purrr::map(url, try_gutenberg_download)
   downloaded <- purrr::discard(downloaded, is.null)
@@ -163,4 +173,18 @@ gutenberg_add_metadata <- function(gutenberg_tbl, meta_fields) {
     gutenbergr::gutenberg_metadata[meta_fields],
     by = "gutenberg_id"
   )
+}
+
+
+#' Check is `wget` is installed
+#'
+#' @return Boolean. Is `wget` installed?
+#' @keywords internal
+check_wget <- function() {
+  tryCatch({
+    system("wget --version", intern = TRUE)
+    TRUE
+  }, error = function(e) {
+    FALSE
+  })
 }

@@ -1,5 +1,6 @@
 # gutenbergr (development version)
 
+* `gutenberg_download()` uses `wget` (@jrdnbradford, #85).
 * `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55, #70).
 * New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
 * The package infrastructure has been updated to make the package more robust and maintainable (#60, #64, #69).
