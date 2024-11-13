@@ -44,6 +44,9 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
+        if: runner.os == 'Windows'  # Run only on Windows
+        run: |
+          if ! [ -x "$(command -v wget)" ]; then choco install wget -y; fi
         with:
           extra-packages: any::rcmdcheck
           needs: check
