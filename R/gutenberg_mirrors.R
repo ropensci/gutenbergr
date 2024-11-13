@@ -19,15 +19,15 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
     return(mirror)
   }
 
-  # figure out the mirror for this location from wget
-  harvest_url <- "https://www.gutenberg.org/robot/harvest"
+  # figure out the mirror for this location
+  harvest_base_url <- "https://www.gutenberg.org/robot/harvest"
   maybe_message(
     verbose,
-    "Determining mirror for Project Gutenberg from {harvest_url}.",
+    "Determining mirror for Project Gutenberg from {harvest_base_url}.",
     class = "mirror-finding"
   )
-  wget_url <- glue::glue("{harvest_url}?filetypes[]=txt")
-  lines <- read_url(wget_url)
+  harvest_url <- glue::glue("{harvest_base_url}?filetypes[]=txt")
+  lines <- read_url(harvest_url)
   a <- stringr::str_subset(lines, stringr::fixed("<a href="))[1]
   mirror_full_url <- stringr::str_match(a, "href=\"(.*?)\"")[2]
 
