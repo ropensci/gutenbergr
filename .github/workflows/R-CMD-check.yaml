@@ -49,9 +49,9 @@ jobs:
           needs: check
 
       - name: Install wget (Windows only)
-        if: runner.os == 'Windows'  # Run only on Windows
+        if: runner.os == 'Windows'
         run: |
-          if ! [ -x "$(command -v wget)" ]; then choco install wget -y; fi
+            powershell -Command "if (!(Test-Path -Path 'wget' -IsExecutable)) { choco install wget -y }"
 
       - uses: r-lib/actions/check-r-package@v2
         with:
