@@ -46,7 +46,6 @@ gutenberg_download <- function(gutenberg_id,
                                strip = TRUE,
                                meta_fields = character(),
                                verbose = TRUE) {
-
   url <- gutenberg_url(gutenberg_id, mirror, verbose)
   downloaded <- purrr::map(url, try_gutenberg_download)
   downloaded <- purrr::discard(downloaded, is.null)
