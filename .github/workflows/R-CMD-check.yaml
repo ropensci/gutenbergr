@@ -50,8 +50,7 @@ jobs:
 
       - name: Install wget (Windows only)
         if: runner.os == 'Windows'
-        run: |
-            powershell -Command "if (!(Get-Command wget -ErrorAction SilentlyContinue)) { choco install wget -y }"
+        run: choco install wget -y --no-progress
 
       - uses: r-lib/actions/check-r-package@v2
         with:
