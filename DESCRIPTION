@@ -16,20 +16,20 @@ License: GPL-2
 URL: https://docs.ropensci.org/gutenbergr/,
     https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
-Depends: 
+Depends:
     R (>= 4.1)
 Imports:
     cli,
     dplyr,
     glue,
     purrr,
-    readMDTable,
+    readMDTable (>= 0.3.0),
     readr,
     rlang,
     stringr,
     tibble,
     urltools
-Suggests: 
+Suggests:
     curl,
     knitr,
     rmarkdown,
@@ -37,7 +37,7 @@ Suggests:
     tidyr,
     tidytext,
     withr
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
