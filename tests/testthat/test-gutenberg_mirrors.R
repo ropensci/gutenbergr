@@ -29,9 +29,34 @@ test_that("gutenberg_get_mirror respects verbose", {
 
 test_that("gutenberg_get_mirror uses existing option", {
   local_dl_and_read()
-  withr::local_options(gutenberg_mirror = "mirror")
+  withr::local_options(gutenberg_mirror = "https://gutenberg.pglaf.org")
   expect_identical(
-    gutenberg_get_mirror(), "mirror"
+    gutenberg_get_mirror(), "https://gutenberg.pglaf.org"
+  )
+})
+
+test_that("gutenberg_get_mirror catches bad option", {
+  withr::local_options(gutenberg_mirror = "https://not-a-gutenberg-mirror.org")
+  expect_message(
+    expect_message(
+      expect_message(
+        gutenberg_get_mirror(),
+        "Checking for new mirror", class = "gutenbergr-msg-mirror-refresh"
+      ), "Determining mirror", class = "gutenbergr-msg-mirror-finding"
+    ), "Using mirror", class = "gutenbergr-msg-mirror-found"
+  )
+})
+
+test_that("is_working_gutenberg_mirror catches working mirror", {
+  local_dl_and_read()
+  expect_true(
+    is_working_gutenberg_mirror("https://gutenberg.pglaf.org")
+  )
+})
+
+test_that("is_working_gutenberg_mirror catches non-working mirror", {
+  expect_false(
+    is_working_gutenberg_mirror("https://www.not-gutenberg.org")
   )
 })
 

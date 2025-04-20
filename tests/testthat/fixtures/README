@@ -1,0 +1,48 @@
+This is the top level directory for the source files for Project
+Gutenberg eBooks.  If you are having trouble figuring out what to do,
+or how to find an eBook, you should probably visit this Web page:
+
+        https://www.gutenberg.org
+
+or find the various search tools here:
+
+	https://www.gutenberg.org/ebooks
+
+You can also read the GUTINDEX.ALL file in this location for an
+explanation of file names, a listing of all eBooks, and instructions
+for finding them.
+
+All eBooks are arranged by eBook number, with a unique subdirectory
+based on that eBook number (starting with numbers 1-9).  To get to the
+files for a particular eBook, you need to "drill down" a few
+subdirectory levels.  For example, eBook #11 is in this subdirectory:
+
+        1/11
+
+and eBook #12714 is in this subdirectory:
+        1/2/7/1/12714
+
+As of October 2023, the Project Gutenberg website presents
+automatically generated formats of all eBooks for which plain text
+(.txt) or HTML (.htm) are available. That means that usually the files
+under the numbered subdirectories are not presented - instead, files
+under cache/epub/ are.
+
+For example, here is the landing page for Alice's Adventures
+in Wonderland:
+
+	https://www.gutenberg.org/ebooks/11
+
+The HTML link goes to this page:
+
+	https://www.gutenberg.org/cache/epub/11/pg11-images.html
+
+The cache/epub files are where automatically generated content goes.
+These have the full proper metadata, headers, and footers. HTML
+is automatically promoted to HTML version 5 when needed, and plain text
+is automatically promoted to the Unicode character set when needed.
+
+Downstream consumers of the Project Gutenberg collection may wish
+to consider leveraging cache/epub rather than the files in the numeric
+subdirectory. Both are freely available. See the "mirroring how-to" at
+www.gutenberg.org for details.

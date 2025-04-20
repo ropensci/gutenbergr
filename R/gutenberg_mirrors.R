@@ -16,7 +16,19 @@
 gutenberg_get_mirror <- function(verbose = TRUE) {
   mirror <- getOption("gutenberg_mirror")
   if (!is.null(mirror)) {
-    return(mirror)
+    if (is_working_gutenberg_mirror(mirror)) {
+      return(mirror)
+    } else {
+      maybe_message(
+        verbose,
+        paste0(
+          "Mirror {mirror} set by options(gutenberg_mirror = {mirror}) is not ",
+          "accessible. It may not be a Gutenberg mirror or may longer be ",
+          "maintained. Checking for new mirror."
+        ),
+        class = "mirror-refresh"
+      )
+    }
   }
 
   # figure out the mirror for this location
@@ -86,4 +98,21 @@ gutenberg_get_all_mirrors <- function() {
   )
 
   return(mirrors)
+}
+
+#' Check if an http(s) or ftp(s) `url` resolves to a working Gutenberg mirror.
+#'
+#' Checks for a root level `README` file at `url` with reference to
+#' `GUTINDEX.ALL`. If this exists, `url` is most likely a working
+#' Gutenberg mirror.
+#'
+#' @return Boolean: whether the `url` resolves to a mirror.
+#'
+#' @keywords internal
+is_working_gutenberg_mirror <- function(url) {
+  base_url <- sub("/+$", "", url)
+  readme_url <- paste0(base_url, "/README")
+  readme <- read_url(readme_url)
+  contains_pg_string <- any(grepl("GUTINDEX.ALL", readme))
+  contains_pg_string
 }
