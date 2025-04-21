@@ -88,11 +88,12 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
   mirrors <- suppressWarnings( # Table has extra row that causes vroom warning
-    readMDTable::read_md_table(
+    read_md_table(
       mirrors_url,
       warn = FALSE,
       force = TRUE,
-      show_col_types = FALSE) |>
+      show_col_types = FALSE
+    ) |>
       dplyr::slice(2:(dplyr::n() - 1)
     )
   )

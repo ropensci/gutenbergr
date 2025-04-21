@@ -61,7 +61,24 @@ test_that("is_working_gutenberg_mirror catches non-working mirror", {
 })
 
 test_that("gutenberg_get_all_mirrors works", {
-  local_dl_and_read()
+  # mirror_table_raw <- suppressWarnings(read_md_table(
+  #   mirrors_url,
+  #   warn = FALSE,
+  #   force = TRUE,
+  #   show_col_types = FALSE
+  # ))
+  # saveRDS(mirror_table_raw, test_path("fixtures", "mirror_table_raw.rds"))
+
+  local_mocked_bindings(
+    read_md_table = function(file, ...) {
+      if (file == "https://www.gutenberg.org/MIRRORS.ALL") {
+        return(
+          readRDS(test_path("fixtures", "mirror_table_raw.rds"))
+        )
+      }
+      stop("Unexpected path.")
+    }
+  )
   mirrors <- gutenberg_get_all_mirrors()
   expect_true(inherits(mirrors, "data.frame"))
   expect_true(inherits(mirrors, "tbl_df"))
