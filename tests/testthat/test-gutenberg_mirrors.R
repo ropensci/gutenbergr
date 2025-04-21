@@ -85,3 +85,15 @@ test_that("gutenberg_get_all_mirrors works", {
   expect_equal(ncol(mirrors), 6)
   expect_true(nrow(mirrors) > 10)
 })
+
+test_that("gutenberg_get_all_mirrors errors for weird warnings", {
+  local_mocked_bindings(
+    read_md_table = function(file, ...) {
+      warning("Some other warning")
+    }
+  )
+  expect_error(
+    gutenberg_get_all_mirrors(),
+    class = "gutenbergr-error-mirror_table_reading"
+  )
+})

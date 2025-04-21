@@ -87,16 +87,22 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #' @export
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
-  mirrors <- suppressWarnings( # Table has extra row that causes vroom warning
-    read_md_table(
-      mirrors_url,
-      warn = FALSE,
-      force = TRUE,
-      show_col_types = FALSE
-    ) |>
-      dplyr::slice(2:(dplyr::n() - 1)
-    )
+  mirrors <- purrr::quietly(read_md_table)(
+    mirrors_url,
+    warn = FALSE,
+    force = TRUE,
+    show_col_types = FALSE
   )
+  if (length(mirrors$warnings) && !(
+    length(mirrors$warnings) == 1 &&
+    all(stringr::str_detect(mirrors$warnings, "One or more parsing issues"))
+  )) {
+    cli::cli_abort(
+      "Unexpected warning in {.code read_md_table()}.",
+      class = "gutenbergr-error-mirror_table_reading"
+    )
+  }
+  mirrors <-  dplyr::slice(mirrors$result, 2:(dplyr::n() - 1))
 
   return(mirrors)
 }
