@@ -16,7 +16,19 @@
 gutenberg_get_mirror <- function(verbose = TRUE) {
   mirror <- getOption("gutenberg_mirror")
   if (!is.null(mirror)) {
-    return(mirror)
+    if (is_working_gutenberg_mirror(mirror)) {
+      return(mirror)
+    } else {
+      maybe_message(
+        verbose,
+        paste0(
+          "Mirror {mirror} set by options(gutenberg_mirror = {mirror}) is not ",
+          "accessible. It may not be a Gutenberg mirror or may longer be ",
+          "maintained. Checking for new mirror."
+        ),
+        class = "mirror-refresh"
+      )
+    }
   }
 
   # figure out the mirror for this location
@@ -75,15 +87,39 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #' @export
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
-  mirrors <- suppressWarnings( # Table has extra row that causes vroom warning
-    readMDTable::read_md_table(
-      mirrors_url,
-      warn = FALSE,
-      force = TRUE,
-      show_col_types = FALSE) |>
-      dplyr::slice(2:(dplyr::n() - 1)
-    )
+  mirrors <- purrr::quietly(read_md_table)(
+    mirrors_url,
+    warn = FALSE,
+    force = TRUE,
+    show_col_types = FALSE
   )
+  if (length(mirrors$warnings) && !(
+    length(mirrors$warnings) == 1 &&
+    all(stringr::str_detect(mirrors$warnings, "One or more parsing issues"))
+  )) {
+    cli::cli_abort(
+      "Unexpected warning in {.code read_md_table()}.",
+      class = "gutenbergr-error-mirror_table_reading"
+    )
+  }
+  mirrors <-  dplyr::slice(mirrors$result, 2:(dplyr::n() - 1))
 
   return(mirrors)
+}
+
+#' Check if an http(s) or ftp(s) `url` resolves to a working Gutenberg mirror.
+#'
+#' Checks for a root level `README` file at `url` with reference to
+#' `GUTINDEX.ALL`. If this exists, `url` is most likely a working
+#' Gutenberg mirror.
+#'
+#' @return Boolean: whether the `url` resolves to a mirror.
+#'
+#' @keywords internal
+is_working_gutenberg_mirror <- function(url) {
+  base_url <- sub("/+$", "", url)
+  readme_url <- paste0(base_url, "/README")
+  readme <- read_url(readme_url)
+  contains_pg_string <- any(grepl("GUTINDEX.ALL", readme))
+  contains_pg_string
 }
