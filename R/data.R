@@ -1,13 +1,11 @@
 #' Gutenberg metadata about each work
 #'
-#' Selected fields of metadata about each of the Project Gutenberg works. These
-#' were collected using the gitenberg Python package, particularly the
-#' \code{pg_rdf_to_json} function.
+#' Selected fields of metadata about each of the Project Gutenberg works.
 #'
 #' @details To find the date on which this metadata was last updated, run
-#'   \code{attr(gutenberg_metadata, "date_updated")}.
+#'   `attr(gutenberg_metadata, "date_updated")`.
 #'
-#' @format A tbl_df (see tibble or dplyr) with one row for each work in Project
+#' @format A [tibble::tibble()] with one row for each work in Project
 #'   Gutenberg and the following columns:
 #' \describe{
 #'   \item{gutenberg_id}{Numeric ID, used to retrieve works from
@@ -25,9 +23,9 @@
 #'   (the most common by far), "Copyrighted. Read the copyright notice inside
 #'   this book for details.", or "None"}
 #'   \item{has_text}{Whether there is a file containing digits followed by
-#'   \code{.txt} in Project Gutenberg for this record (as opposed to, for
+#'   `.txt` in Project Gutenberg for this record (as opposed to, for
 #'   example, audiobooks). If not, cannot be retrieved with
-#'   \code{\link{gutenberg_download}}}
+#'   [gutenberg_download()]}
 #' }
 #'
 #' @examplesIf interactive()
@@ -51,10 +49,6 @@
 #'     !str_detect(rights, "Copyright")
 #'   ) |>
 #'   distinct(title)
-#'
-#' \donttest{
-#' shakespeare_works <- gutenberg_download(shakespeare_metadata$gutenberg_id)
-#' }
 #'
 #' # note that the gutenberg_works() function filters for English
 #' # non-copyrighted works and does de-duplication by default:

@@ -4,6 +4,7 @@
 * New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
 * The package infrastructure has been updated to make the package more robust and maintainable (#60, #64, #69).
 * We now use the base R pipe (`|>`) in code and examples, not the magrittr pipe (`%>%`) (@jonthegeek, #75).
+* Some fields (`gutenberg_languages$language`, `gutenberg_metadata$language`, and `gutenberg_metadata$rights`) are now factors to reduce object size.
 
 # gutenbergr 0.2.4
 

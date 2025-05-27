@@ -12,3 +12,5 @@ usethis::use_data(sample_books, overwrite = TRUE, compress = "bzip2")
 # Fix format.
 # tools::resaveRdaFiles("data/")
 # tools::checkRdaFiles("data/")
+
+rm(sample_books)

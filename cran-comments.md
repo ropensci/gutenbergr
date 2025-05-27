@@ -1,40 +1,7 @@
-## gutenbergr 2.3.4
-
-This release is a re-submission after gutenbergr 2.3.0 was archived.
-
-## Changes
-
-Minor changes:
-
-* Some examples in `gutenberg_download()`, `gutenberg_works.R`, and `data.R` have been updated to `@examplesIf interactive()` and/or wrapped in `/donttest` to address graceful failure while preserving the interactive intent of the functions.
-* urls in the README have been updated where necessary
-
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 1 warnings | 2 note
 
-* Package was archived on CRAN for policy violation On Internet access. 
-* installed size is 5.3MB; sub-directories of 1Mb or more: data (4.9Mb). This due to the data requirements of the package and the text files from Project Gutenberg for use in the examples. We will strive to further reduce the size of the installed package in the next major release.
-
-
-## Test environments
-
-* local OS X install, R 4.3.2
-    2 NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
-
-* Windows Server 2022 x64 (build 20348)
-    NOTE: New submission
-
-New submission
-
-Package was archived on CRAN
-
-CRAN repository db overrides:
-  X-CRAN-Comment: Archived on 2023-08-10 for policy violation.
-
-## revdepcheck results
-
-We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
-
- * We saw 0 new problems
- * We failed to check 0 packages
+* Warning is this: "LaTeX errors when creating PDF version. This typically indicates Rd problems. LaTeX errors found:". There isn't anything after the ":". My current suspicion is that it's an artefact from old-style documentation. I'm rewriting documentation to try to remove this warning.
+* Note 1: Maintainer change from Myfanwy Johnston <mrowlan1@gmail.com> to Jon Harmon <jonthegeek@gmail.com>. Myfanwy will send an email confirming the change.
+* Note 2: non-standard file found in check directory: 'gutenbergr-manual.tex'. I suspect this is related to the warning, and hope to eliminate both.
