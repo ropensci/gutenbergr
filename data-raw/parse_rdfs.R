@@ -31,15 +31,21 @@ new_gutenberg_authors <- purrr::map(all_metadata, ~ .x$authors) |>
 new_gutenberg_languages <- purrr::map(all_metadata, ~ .x$languages) |>
   purrr::list_rbind() |>
   dplyr::distinct() |>
-  dplyr::arrange(gutenberg_id, language)
+  dplyr::arrange(gutenberg_id, language) |>
+  dplyr::mutate(lanuage = as.factor(language))
 
 new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
   purrr::list_rbind() |>
-  dplyr::arrange(gutenberg_id, gutenberg_author_id)
+  dplyr::arrange(gutenberg_id, gutenberg_author_id) |>
+  dplyr::mutate(
+    language = as.factor(language),
+    rights = as.factor(rights)
+  )
 
 new_gutenberg_subjects <- purrr::map_dfr(all_metadata, ~ .x$subjects) |>
   dplyr::distinct() |>
-  dplyr::arrange(gutenberg_id)
+  dplyr::arrange(gutenberg_id) |>
+  dplyr::mutate(subject_type = as.factor(subject_type))
 
 gutenberg_authors <- new_gutenberg_authors
 gutenberg_subjects <- new_gutenberg_subjects
@@ -55,6 +61,10 @@ usethis::use_data(gutenberg_authors, overwrite = TRUE, compress = "xz")
 usethis::use_data(gutenberg_languages, overwrite = TRUE, compress = "bzip2")
 usethis::use_data(gutenberg_metadata, overwrite = TRUE, compress = "xz")
 usethis::use_data(gutenberg_subjects, overwrite = TRUE, compress = "xz")
+
+# Fix format.
+# tools::resaveRdaFiles("data/")
+# tools::checkRdaFiles("data/")
 
 # Clean up.
 unlink(cache_dir, recursive = TRUE)

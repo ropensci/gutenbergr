@@ -1,7 +1,5 @@
 ---
 title: "gutenbergr: Search and download public domain texts from Project Gutenberg"
-author: "David Robinson, Myfanwy Johnston"
-data: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{gutenbergr: Search and download public domain texts from Project Gutenberg}
@@ -72,10 +70,7 @@ The meta-data currently in the package was last updated on **`r format(attr(gute
 The function `gutenberg_download()` downloads one or more works from Project Gutenberg based on their ID. For example, we earlier saw that one version of _Persuasion_ has ID 105 (see [the URL here](https://www.gutenberg.org/ebooks/105)), so `gutenberg_download(105)` downloads this text.
 
 ```{r load 1 file, echo=FALSE}
-f105 <- system.file("extdata", "105.zip", package = "gutenbergr")
-persuasion <- gutenberg_download(105,
-  mirror = "http://aleph.gutenberg.org"
-)
+persuasion <- dplyr::filter(gutenbergr::sample_books, gutenberg_id == 105)
 ```
 
 

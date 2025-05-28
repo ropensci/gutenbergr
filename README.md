@@ -75,20 +75,20 @@ gutenberg_works() |>
   filter(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <chr>   
+#>          <int> <chr>             <chr>                       <int> <fct>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <chr>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>   
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <chr>   
+#>          <int> <chr>             <chr>                       <int> <fct>   
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en      
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <chr>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>   
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 ```
 
@@ -213,8 +213,8 @@ See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for the scripts that generate these datasets. As of now, these
 were generated from [the Project Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **14
-September 2024**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **27
+May 2025**.
 
 ### Do you respect the rules regarding robot access to Project Gutenberg?
 

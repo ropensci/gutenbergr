@@ -1,40 +1,12 @@
-## gutenbergr 2.3.4
-
-This release is a re-submission after gutenbergr 2.3.0 was archived.
-
-## Changes
-
-Minor changes:
-
-* Some examples in `gutenberg_download()`, `gutenberg_works.R`, and `data.R` have been updated to `@examplesIf interactive()` and/or wrapped in `/donttest` to address graceful failure while preserving the interactive intent of the functions.
-* urls in the README have been updated where necessary
-
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
-* Package was archived on CRAN for policy violation On Internet access. 
-* installed size is 5.3MB; sub-directories of 1Mb or more: data (4.9Mb). This due to the data requirements of the package and the text files from Project Gutenberg for use in the examples. We will strive to further reduce the size of the installed package in the next major release.
-
-
-## Test environments
-
-* local OS X install, R 4.3.2
-    2 NOTEs: installed package size, found marked UTF-8 strings in the data directory. These strings are in the metadata from Project Gutenberg.
-
-* Windows Server 2022 x64 (build 20348)
-    NOTE: New submission
-
-New submission
-
-Package was archived on CRAN
-
-CRAN repository db overrides:
-  X-CRAN-Comment: Archived on 2023-08-10 for policy violation.
+* Note: Maintainer change from Myfanwy Johnston <mrowlan1@gmail.com> to Jon Harmon <jonthegeek@gmail.com>. Myfanwy agreed to the change, but they are no longer active on GitHub and have not replied to emails asking them to alert you about the change. You can see their approval of the maintainer change back in December 2023 on GitHub: https://github.com/ropensci/gutenbergr/pull/51#pullrequestreview-1773485496
 
 ## revdepcheck results
 
-We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
