@@ -3,6 +3,7 @@
 * `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55, #70).
 * New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
 * The package infrastructure has been updated to make the package more robust and maintainable (#60, #64, #69).
+* We now verify that the `gutenberg_mirror` `option` is a URL to a working Gutenberg mirror (@jrdnbradford, #83).
 * We now use the base R pipe (`|>`) in code and examples, not the magrittr pipe (`%>%`) (@jonthegeek, #75).
 * Some fields (`gutenberg_languages$language`, `gutenberg_metadata$language`, and `gutenberg_metadata$rights`) are now factors to reduce object size.
 
