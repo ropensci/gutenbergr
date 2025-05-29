@@ -23,7 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Myfanwy Johnston \email{mrowlan1@gmail.com}
-  \item Jordan Bradford \email{jrdnbradford@gmail.com}
+  \item Jordan Bradford \email{jrdnbradford@gmail.com} (\href{https://orcid.org/0009-0000-8570-3474}{ORCID})
   \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 

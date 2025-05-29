@@ -5,7 +5,8 @@ Authors@R: c(
     person("Jon", "Harmon", , "jonthegeek@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4781-4346")),
     person("Myfanwy", "Johnston", , "mrowlan1@gmail.com", role = "aut"),
-    person("Jordan", "Bradford", , "jrdnbradford@gmail.com", role = "aut"),
+    person("Jordan", "Bradford", , "jrdnbradford@gmail.com", role = "aut",
+           comment = c(ORCID = "0009-0000-8570-3474")),
     person("David", "Robinson", , "admiral.david@gmail.com", role = c("aut", "cph"))
   )
 Description: Download and process public domain works in the Project
