@@ -1,4 +1,4 @@
-# gutenbergr (development version)
+# gutenbergr 0.3.0
 
 * `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55, #70).
 * New function `gutenberg_get_all_mirrors()` retrieves all mirror data (@jrdnbradford, #58).
