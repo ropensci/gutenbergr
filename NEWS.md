@@ -35,7 +35,7 @@
 
 * Make compatible with tidyr v1.0.0
 * data_frame is deprecated, use tibble (thanks @evanodell for #21)
-* ROpenSci updates to README (thanks @maelle for #23)
+* rOpenSci updates to README (thanks @maelle for #23)
 
 # gutenbergr 0.1.4
 
@@ -60,7 +60,7 @@
 * Added `all_languages` and `only_languages` arguments to `gutenberg_works`, allowing fine-grained control of languages. (For example, "either English or French" or "both English and French")
 * Changed get_gutenberg_mirror to use xml2 directly, in order to handle AppVeyor
 * Removed use of data() in `gutenberg_works`, since it slows down `gutenberg_works` about 2X
-* Various documentation, vignette, and README adjustments in response to ROpenSci feedback.
+* Various documentation, vignette, and README adjustments in response to rOpenSci feedback.
 * Added AppVeyor for Windows continuous integration
 * Added code coverage information through codecov.io and covr, along with tests to improve coverage
 
