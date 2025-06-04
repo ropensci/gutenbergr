@@ -32,7 +32,7 @@ new_gutenberg_languages <- purrr::map(all_metadata, ~ .x$languages) |>
   purrr::list_rbind() |>
   dplyr::distinct() |>
   dplyr::arrange(gutenberg_id, language) |>
-  dplyr::mutate(lanuage = as.factor(language))
+  dplyr::mutate(language = as.factor(language))
 
 new_gutenberg_metadata <- purrr::map(all_metadata, ~ .x$metadata) |>
   purrr::list_rbind() |>
