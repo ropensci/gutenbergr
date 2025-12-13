@@ -42,7 +42,10 @@ test_that("gutenberg_works does appropriate filtering by language", {
   expect_true(any(w_en_fr_all_not_only$language == "en/es/fr"))
 
   en_es <- gutenberg_works(languages = c("en", "es"))
-  expect_equal(sort(unique(as.character(en_es$language))), c("en", "en/es", "es"))
+  expect_equal(
+    sort(unique(as.character(en_es$language))),
+    c("en", "en/es", "es")
+  )
 })
 
 

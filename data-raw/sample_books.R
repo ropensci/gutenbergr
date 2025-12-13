@@ -5,7 +5,7 @@ devtools::load_all(".")
 sample_books <- gutenberg_download(
   c(109, 105),
   meta_fields = c("title", "author"),
-  mirror = "http://aleph.gutenberg.org"
+  mirror = "https://aleph.pglaf.org/"
 )
 usethis::use_data(sample_books, overwrite = TRUE, compress = "bzip2")
 

@@ -63,12 +63,15 @@
 #'   count(language, sort = TRUE)
 #' }
 #' @export
-gutenberg_works <- function(..., languages = "en",
-                            only_text = TRUE,
-                            rights = c("Public domain in the USA.", "None"),
-                            distinct = TRUE,
-                            all_languages = FALSE,
-                            only_languages = TRUE) {
+gutenberg_works <- function(
+  ...,
+  languages = "en",
+  only_text = TRUE,
+  rights = c("Public domain in the USA.", "None"),
+  distinct = TRUE,
+  all_languages = FALSE,
+  only_languages = TRUE
+) {
   rlang::check_dots_unnamed(
     error = function(e) {
       cli::cli_abort(
@@ -86,37 +89,37 @@ gutenberg_works <- function(..., languages = "en",
 
   if (!is.null(languages)) {
     lang_filt <- gutenberg_languages |>
-      dplyr::filter(language %in% languages) |>
-      dplyr::count(gutenberg_id, total_languages)
+      dplyr::filter(.data$language %in% languages) |>
+      dplyr::count(.data$gutenberg_id, .data$total_languages)
 
     if (all_languages) {
       lang_filt <- lang_filt |>
-        dplyr::filter(n >= length(languages))
+        dplyr::filter(.data$n >= length(languages))
     }
     if (only_languages) {
       lang_filt <- lang_filt |>
-        dplyr::filter(total_languages <= n)
+        dplyr::filter(.data$total_languages <= n)
     }
 
     ret <- ret |>
-      dplyr::filter(gutenberg_id %in% lang_filt$gutenberg_id)
+      dplyr::semi_join(lang_filt, by = "gutenberg_id")
   }
 
   if (!is.null(rights)) {
-    .rights <- rights
-    ret <- dplyr::filter(ret, rights %in% .rights)
+    ret <- dplyr::filter(ret, .data$rights %in% .env$rights)
   }
 
   if (only_text) {
-    ret <- dplyr::filter(ret, has_text)
+    ret <- dplyr::filter(ret, .data$has_text)
   }
 
   if (distinct) {
-    ret <- dplyr::distinct(ret, title, gutenberg_author_id, .keep_all = TRUE)
-    # in older versions of dplyr, distinct_ didn't need .keep_all
-    if (any(colnames(ret) == ".keep_all")) {
-      ret$.keep_all <- NULL # nocov
-    }
+    ret <- dplyr::distinct(
+      ret,
+      .data$title,
+      .data$gutenberg_author_id,
+      .keep_all = TRUE
+    )
   }
 
   ret

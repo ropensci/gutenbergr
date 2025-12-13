@@ -2,13 +2,9 @@ test_that("gutenberg_get_mirror works with no option set", {
   local_dl_and_read()
   withr::local_options(gutenberg_mirror = NULL)
   expect_message(
-    expect_message(
-      expect_identical(
-        gutenberg_get_mirror(),
-        "http://aleph.gutenberg.org"
-      ),
-      "Determining mirror",
-      class = "gutenbergr-msg-mirror-finding"
+    expect_identical(
+      gutenberg_get_mirror(),
+      "https://aleph.pglaf.org"
     ),
     "Using mirror",
     class = "gutenbergr-msg-mirror-found"
@@ -16,7 +12,7 @@ test_that("gutenberg_get_mirror works with no option set", {
   expect_no_message(
     expect_identical(
       gutenberg_get_mirror(),
-      "http://aleph.gutenberg.org"
+      "https://aleph.pglaf.org"
     )
   )
 })
@@ -31,7 +27,8 @@ test_that("gutenberg_get_mirror uses existing option", {
   local_dl_and_read()
   withr::local_options(gutenberg_mirror = "https://gutenberg.pglaf.org")
   expect_identical(
-    gutenberg_get_mirror(), "https://gutenberg.pglaf.org"
+    gutenberg_get_mirror(),
+    "https://gutenberg.pglaf.org"
   )
 })
 
@@ -39,11 +36,12 @@ test_that("gutenberg_get_mirror catches bad option", {
   withr::local_options(gutenberg_mirror = "https://not-a-gutenberg-mirror.org")
   expect_message(
     expect_message(
-      expect_message(
-        gutenberg_get_mirror(),
-        "Checking for new mirror", class = "gutenbergr-msg-mirror-refresh"
-      ), "Determining mirror", class = "gutenbergr-msg-mirror-finding"
-    ), "Using mirror", class = "gutenbergr-msg-mirror-found"
+      gutenberg_get_mirror(),
+      "Checking for new mirror",
+      class = "gutenbergr-msg-mirror-refresh"
+    ),
+    "Using mirror",
+    class = "gutenbergr-msg-mirror-found"
   )
 })
 

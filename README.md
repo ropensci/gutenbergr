@@ -68,8 +68,11 @@ Suppose we wanted to download Emily Bronte’s “Wuthering Heights.” We
 could find the book’s ID by filtering:
 
 ``` r
-library(dplyr)
 library(gutenbergr)
+library(dplyr)
+conflicted::conflict_prefer_all("dplyr", quiet = TRUE)
+gutenberg_get_mirror()
+#> [1] "https://aleph.pglaf.org"
 
 gutenberg_works() |>
   filter(title == "Wuthering Heights")

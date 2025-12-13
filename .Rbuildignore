@@ -9,3 +9,5 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^revdep$
+^[.]?air[.]toml$
+^\.vscode$

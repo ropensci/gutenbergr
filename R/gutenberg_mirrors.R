@@ -31,19 +31,17 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
     }
   }
 
-  # figure out the mirror for this location
-  harvest_base_url <- "https://www.gutenberg.org/robot/harvest"
-  maybe_message(
-    verbose,
-    "Determining mirror for Project Gutenberg from {harvest_base_url}.",
-    class = "mirror-finding"
-  )
-  harvest_url <- glue::glue("{harvest_base_url}?filetypes[]=txt")
-  lines <- read_url(harvest_url)
-  a <- stringr::str_subset(lines, stringr::fixed("<a href="))[1]
-  mirror_full_url <- stringr::str_match(a, "href=\"(.*?)\"")[2]
+  # Default to mirror maintained by Project Gutenberg
+  all_mirrors <- gutenberg_get_all_mirrors()
+  mirror_full_url <- dplyr::filter(
+    all_mirrors,
+    .data$provider == "Project Gutenberg",
+    stringr::str_starts(.data$url, "https")
+  ) |>
+    utils::head(1) |>
+    dplyr::pull(.data$url)
 
-  # parse and leave out the path
+  # parse and leave out any path
   parsed <- urltools::url_parse(mirror_full_url)
   mirror <- unclass(glue::glue_data(parsed, "{scheme}://{domain}"))
   maybe_message(
@@ -93,16 +91,20 @@ gutenberg_get_all_mirrors <- function() {
     force = TRUE,
     show_col_types = FALSE
   )
-  if (length(mirrors$warnings) && !(
-    length(mirrors$warnings) == 1 &&
-    all(stringr::str_detect(mirrors$warnings, "One or more parsing issues"))
-  )) {
+  if (
+    length(mirrors$warnings) &&
+      !(length(mirrors$warnings) == 1 &&
+        all(stringr::str_detect(
+          mirrors$warnings,
+          "One or more parsing issues"
+        )))
+  ) {
     cli::cli_abort(
       "Unexpected warning in {.code read_md_table()}.",
       class = "gutenbergr-error-mirror_table_reading"
     )
   }
-  mirrors <-  dplyr::slice(mirrors$result, 2:(dplyr::n() - 1))
+  mirrors <- dplyr::slice(mirrors$result, 2:(dplyr::n() - 1))
 
   return(mirrors)
 }

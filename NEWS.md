@@ -1,5 +1,8 @@
 # gutenbergr (development version)
 
+* The `lanuage` column in `gutenberg_languages` is now properly merged with the `language` column (#94).
+* The default mirror is now determined from the available mirrors in `gutenberg_get_all_mirrors()`, rather than trying to be clever and find a local mirror.
+
 # gutenbergr 0.3.0
 
 * `gutenberg_download()` tries the `.txt` version of files when the `.zip` is unavailable (@jrdnbradford, #55, #70).

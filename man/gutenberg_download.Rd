@@ -6,7 +6,7 @@
 \usage{
 gutenberg_download(
   gutenberg_id,
-  mirror = NULL,
+  mirror = gutenberg_get_mirror(verbose = verbose),
   strip = TRUE,
   meta_fields = character(),
   verbose = TRUE
@@ -45,7 +45,7 @@ interest or multiple at a time. You can look up the Gutenberg IDs of a work
 using \code{\link[=gutenberg_works]{gutenberg_works()}} or the \link{gutenberg_metadata} dataset.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # download The Count of Monte Cristo
 gutenberg_download(1184)
 
