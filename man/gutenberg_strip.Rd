@@ -19,7 +19,7 @@ will also not strip tables of contents, prologues, or other text
 that appears at the start of a book.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 book <- gutenberg_works(title == "Pride and Prejudice") |>
   gutenberg_download(strip = FALSE)

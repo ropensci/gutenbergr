@@ -28,7 +28,8 @@ gutenberg_strip <- function(text) {
 
   starting_regex <- "(^\\*\\*\\*.*PROJECT GUTENBERG|END.*SMALL PRINT)"
   text <- discard_start_while(
-    text, !stringr::str_detect(text, starting_regex)
+    text,
+    !stringr::str_detect(text, starting_regex)
   )[-1]
   # also discard rest of "paragraph"
   text <- discard_start_while(text, text != "")

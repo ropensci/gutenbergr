@@ -15,7 +15,8 @@ read_url <- function(url) {
 #'
 #' @return A character vector with one element for each line.
 #' @keywords internal
-dl_and_read <- function(url) { # nocov start
+dl_and_read <- function(url) {
+  # nocov start
   mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
   tmp <- tempfile()
   on.exit(unlink(tmp))
@@ -58,11 +59,13 @@ discard_end_while <- function(.x, .p) {
   rev(discard_start_while(rev(.x), rev(.p)))
 }
 
-maybe_message <- function(verbose,
-                          message,
-                          class = NULL,
-                          ...,
-                          call = rlang::caller_env()) {
+maybe_message <- function(
+  verbose,
+  message,
+  class = NULL,
+  ...,
+  call = rlang::caller_env()
+) {
   if (verbose) {
     if (length(class)) {
       class <- paste0("gutenbergr-msg-", class)

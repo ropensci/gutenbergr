@@ -58,7 +58,7 @@ attr(gutenberg_metadata, "date_updated") <- updated
 attr(gutenberg_subjects, "date_updated") <- updated
 
 usethis::use_data(gutenberg_authors, overwrite = TRUE, compress = "xz")
-usethis::use_data(gutenberg_languages, overwrite = TRUE, compress = "bzip2")
+usethis::use_data(gutenberg_languages, overwrite = TRUE, compress = "xz")
 usethis::use_data(gutenberg_metadata, overwrite = TRUE, compress = "xz")
 usethis::use_data(gutenberg_subjects, overwrite = TRUE, compress = "xz")
 

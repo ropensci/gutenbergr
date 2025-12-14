@@ -30,7 +30,7 @@ relatively stable. For more information on mirroring and getting your own
 mirror listed, see \url{https://www.gutenberg.org/help/mirroring.html}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 gutenberg_get_all_mirrors()
 \dontshow{\}) # examplesIf}
