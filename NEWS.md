@@ -1,4 +1,4 @@
-# gutenbergr (development version)
+# gutenbergr 0.3.1
 
 * The `lanuage` column in `gutenberg_languages` is now properly merged with the `language` column (#94).
 * The default mirror is now determined from the available mirrors in `gutenberg_get_all_mirrors()`, rather than trying to be clever and find a local mirror.
