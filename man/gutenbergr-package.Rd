@@ -18,12 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Jon Harmon \email{jonthegeek@gmail.com} (\href{https://orcid.org/0000-0003-4781-4346}{ORCID})
+\strong{Maintainer}: Jordan Bradford \email{jrdnbradford@gmail.com} (\href{https://orcid.org/0009-0000-8570-3474}{ORCID})
 
 Authors:
 \itemize{
+  \item Jon Harmon \email{jonthegeek@gmail.com} (\href{https://orcid.org/0000-0003-4781-4346}{ORCID})
   \item Myfanwy Johnston \email{mrowlan1@gmail.com}
-  \item Jordan Bradford \email{jrdnbradford@gmail.com} (\href{https://orcid.org/0009-0000-8570-3474}{ORCID})
   \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 

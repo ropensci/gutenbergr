@@ -1,5 +1,7 @@
 # gutenbergr (development version)
 
+* Jordan Bradford (@jrdnbradford) is now the primary maintainer of this package. Thanks for taking the lead, Jordan! (#95).
+
 # gutenbergr 0.3.1
 
 * The `lanuage` column in `gutenberg_languages` is now properly merged with the `language` column (#94).
