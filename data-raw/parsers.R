@@ -62,13 +62,15 @@ parse_all_metadata <- function(file) {
     xml2::xml_text(trim = TRUE)
 
   bookshelf <- xml2::xml_find_all(
-    meta, ".//pgterms:bookshelf/rdf:Description/rdf:value"
+    meta,
+    ".//pgterms:bookshelf/rdf:Description/rdf:value"
   ) |>
     xml2::xml_text(trim = TRUE) |>
     paste(collapse = "/")
 
   has_text <- xml2::xml_find_all(
-    meta, ".//pgterms:file"
+    meta,
+    ".//pgterms:file"
   ) |>
     xml2::xml_attr("about") |>
     stringr::str_detect("txt") |>
@@ -135,7 +137,9 @@ parse_author <- function(author) {
     xml2::xml_find_all("pgterms:webpage") |>
     xml2::xml_attr("resource") |>
     paste(collapse = "|")
-  if (wikipedia == "") wikipedia <- NA_character_
+  if (wikipedia == "") {
+    wikipedia <- NA_character_
+  }
 
   # Right now we have two columns, "alias" and "aliases". They should be a
   # single list column but we'll get there later.
@@ -177,13 +181,17 @@ parse_subject <- function(subject) {
     stringr::str_extract("\\w+$") |>
     tolower()
 
-  if (!length(subject_type)) subject_type <- NA_character_
+  if (!length(subject_type)) {
+    subject_type <- NA_character_
+  }
 
   subject_value <- subject |>
     xml2::xml_find_first("rdf:value") |>
     xml2::xml_text()
 
-  if (!length(subject_value)) subject_value <- NA_character_
+  if (!length(subject_value)) {
+    subject_value <- NA_character_
+  }
 
   return(
     tibble::tibble(

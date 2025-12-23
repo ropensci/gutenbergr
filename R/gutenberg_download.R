@@ -55,7 +55,9 @@ gutenberg_download <- function(
     downloaded <- purrr::map(downloaded, gutenberg_strip)
   }
   ret <- purrr::list_rbind(c(
-    list(empty = tibble::tibble(gutenberg_id = integer(), text = character())),
+    list(
+      empty = tibble::tibble(gutenberg_id = integer(), text = character())
+    ),
     purrr::imap(
       downloaded,
       ~ tibble::tibble(text = .x, gutenberg_id = as.integer(.y))
