@@ -78,20 +78,20 @@ gutenberg_works() |>
   filter(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
+#>          <int> <chr>             <chr>                       <int> <fct>
+#> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
+#>          <int> <chr>             <chr>                       <int> <fct>
+#> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
 ```
 
@@ -102,18 +102,18 @@ Since we see that it has `gutenberg_id` 768, we can download it with the
 wuthering_heights <- gutenberg_download(768)
 wuthering_heights
 #> # A tibble: 12,342 × 2
-#>    gutenberg_id text               
-#>           <int> <chr>              
+#>    gutenberg_id text
+#>           <int> <chr>
 #>  1          768 "Wuthering Heights"
-#>  2          768 ""                 
-#>  3          768 "by Emily Brontë"  
-#>  4          768 ""                 
-#>  5          768 ""                 
-#>  6          768 ""                 
-#>  7          768 ""                 
-#>  8          768 "CHAPTER I"        
-#>  9          768 ""                 
-#> 10          768 ""                 
+#>  2          768 ""
+#>  3          768 "by Emily Brontë"
+#>  4          768 ""
+#>  5          768 ""
+#>  6          768 ""
+#>  7          768 ""
+#>  8          768 "CHAPTER I"
+#>  9          768 ""
+#> 10          768 ""
 #> # ℹ 12,332 more rows
 ```
 
@@ -126,8 +126,8 @@ the metadata.
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 books
 #> # A tibble: 33,343 × 3
-#>    gutenberg_id text                title            
-#>           <int> <chr>               <chr>            
+#>    gutenberg_id text                title
+#>           <int> <chr>               <chr>
 #>  1          768 "Wuthering Heights" Wuthering Heights
 #>  2          768 ""                  Wuthering Heights
 #>  3          768 "by Emily Brontë"   Wuthering Heights
@@ -159,20 +159,20 @@ aristotle_books <- gutenberg_works(author == "Aristotle") |>
 
 aristotle_books
 #> # A tibble: 43,801 × 3
-#>    gutenberg_id text                                                                    
-#>           <int> <chr>                                                                   
-#>  1         1974 "THE POETICS OF ARISTOTLE"                                              
-#>  2         1974 ""                                                                      
-#>  3         1974 "By Aristotle"                                                          
-#>  4         1974 ""                                                                      
-#>  5         1974 "A Translation By S. H. Butcher"                                        
-#>  6         1974 ""                                                                      
-#>  7         1974 ""                                                                      
-#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"       
+#>    gutenberg_id text
+#>           <int> <chr>
+#>  1         1974 "THE POETICS OF ARISTOTLE"
+#>  2         1974 ""
+#>  3         1974 "By Aristotle"
+#>  4         1974 ""
+#>  5         1974 "A Translation By S. H. Butcher"
+#>  6         1974 ""
+#>  7         1974 ""
+#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"
 #>  9         1974 "intact some Greek words to illustrate a specific point of the original"
-#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"  
-#>    title                   
-#>    <chr>                   
+#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"
+#>    title
+#>    <chr>
 #>  1 The Poetics of Aristotle
 #>  2 The Poetics of Aristotle
 #>  3 The Poetics of Aristotle
@@ -251,5 +251,9 @@ Please note that the gutenbergr project is released with a [Contributor
 Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
+
+## Contributing
+
+See [`CONTRIBUTING.md`](./github/CONTRIBUTING.md).
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
