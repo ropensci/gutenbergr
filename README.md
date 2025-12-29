@@ -216,8 +216,8 @@ See the
 [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for the scripts that generate these datasets. As of now, these
 were generated from [the Project Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **27
-May 2025**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **14
+December 2025**.
 
 ### Do you respect the rules regarding robot access to Project Gutenberg?
 
