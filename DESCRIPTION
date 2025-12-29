@@ -32,12 +32,18 @@ Imports:
     urltools
 Suggests:
     curl,
+    devtools (>= 2.4.5),
+    fs (>= 1.6.6),
+    here (>= 1.0.2),
     knitr,
+    lubridate (>= 1.9.4),
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
     tidytext,
-    withr
+    usethis (>= 3.2.1),
+    withr,
+    xml2 (>= 1.5.1)
 VignetteBuilder:
     knitr
 Encoding: UTF-8
