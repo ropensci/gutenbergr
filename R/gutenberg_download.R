@@ -131,8 +131,11 @@ try_gutenberg_download <- function(url) {
       c(
         "!" = "Could not download a book at {url}.",
         "i" = "The book may have been archived.",
-        "i" = "Alternatively, You may need to select a different mirror.",
-        ">" = "See https://www.gutenberg.org/MIRRORS.ALL for options."
+        "i" = "Alternatively, you may need to select a different mirror.",
+        ">" = paste0(
+          "See https://www.gutenberg.org/MIRRORS.ALL ",
+          "or run `gutenberg_get_all_mirrors()` for options."
+        )
       ),
       class = "gutenbergr-warning-download_failure"
     )
