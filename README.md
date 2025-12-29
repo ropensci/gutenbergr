@@ -15,6 +15,10 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![R-CMD-check](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/gutenbergr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/gutenbergr)
+[![Monthly
+Downloads](https://cranlogs.r-pkg.org/badges/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 <!-- badges: end -->
 
 Download and process public domain works from the [Project
