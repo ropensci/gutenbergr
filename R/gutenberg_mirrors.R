@@ -23,7 +23,7 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
         verbose,
         paste0(
           "Mirror {mirror} set by options(gutenberg_mirror = {mirror}) is not ",
-          "accessible. It may not be a Gutenberg mirror or may longer be ",
+          "accessible. It may not be a Gutenberg mirror or may no longer be ",
           "maintained. Checking for new mirror."
         ),
         class = "mirror-refresh"
