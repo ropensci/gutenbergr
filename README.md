@@ -258,6 +258,6 @@ By contributing to this project, you agree to abide by its terms.
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](./github/CONTRIBUTING.md).
+See [`CONTRIBUTING.md`](./.github/CONTRIBUTING.md).
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)

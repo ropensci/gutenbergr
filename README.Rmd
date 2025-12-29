@@ -133,6 +133,6 @@ Please note that the gutenbergr project is released with a [Contributor Code of 
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](./github/CONTRIBUTING.md).
+See [`CONTRIBUTING.md`](./.github/CONTRIBUTING.md).
 
 [![ropensci\_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
