@@ -239,6 +239,8 @@ to the best of our ability. Namely:
   `https://www.gutenberg.lib.md.us/8/84/84.zip`.
 - We give priority to retrieving the `.zip` file to minimize bandwidth
   on the mirror. `.txt` files are only retrieved if there is no `.zip`.
+- gutenbergr supports both session and persistent caching of downloaded
+  files to prevent redownloading.
 
 Still, this package is *not* the right way to download the entire
 Project Gutenberg corpus (or all from a particular language). For that,

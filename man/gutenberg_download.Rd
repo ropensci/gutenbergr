@@ -9,7 +9,8 @@ gutenberg_download(
   mirror = gutenberg_get_mirror(verbose = verbose),
   strip = TRUE,
   meta_fields = character(),
-  verbose = TRUE
+  verbose = TRUE,
+  use_cache = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,20 @@ and \code{author}, to add from \link{gutenberg_metadata}.}
 
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
 that was chosen}
+
+\item{use_cache}{Whether to use caching. Caching behavior is set with
+\code{\link{gutenberg_set_cache}} or the \code{gutenbergr_cache_type} option.
+Options are:
+\itemize{
+\item \code{"session"}: Files are stored in a (\code{tempdir()}).
+This is the default behavior.
+\item \code{"persistent"}: Files are stored in an OS-specific
+user cache directory. These files persist across sessions,
+preventing redundant downloads of the same files in the future.
+}
+To check your current cache location, use \code{\link{gutenberg_cache_dir}}.
+The files in the cache are \code{.rds} files that have already been processed
+into a \code{tbl_df}.}
 }
 \value{
 A two column \code{tbl_df} (see \code{\link[tibble:tibble]{tibble::tibble()}}) with one row for each

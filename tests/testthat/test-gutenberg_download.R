@@ -22,11 +22,13 @@ test_that("flatten_gutenberg_id works", {
 
 test_that("gutenberg_download works", {
   local_dl_and_read()
-  test_result <- gutenberg_download(
-    c(109, 105),
-    meta_fields = c("title", "author"),
-    mirror = "http://aleph.gutenberg.org"
-  )
+  with_gutenberg_cache({
+    test_result <- gutenberg_download(
+      c(109, 105),
+      meta_fields = c("title", "author"),
+      mirror = "http://aleph.gutenberg.org"
+    )
+  })
   expect_identical(test_result, gutenbergr::sample_books)
 })
 
@@ -40,4 +42,26 @@ test_that("try_gutenberg_download errors informatively with no return", {
     try_gutenberg_download("https://example.com"),
     class = "gutenbergr-warning-download_failure"
   )
+})
+
+test_that("gutenberg_download actually caches a file", {
+  local_dl_and_read()
+  with_gutenberg_cache({
+    testthat::local_mocked_bindings(
+      try_gutenberg_download = function(url) {
+        c("Line 1", "Line 2")
+      },
+      .package = "gutenbergr"
+    )
+
+    gutenberg_download(
+      109,
+      use_cache = TRUE,
+      strip = FALSE
+    )
+
+    cache_path <- gutenberg_cache_dir()
+    expect_true(file.exists(file.path(cache_path, "109.rds")))
+    expect_equal(nrow(gutenberg_list_cache(quiet = TRUE)), 1)
+  })
 })
