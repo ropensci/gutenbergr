@@ -87,6 +87,42 @@ gutenberg_clear_cache <- function() {
   invisible(n_files)
 }
 
+#' Delete specific files from the cache
+#'
+#' @param ids A numeric or character vector of Gutenberg IDs to remove
+#'   from the current cache.
+#' @param quiet Logical. If TRUE, suppresses status messages.
+#'
+#' @return The number of files successfully deleted (invisibly).
+#' @export
+gutenberg_delete_cache <- function(ids, quiet = FALSE) {
+  if (missing(ids) || length(ids) == 0) {
+    cli::cli_abort("Please provide at least one Gutenberg ID to delete.")
+  }
+
+  cache_root <- gutenberg_cache_path()
+  target_files <- file.path(cache_root, paste0(ids, ".rds"))
+  existing_files <- target_files[file.exists(target_files)]
+  n_deleted <- length(existing_files)
+
+  if (n_deleted > 0) {
+    unlink(existing_files)
+    if (!quiet) {
+      cli::cli_alert_success(
+        "Deleted {n_deleted} cached file{?s} from {.path {cache_root}}"
+      )
+    }
+  } else {
+    if (!quiet) {
+      cli::cli_alert_info(
+        "None of the specified IDs ({.val {ids}}) were found in the current cache."
+      )
+    }
+  }
+
+  invisible(n_deleted)
+}
+
 #' List files in the cache path currently returned by \code{\link{gutenberg_cache_path}}
 #' @param quiet Whether to print the cache directory path
 #' @export

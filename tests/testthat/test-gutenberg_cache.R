@@ -48,6 +48,23 @@ test_that("gutenberg_list_cache lists cached files", {
   })
 })
 
+test_that("gutenberg_delete_cache removes specific files by ID", {
+  with_gutenberg_cache({
+    path <- gutenberg_cache_path()
+
+    file_105 <- file.path(path, "105.rds")
+    file_109 <- file.path(path, "109.rds")
+    saveRDS(list(id = 105), file_105)
+    saveRDS(list(id = 109), file_109)
+
+    n <- gutenberg_delete_cache(105, quiet = TRUE)
+    expect_equal(n, 1)
+    expect_false(file.exists(file_105))
+    expect_true(file.exists(file_109))
+    expect_message(gutenberg_delete_cache(999), "None of the specified IDs")
+  })
+})
+
 test_that("gutenberg_clear_cache deletes cached files", {
   with_gutenberg_cache({
     path <- gutenberg_cache_dir()
@@ -77,15 +94,13 @@ test_that("session cache is detected as temporary", {
 
 test_that("gutenberg_set_cache toggles between different paths", {
   with_gutenberg_cache({
-    # 1. Capture the session path
     session_path <- gutenberg_set_cache("session", quiet = TRUE)
 
-    # 2. Define a separate, writable temp path for the mock persistent storage
-    # Using tempfile() ensures it's in a writable directory (/tmp or similar)
+    # Define a separate, writable temp path for the mock persistent storage
     mock_persistent_path <- tempfile("mock_persistent_")
     withr::defer(unlink(mock_persistent_path, recursive = TRUE))
 
-    # 3. Mock dlr to return this specific temp path when 'persistent' is requested
+    # Mock dlr to return this specific temp path when 'persistent' is requested
     testthat::local_mocked_bindings(
       app_cache_dir = function(appname, cache_dir = NULL) {
         if (is.null(cache_dir)) {
@@ -96,15 +111,11 @@ test_that("gutenberg_set_cache toggles between different paths", {
       .package = "dlr"
     )
 
-    # 4. Trigger the persistent switch
     # dlr will now successfully create 'mock_persistent_path' because it's in a writable area
     persistent_path <- gutenberg_set_cache("persistent", quiet = TRUE)
 
-    # 5. Verify the toggle worked
     expect_false(identical(session_path, persistent_path))
     expect_equal(persistent_path, mock_persistent_path)
-
-    # 6. Verify the directory was actually created (proving dlr did its job)
     expect_true(dir.exists(persistent_path))
   })
 })

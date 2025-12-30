@@ -2,6 +2,7 @@
 
 export(gutenberg_cache_dir)
 export(gutenberg_clear_cache)
+export(gutenberg_delete_cache)
 export(gutenberg_download)
 export(gutenberg_get_all_mirrors)
 export(gutenberg_get_mirror)
