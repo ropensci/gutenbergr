@@ -249,15 +249,12 @@ work, or works for a particular author or topic. See their [Terms of
 Service](https://www.gutenberg.org/policy/terms_of_use.html) for
 details.
 
-## Code of Conduct
-
-Please note that the gutenbergr project is released with a [Contributor
-Code of
-Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
-
 ## Contributing
 
 See [`CONTRIBUTING.md`](./.github/CONTRIBUTING.md).
+
+Please note that this package is released with a
+[Contributor Code of Conduct](https://ropensci.org/code-of-conduct/).
+By contributing to this project, you agree to abide by its terms.
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
