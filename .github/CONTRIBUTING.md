@@ -40,5 +40,5 @@ See the Tidyverse guide on [how to create a great issue](https://code-review.tid
 
 ## Code of Conduct
 
-Please note that the gutenbergr project is released with [rOpenSci's Code of Conduct](https://ropensci.org/code-of-conduct/)
+Please note that the gutenbergr project is released with [rOpenSci's Code of Conduct](https://ropensci.org/code-of-conduct/).
 By contributing to this project you agree to abide by its terms.
