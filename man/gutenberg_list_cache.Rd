@@ -2,13 +2,23 @@
 % Please edit documentation in R/gutenberg_cache.R
 \name{gutenberg_list_cache}
 \alias{gutenberg_list_cache}
-\title{List files in the cache path currently returned by \code{\link{gutenberg_cache_path}}}
+\title{List files in the Gutenberg cache}
 \usage{
 gutenberg_list_cache(quiet = FALSE)
 }
 \arguments{
-\item{quiet}{Whether to print the cache directory path}
+\item{quiet}{Whether to suppress the status message showing the cache directory path.}
+}
+\value{
+A \link[tibble:tibble]{tibble::tibble} with the following columns:
+\describe{
+\item{file}{The filename.}
+\item{size_mb}{Size of the file in megabytes.}
+\item{modified}{The last modification time.}
+\item{path}{The file's absolute path.}
+}
 }
 \description{
-List files in the cache path currently returned by \code{\link{gutenberg_cache_path}}
+Provides a detailed list of files currently stored in the directory
+returned by \code{\link[=gutenberg_cache_path]{gutenberg_cache_path()}}.
 }

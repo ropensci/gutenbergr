@@ -111,9 +111,7 @@ test_that("gutenberg_set_cache toggles between different paths", {
       .package = "dlr"
     )
 
-    # dlr will now successfully create 'mock_persistent_path' because it's in a writable area
     persistent_path <- gutenberg_set_cache("persistent", quiet = TRUE)
-
     expect_false(identical(session_path, persistent_path))
     expect_equal(persistent_path, mock_persistent_path)
     expect_true(dir.exists(persistent_path))

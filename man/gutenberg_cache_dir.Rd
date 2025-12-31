@@ -6,6 +6,9 @@
 \usage{
 gutenberg_cache_dir()
 }
+\value{
+A character string representing the path to the cache directory.
+}
 \description{
 Get the active Gutenberg cache directory
 }

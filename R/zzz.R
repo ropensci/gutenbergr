@@ -1,18 +1,12 @@
 .onLoad <- function(libname, pkgname) {
   cache_type <- getOption("gutenbergr_cache_type", "session")
-
-  # Validate early to avoid silent misconfiguration
   if (!(cache_type %in% c("session", "persistent"))) {
     warning("Invalid gutenbergr_cache_type. Defaulting to 'session'.")
     cache_type <- "session"
   }
 
-  # Configure cache location
   gutenberg_set_cache(cache_type, quiet = TRUE)
-
-  # Ensure cache directory exists so later calls are safe
   gutenberg_ensure_cache_dir()
-
   invisible()
 }
 

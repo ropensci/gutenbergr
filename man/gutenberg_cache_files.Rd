@@ -7,9 +7,9 @@
 gutenberg_cache_files()
 }
 \value{
-Character vector of full paths
+A character vector of full file paths.
 }
 \description{
-List cached .rds files
+Retrieves a list of all \code{.rds} files currently stored in the Gutenberg cache.
 }
 \keyword{internal}

@@ -2,10 +2,14 @@
 % Please edit documentation in R/gutenberg_cache.R
 \name{gutenberg_clear_cache}
 \alias{gutenberg_clear_cache}
-\title{Delete all files in cache path currently returned by \code{\link{gutenberg_cache_path}}}
+\title{Clear all files from the Gutenberg cache}
 \usage{
 gutenberg_clear_cache()
 }
+\value{
+The number of files deleted (invisibly).
+}
 \description{
-Delete all files in cache path currently returned by \code{\link{gutenberg_cache_path}}
+Deletes all cached \code{.rds} files in the directory currently returned by
+\code{\link[=gutenberg_cache_path]{gutenberg_cache_path()}}.
 }

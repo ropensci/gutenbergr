@@ -10,7 +10,7 @@ gutenberg_delete_cache(ids, quiet = FALSE)
 \item{ids}{A numeric or character vector of Gutenberg IDs to remove
 from the current cache.}
 
-\item{quiet}{Logical. If TRUE, suppresses status messages.}
+\item{quiet}{Whether to suppress the status messages.}
 }
 \value{
 The number of files successfully deleted (invisibly).

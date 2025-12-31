@@ -7,10 +7,14 @@
 gutenberg_set_cache(type = c("session", "persistent"), quiet = FALSE)
 }
 \arguments{
-\item{type}{Either "session" (default) or "persistent"}
+\item{type}{Either "session" (default) or "persistent".}
 
-\item{quiet}{Whether to alert on cache type and path}
+\item{quiet}{Whether to suppress the status message confirming the path.}
+}
+\value{
+The active cache path (invisibly).
 }
 \description{
-Set the Gutenberg cache type
+Configures whether the cache should be temporary (per-session) or
+persistent across sessions.
 }
