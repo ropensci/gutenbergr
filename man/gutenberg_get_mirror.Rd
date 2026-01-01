@@ -23,3 +23,4 @@ Get the recommended mirror for Gutenberg files and set the global
 gutenberg_get_mirror()
 \dontshow{\}) # examplesIf}
 }
+\keyword{mirror}

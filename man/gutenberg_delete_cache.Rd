@@ -18,3 +18,4 @@ The number of files successfully deleted (invisibly).
 \description{
 Delete specific files from the cache
 }
+\keyword{cache}

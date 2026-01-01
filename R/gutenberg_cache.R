@@ -4,6 +4,7 @@
 #' based on the current `gutenbergr_cache_type` option.
 #'
 #' @return A character string representing the path to the cache directory.
+#' @keywords cache
 #' @export
 gutenberg_cache_dir <- function() {
   type <- getOption("gutenbergr_cache_type", "session")
@@ -67,6 +68,7 @@ gutenberg_cache_files <- function() {
 #'
 #' @return The active cache path (invisibly).
 #' @export
+#' @keywords cache
 gutenberg_set_cache <- function(
   type = c("session", "persistent"),
   quiet = FALSE
@@ -96,6 +98,7 @@ gutenberg_set_cache <- function(
 #' [gutenberg_cache_dir()].
 #'
 #' @return The number of files deleted (invisibly).
+#' @keywords cache
 #' @export
 gutenberg_clear_cache <- function() {
   files <- gutenberg_cache_files()
@@ -116,6 +119,7 @@ gutenberg_clear_cache <- function() {
 #' @param quiet Whether to suppress the status messages.
 #'
 #' @return The number of files successfully deleted (invisibly).
+#' @keywords cache
 #' @export
 gutenberg_delete_cache <- function(ids, quiet = FALSE) {
   if (missing(ids) || length(ids) == 0) {
@@ -159,6 +163,7 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 #'     \item{modified}{The last modification time.}
 #'     \item{path}{The file's absolute path.}
 #'   }
+#' @keywords cache
 #' @export
 gutenberg_list_cache <- function(quiet = FALSE) {
   cache_root <- gutenberg_cache_dir()

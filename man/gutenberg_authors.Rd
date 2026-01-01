@@ -6,7 +6,7 @@
 \title{Metadata about Project Gutenberg authors}
 \format{
 A tbl_df (see tibble or dplyr) with one row for each
-author, with the columns
+author, with the columns:
 \describe{
 \item{gutenberg_author_id}{Unique identifier for the author that can
 be used to join with the \link{gutenberg_metadata} dataset}

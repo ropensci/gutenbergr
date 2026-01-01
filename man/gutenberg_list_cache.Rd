@@ -22,3 +22,4 @@ A \link[tibble:tibble]{tibble::tibble} with the following columns:
 Provides a detailed list of files currently stored in the directory
 returned by \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}}.
 }
+\keyword{cache}

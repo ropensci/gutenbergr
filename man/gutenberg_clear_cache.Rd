@@ -13,3 +13,4 @@ The number of files deleted (invisibly).
 Deletes all cached \code{.rds} files in the directory currently returned by
 \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}}.
 }
+\keyword{cache}
