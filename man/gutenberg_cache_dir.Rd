@@ -2,7 +2,7 @@
 % Please edit documentation in R/gutenberg_cache.R
 \name{gutenberg_cache_dir}
 \alias{gutenberg_cache_dir}
-\title{Get the active Gutenberg cache directory}
+\title{Get the active cache directory path}
 \usage{
 gutenberg_cache_dir()
 }
@@ -10,5 +10,6 @@ gutenberg_cache_dir()
 A character string representing the path to the cache directory.
 }
 \description{
-Get the active Gutenberg cache directory
+Calculates the path to the directory where Gutenberg files are stored,
+based on the current \code{gutenbergr_cache_type} option.
 }

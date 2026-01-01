@@ -13,20 +13,15 @@
 #' @param strip Whether to strip suspected headers and footers using
 #'   [gutenberg_strip()].
 #' @param meta_fields Additional fields describing each book, such as `title`
-#'   and `author`, to add from \link{gutenberg_metadata}.
+#'   and `author`, to add from [gutenberg_metadata].
 #' @param verbose Whether to show messages about the Project Gutenberg mirror
 #'   that was chosen
-#' @param use_cache Whether to use caching. Caching behavior is set with
-#'   \code{\link{gutenberg_set_cache}} or the \code{gutenbergr_cache_type} option.
-#'   Options are:
-#'   \itemize{
-#'     \item \code{"session"}: Files are stored in a (\code{tempdir()}).
-#'       This is the default behavior.
-#'     \item \code{"persistent"}: Files are stored in an OS-specific
-#'       user cache directory. These files persist across sessions,
-#'       preventing redundant downloads of the same files in the future.
-#'   }
-#'   To check your current cache location, use \code{\link{gutenberg_cache_dir}}.
+#' @param use_cache Whether to use caching. Defaults to `TRUE`.
+#'
+#'   See [gutenberg_set_cache()] for details on configuring caching.
+#'
+#'   See [gutenberg_cache_dir()] to check your current cache location.
+#'
 #'   The files in the cache are `.rds` files that have already been processed
 #'   into a `tbl_df`.
 #'

@@ -7,7 +7,14 @@
 gutenberg_set_cache(type = c("session", "persistent"), quiet = FALSE)
 }
 \arguments{
-\item{type}{Either "session" (default) or "persistent".}
+\item{type}{Either \code{"session"} (default) or \code{"persistent"}.
+\itemize{
+\item \code{"session"}: Files are stored in a \code{\link[=tempdir]{tempdir()}}.
+This is the default behavior.
+\item \code{"persistent"}: Files are stored in an OS-specific
+user cache directory. These files persist across sessions,
+preventing redundant downloads of the same files in the future.
+}}
 
 \item{quiet}{Whether to suppress the status message confirming the path.}
 }
@@ -17,4 +24,9 @@ The active cache path (invisibly).
 \description{
 Configures whether the cache should be temporary (per-session) or
 persistent across sessions.
+}
+\details{
+The cache type can also be set with an option:
+
+\code{options(gutenbergr_cache_type = "persistent")}
 }

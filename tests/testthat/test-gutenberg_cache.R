@@ -138,8 +138,7 @@ describe("gutenberg_list_cache()", {
 describe("gutenberg_delete_cache()", {
   test_that("removes specific files by ID", {
     with_gutenberg_cache({
-      path <- gutenberg_cache_path()
-
+      path <- gutenberg_cache_dir()
       file_105 <- file.path(path, "105.rds")
       file_109 <- file.path(path, "109.rds")
       saveRDS(list(id = 105), file_105)
@@ -163,7 +162,7 @@ describe("gutenberg_delete_cache()", {
 
   test_that("messages on success and missing when quiet = FALSE", {
     with_gutenberg_cache({
-      path <- gutenberg_cache_path()
+      path <- gutenberg_cache_dir()
       saveRDS(list(id = 1), file.path(path, "1.rds"))
 
       expect_message(
@@ -195,7 +194,7 @@ describe("gutenberg_clear_cache()", {
 
   test_that("emits success message", {
     with_gutenberg_cache({
-      path <- gutenberg_cache_path()
+      path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "1.rds"))
 
       expect_message(

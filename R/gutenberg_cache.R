@@ -4,8 +4,8 @@
 #' based on the current `gutenbergr_cache_type` option.
 #'
 #' @return A character string representing the path to the cache directory.
-#' @keywords internal
-gutenberg_cache_path <- function() {
+#' @export
+gutenberg_cache_dir <- function() {
   type <- getOption("gutenbergr_cache_type", "session")
 
   if (type == "session") {
@@ -18,14 +18,6 @@ gutenberg_cache_path <- function() {
   }
 }
 
-#' Get the active Gutenberg cache directory
-#'
-#' @return A character string representing the path to the cache directory.
-#' @export
-gutenberg_cache_dir <- function() {
-  gutenberg_cache_path()
-}
-
 #' Ensure the Gutenberg cache directory exists
 #'
 #' Checks for the existence of the cache directory and creates it if it is missing.
@@ -33,7 +25,7 @@ gutenberg_cache_dir <- function() {
 #' @return The cache directory path (invisibly).
 #' @keywords internal
 gutenberg_ensure_cache_dir <- function() {
-  path <- path.expand(gutenberg_cache_path())
+  path <- path.expand(gutenberg_cache_dir())
   if (!dir.exists(path)) {
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
   }
@@ -47,7 +39,7 @@ gutenberg_ensure_cache_dir <- function() {
 #' @return A character vector of full file paths.
 #' @keywords internal
 gutenberg_cache_files <- function() {
-  path <- gutenberg_cache_path()
+  path <- gutenberg_cache_dir()
   if (!dir.exists(path)) {
     return(character())
   }
@@ -59,7 +51,18 @@ gutenberg_cache_files <- function() {
 #' Configures whether the cache should be temporary (per-session) or
 #' persistent across sessions.
 #'
-#' @param type Either "session" (default) or "persistent".
+#' The cache type can also be set with an option:
+#'
+#' `options(gutenbergr_cache_type = "persistent")`
+#'
+#' @param type Either `"session"` (default) or `"persistent"`.
+#'  \itemize{
+#'    \item `"session"`: Files are stored in a [tempdir()].
+#'     This is the default behavior.
+#'    \item `"persistent"`: Files are stored in an OS-specific
+#'     user cache directory. These files persist across sessions,
+#'     preventing redundant downloads of the same files in the future.
+#'  }
 #' @param quiet Whether to suppress the status message confirming the path.
 #'
 #' @return The active cache path (invisibly).
@@ -79,7 +82,7 @@ gutenberg_set_cache <- function(
   }
 
   gutenberg_ensure_cache_dir()
-  path <- gutenberg_cache_path()
+  path <- gutenberg_cache_dir()
   if (!quiet) {
     cli::cli_alert_success("Cache set to {.val {type}}: {.path {path}}")
   }
@@ -90,7 +93,7 @@ gutenberg_set_cache <- function(
 #' Clear all files from the Gutenberg cache
 #'
 #' Deletes all cached `.rds` files in the directory currently returned by
-#' [gutenberg_cache_path()].
+#' [gutenberg_cache_dir()].
 #'
 #' @return The number of files deleted (invisibly).
 #' @export
@@ -119,7 +122,7 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
     cli::cli_abort("Please provide at least one Gutenberg ID to delete.")
   }
 
-  cache_root <- gutenberg_cache_path()
+  cache_root <- gutenberg_cache_dir()
   target_files <- file.path(cache_root, paste0(ids, ".rds"))
   existing_files <- target_files[file.exists(target_files)]
   n_deleted <- length(existing_files)
@@ -145,7 +148,7 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 #' List files in the Gutenberg cache
 #'
 #' Provides a detailed list of files currently stored in the directory
-#' returned by [gutenberg_cache_path()].
+#' returned by [gutenberg_cache_dir()].
 #'
 #' @param quiet Whether to suppress the status message showing the cache directory path.
 #'
@@ -158,7 +161,7 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 #'   }
 #' @export
 gutenberg_list_cache <- function(quiet = FALSE) {
-  cache_root <- gutenberg_cache_path()
+  cache_root <- gutenberg_cache_dir()
   files <- gutenberg_cache_files()
 
   if (!quiet) {

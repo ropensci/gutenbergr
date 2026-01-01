@@ -30,17 +30,12 @@ and \code{author}, to add from \link{gutenberg_metadata}.}
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
 that was chosen}
 
-\item{use_cache}{Whether to use caching. Caching behavior is set with
-\code{\link{gutenberg_set_cache}} or the \code{gutenbergr_cache_type} option.
-Options are:
-\itemize{
-\item \code{"session"}: Files are stored in a (\code{tempdir()}).
-This is the default behavior.
-\item \code{"persistent"}: Files are stored in an OS-specific
-user cache directory. These files persist across sessions,
-preventing redundant downloads of the same files in the future.
-}
-To check your current cache location, use \code{\link{gutenberg_cache_dir}}.
+\item{use_cache}{Whether to use caching. Defaults to \code{TRUE}.
+
+See \code{\link[=gutenberg_set_cache]{gutenberg_set_cache()}} for details on configuring caching.
+
+See \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}} to check your current cache location.
+
 The files in the cache are \code{.rds} files that have already been processed
 into a \code{tbl_df}.}
 }

@@ -20,5 +20,5 @@ A \link[tibble:tibble]{tibble::tibble} with the following columns:
 }
 \description{
 Provides a detailed list of files currently stored in the directory
-returned by \code{\link[=gutenberg_cache_path]{gutenberg_cache_path()}}.
+returned by \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}}.
 }
