@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages-used}
+```{r packages-used, include = FALSE}
 library(gutenbergr)
 library(dplyr)
 library(stringr)
@@ -30,7 +30,7 @@ The gutenbergr package helps you download and process public domain works from t
   * `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc
   * `gutenberg_authors` contains information about each author, such as aliases and birth/death year
   * `gutenberg_subjects` contains pairings of works with Library of Congress subjects and topics
-  
+
 ### Project Gutenberg Metadata
 
 This package contains metadata for all Project Gutenberg works as R datasets, so that you can search and filter for particular works before downloading.
