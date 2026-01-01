@@ -12,6 +12,7 @@
 #'
 #' gutenberg_get_mirror()
 #'
+#' @keywords mirror
 #' @export
 gutenberg_get_mirror <- function(verbose = TRUE) {
   mirror <- getOption("gutenberg_mirror")
@@ -82,6 +83,7 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #'
 #' gutenberg_get_all_mirrors()
 #'
+#' @keywords mirror
 #' @export
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"

@@ -4,3 +4,22 @@ development:
 template:
   bootstrap: 5
   light-switch: true
+
+reference:
+- title: Core Functions
+  contents:
+  - gutenberg_download
+  - gutenberg_works
+  - gutenberg_strip
+
+- title: Cache Functions
+- contents:
+  - has_keyword("cache")
+
+- title: Mirror Functions
+- contents:
+  - has_keyword("mirror")
+
+- title: Data
+- contents:
+  - has_keyword("datasets")

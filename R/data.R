@@ -27,6 +27,8 @@
 #'   example, audiobooks). If not, cannot be retrieved with
 #'   [gutenberg_download()]}
 #' }
+#' @docType data
+#' @keywords datasets
 #'
 #' @examplesIf interactive()
 #'
@@ -81,6 +83,8 @@
 #'   "lcsh" (Library of Congress Subject Headings)}
 #'   \item{subject}{Subject}
 #' }
+#' @docType data
+#' @keywords datasets
 #'
 #' @details Find more information about Library of Congress Categories
 #' here: \url{https://www.loc.gov/catdir/cpso/lcco/}, and about
@@ -135,7 +139,7 @@
 #' run \code{attr(gutenberg_authors, "date_updated")}.
 #'
 #' @format A tbl_df (see tibble or dplyr) with one row for each
-#' author, with the columns
+#' author, with the columns:
 #' \describe{
 #'   \item{gutenberg_author_id}{Unique identifier for the author that can
 #'   be used to join with the \link{gutenberg_metadata} dataset}
@@ -148,6 +152,8 @@
 #'   \item{aliases}{Character vector of aliases. If there
 #'   are multiple, they are "/"-delimited}
 #' }
+#' @docType data
+#' @keywords datasets
 #'
 #' @examples
 #'
@@ -166,7 +172,7 @@
 #' run \code{attr(gutenberg_languages, "date_updated")}.
 #'
 #' @format A tbl_df (see tibble or dplyr) with one row for each
-#' author, with the columns
+#' author, with the columns:
 #' \describe{
 #'   \item{gutenberg_id}{Unique identifier for the work that can
 #'   be used to join with the \link{gutenberg_metadata} dataset}
@@ -174,6 +180,8 @@
 #'   letter code if one exists, otherwise three letter.}
 #'   \item{total_languages}{Number of languages for this work.}
 #' }
+#' @docType data
+#' @keywords datasets
 #'
 #' @examples
 #'
@@ -201,4 +209,6 @@
 #'   \item{title}{The title of this work.}
 #'   \item{author}{The author of this work.}
 #' }
+#' @docType data
+#' @keywords datasets
 "sample_books"

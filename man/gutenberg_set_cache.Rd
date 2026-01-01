@@ -30,3 +30,4 @@ The cache type can also be set with an option:
 
 \code{options(gutenbergr_cache_type = "persistent")}
 }
+\keyword{cache}
