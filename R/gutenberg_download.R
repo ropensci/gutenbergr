@@ -13,9 +13,17 @@
 #' @param strip Whether to strip suspected headers and footers using
 #'   [gutenberg_strip()].
 #' @param meta_fields Additional fields describing each book, such as `title`
-#'   and `author`, to add from \link{gutenberg_metadata}.
+#'   and `author`, to add from [gutenberg_metadata].
 #' @param verbose Whether to show messages about the Project Gutenberg mirror
 #'   that was chosen
+#' @param use_cache Whether to use caching. Defaults to `TRUE`.
+#'
+#'   See [gutenberg_set_cache()] for details on configuring caching.
+#'
+#'   See [gutenberg_cache_dir()] to check your current cache location.
+#'
+#'   The files in the cache are `.rds` files that have already been processed
+#'   into a `tbl_df`.
 #'
 #' @return A two column `tbl_df` (see [tibble::tibble()]) with one row for each
 #'   line of the text or texts, with columns
@@ -46,23 +54,39 @@ gutenberg_download <- function(
   mirror = gutenberg_get_mirror(verbose = verbose),
   strip = TRUE,
   meta_fields = character(),
-  verbose = TRUE
+  verbose = TRUE,
+  use_cache = TRUE
 ) {
-  url <- gutenberg_url(gutenberg_id, mirror, verbose)
-  downloaded <- purrr::map(url, try_gutenberg_download)
+  urls <- gutenberg_url(gutenberg_id, mirror, verbose)
+  downloaded <- purrr::imap(urls, function(url, id) {
+    if (use_cache) {
+      dlr::read_or_cache(
+        source_path = id,
+        appname = "gutenbergr",
+        filename = paste0(id, ".rds"),
+        process_f = function(x) {
+          try_gutenberg_download(url)
+        }
+      )
+    } else {
+      try_gutenberg_download(url)
+    }
+  })
   downloaded <- purrr::discard(downloaded, is.null)
+
   if (strip) {
     downloaded <- purrr::map(downloaded, gutenberg_strip)
   }
-  ret <- purrr::list_rbind(c(
-    list(
-      empty = tibble::tibble(gutenberg_id = integer(), text = character())
-    ),
+
+  ret <- purrr::list_rbind(
     purrr::imap(
       downloaded,
-      ~ tibble::tibble(text = .x, gutenberg_id = as.integer(.y))
+      ~ tibble::tibble(
+        gutenberg_id = as.integer(.y),
+        text = .x,
+      )
     )
-  ))
+  )
 
   gutenberg_add_metadata(ret, meta_fields)
 }

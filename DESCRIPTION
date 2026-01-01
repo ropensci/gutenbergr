@@ -21,6 +21,7 @@ Depends:
     R (>= 4.1)
 Imports:
     cli,
+    dlr,
     dplyr,
     glue,
     purrr,

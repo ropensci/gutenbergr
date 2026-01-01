@@ -124,6 +124,7 @@ Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_a
 * Project Gutenberg allows harvesting with automated software using [this list of links](https://www.gutenberg.org/robot/harvest?filetypes[]=html). The gutenbergr package visits that page once to find the recommended mirror for the user's location.
 * We retrieve the book text directly from that mirror using links in the same format. For example, Frankenstein (book 84) is retrieved from `https://www.gutenberg.lib.md.us/8/84/84.zip`.
 * We give priority to retrieving the `.zip` file to minimize bandwidth on the mirror. `.txt` files are only retrieved if there is no `.zip`.
+* gutenbergr supports both session and persistent caching of downloaded files to prevent redownloading.
 
 Still, this package is *not* the right way to download the entire Project Gutenberg corpus (or all from a particular language). For that, follow [their recommendation](https://www.gutenberg.org/policy/robot_access.html) to set up a mirror. This package is recommended for downloading a single work, or works for a particular author or topic. See their [Terms of Service](https://www.gutenberg.org/policy/terms_of_use.html) for details.
 

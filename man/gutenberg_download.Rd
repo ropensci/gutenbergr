@@ -9,7 +9,8 @@ gutenberg_download(
   mirror = gutenberg_get_mirror(verbose = verbose),
   strip = TRUE,
   meta_fields = character(),
-  verbose = TRUE
+  verbose = TRUE,
+  use_cache = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,15 @@ and \code{author}, to add from \link{gutenberg_metadata}.}
 
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
 that was chosen}
+
+\item{use_cache}{Whether to use caching. Defaults to \code{TRUE}.
+
+See \code{\link[=gutenberg_set_cache]{gutenberg_set_cache()}} for details on configuring caching.
+
+See \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}} to check your current cache location.
+
+The files in the cache are \code{.rds} files that have already been processed
+into a \code{tbl_df}.}
 }
 \value{
 A two column \code{tbl_df} (see \code{\link[tibble:tibble]{tibble::tibble()}}) with one row for each
