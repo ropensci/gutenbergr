@@ -1,119 +1,207 @@
-test_that("gutenberg_cache_dir returns character path", {
-  with_gutenberg_cache({
-    path <- gutenberg_cache_dir()
-    expect_type(path, "character")
-    expect_true(nzchar(path))
+describe("gutenberg_cache_dir()", {
+  test_that("returns character path", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_dir()
+      expect_type(path, "character")
+      expect_true(nzchar(path))
+    })
   })
-})
 
-test_that("gutenberg_set_cache(session) uses tempdir()", {
-  with_gutenberg_cache({
-    path <- gutenberg_set_cache("session", quiet = TRUE)
-    expect_true(
-      startsWith(
+  test_that("returns session cache path when in session mode", {
+    with_gutenberg_cache(type = "session", {
+      path <- gutenberg_cache_dir()
+      expect_type(path, "character")
+      expect_true(startsWith(
         normalizePath(path, mustWork = FALSE),
         normalizePath(tempdir(), mustWork = FALSE)
+      ))
+    })
+  })
+
+  test_that("returns persistent cache path when in persistent mode", {
+    with_gutenberg_cache(type = "persistent", {
+      path <- gutenberg_cache_dir()
+      expect_type(path, "character")
+      expected_path <- dlr::app_cache_dir("gutenbergr")
+      expect_equal(
+        normalizePath(path, mustWork = FALSE),
+        normalizePath(expected_path, mustWork = FALSE)
       )
-    )
-    expect_true(dir.exists(path))
+    })
   })
 })
 
-test_that("gutenberg_set_cache(persistent) returns default cache", {
-  with_gutenberg_cache({
-    path <- gutenberg_set_cache("persistent", quiet = TRUE)
-    expect_type(path, "character")
+describe("gutenberg_set_cache()", {
+  test_that("session mode uses tempdir()", {
+    with_gutenberg_cache({
+      path <- gutenberg_set_cache("session", quiet = TRUE)
+      expect_true(
+        startsWith(
+          normalizePath(path, mustWork = FALSE),
+          normalizePath(tempdir(), mustWork = FALSE)
+        )
+      )
+      expect_true(dir.exists(path))
+    })
+  })
+
+  test_that("persistent mode returns default cache", {
+    with_gutenberg_cache({
+      path <- gutenberg_set_cache("persistent", quiet = TRUE)
+      expect_type(path, "character")
+    })
+  })
+
+  test_that("toggles between different paths", {
+    with_gutenberg_cache({
+      session_path <- gutenberg_set_cache("session", quiet = TRUE)
+
+      # Define a separate, writable temp path for the mock persistent storage
+      mock_persistent_path <- tempfile("mock_persistent_")
+      withr::defer(unlink(mock_persistent_path, recursive = TRUE))
+
+      # Mock dlr to return this specific temp path when 'persistent' is requested
+      testthat::local_mocked_bindings(
+        app_cache_dir = function(appname, cache_dir = NULL) {
+          if (is.null(cache_dir)) {
+            return(mock_persistent_path)
+          }
+          return(cache_dir)
+        },
+        .package = "dlr"
+      )
+
+      persistent_path <- gutenberg_set_cache("persistent", quiet = TRUE)
+      expect_false(identical(session_path, persistent_path))
+      expect_equal(persistent_path, mock_persistent_path)
+      expect_true(dir.exists(persistent_path))
+    })
+  })
+
+  test_that("session cache is detected as temporary", {
+    with_gutenberg_cache({
+      gutenberg_set_cache("session", quiet = TRUE)
+      path <- gutenberg_cache_dir()
+
+      is_session <- startsWith(
+        normalizePath(path, winslash = "/", mustWork = FALSE),
+        normalizePath(tempdir(), winslash = "/", mustWork = FALSE)
+      )
+
+      expect_true(is_session)
+    })
+  })
+
+  test_that("emits success message when quiet = FALSE", {
+    with_gutenberg_cache({
+      expect_message(
+        gutenberg_set_cache("session", quiet = FALSE),
+        "Cache set to"
+      )
+    })
   })
 })
 
-test_that("gutenberg_list_cache returns empty tibble when empty", {
-  with_gutenberg_cache({
-    out <- gutenberg_list_cache(quiet = TRUE)
-    expect_s3_class(out, "tbl_df")
-    expect_equal(nrow(out), 0)
+describe("gutenberg_list_cache()", {
+  test_that("returns empty tibble when cache is empty", {
+    with_gutenberg_cache({
+      out <- gutenberg_list_cache(quiet = TRUE)
+      expect_s3_class(out, "tbl_df")
+      expect_equal(nrow(out), 0)
+    })
+  })
+
+  test_that("lists cached files with correct metadata", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_dir()
+      saveRDS("test", file.path(path, "123.rds"))
+      saveRDS("test", file.path(path, "456.rds"))
+
+      out <- gutenberg_list_cache(quiet = TRUE)
+
+      expect_equal(nrow(out), 2)
+      expect_true(all(out$file %in% c("123.rds", "456.rds")))
+      expect_true(all(out$size_mb > 0))
+    })
+  })
+
+  test_that("informs about directory when quiet = FALSE", {
+    with_gutenberg_cache({
+      expect_message(
+        gutenberg_list_cache(quiet = FALSE),
+        "Cache directory:"
+      )
+    })
   })
 })
 
-test_that("gutenberg_list_cache lists cached files", {
-  with_gutenberg_cache({
-    path <- gutenberg_cache_dir()
-    saveRDS("test", file.path(path, "123.rds"))
-    saveRDS("test", file.path(path, "456.rds"))
+describe("gutenberg_delete_cache()", {
+  test_that("removes specific files by ID", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_path()
 
-    out <- gutenberg_list_cache(quiet = TRUE)
+      file_105 <- file.path(path, "105.rds")
+      file_109 <- file.path(path, "109.rds")
+      saveRDS(list(id = 105), file_105)
+      saveRDS(list(id = 109), file_109)
 
-    expect_equal(nrow(out), 2)
-    expect_true(all(out$file %in% c("123.rds", "456.rds")))
-    expect_true(all(out$size_mb > 0))
+      n <- gutenberg_delete_cache(105, quiet = TRUE)
+      expect_equal(n, 1)
+      expect_false(file.exists(file_105))
+      expect_true(file.exists(file_109))
+    })
+  })
+
+  test_that("handles non-existent IDs gracefully", {
+    with_gutenberg_cache({
+      expect_message(
+        gutenberg_delete_cache(999),
+        "None of the specified IDs"
+      )
+    })
+  })
+
+  test_that("messages on success and missing when quiet = FALSE", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_path()
+      saveRDS(list(id = 1), file.path(path, "1.rds"))
+
+      expect_message(
+        gutenberg_delete_cache(1, quiet = FALSE),
+        "Deleted 1 cached file"
+      )
+
+      expect_message(
+        gutenberg_delete_cache(999, quiet = FALSE),
+        "None of the specified IDs"
+      )
+    })
   })
 })
 
-test_that("gutenberg_delete_cache removes specific files by ID", {
-  with_gutenberg_cache({
-    path <- gutenberg_cache_path()
+describe("gutenberg_clear_cache()", {
+  test_that("deletes all cached files", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_dir()
+      saveRDS("test", file.path(path, "1.rds"))
+      saveRDS("test", file.path(path, "2.rds"))
 
-    file_105 <- file.path(path, "105.rds")
-    file_109 <- file.path(path, "109.rds")
-    saveRDS(list(id = 105), file_105)
-    saveRDS(list(id = 109), file_109)
+      n <- suppressMessages(gutenberg_clear_cache())
 
-    n <- gutenberg_delete_cache(105, quiet = TRUE)
-    expect_equal(n, 1)
-    expect_false(file.exists(file_105))
-    expect_true(file.exists(file_109))
-    expect_message(gutenberg_delete_cache(999), "None of the specified IDs")
+      expect_equal(n, 2)
+      expect_equal(length(list.files(path, pattern = "\\.rds$")), 0)
+    })
   })
-})
 
-test_that("gutenberg_clear_cache deletes cached files", {
-  with_gutenberg_cache({
-    path <- gutenberg_cache_dir()
-    saveRDS("test", file.path(path, "1.rds"))
-    saveRDS("test", file.path(path, "2.rds"))
+  test_that("emits success message", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_path()
+      saveRDS("test", file.path(path, "1.rds"))
 
-    n <- suppressMessages(gutenberg_clear_cache())
-
-    expect_equal(n, 2)
-    expect_equal(length(list.files(path, pattern = "\\.rds$")), 0)
-  })
-})
-
-test_that("session cache is detected as temporary", {
-  with_gutenberg_cache({
-    gutenberg_set_cache("session", quiet = TRUE)
-    path <- gutenberg_cache_dir()
-
-    is_session <- startsWith(
-      normalizePath(path, winslash = "/", mustWork = FALSE),
-      normalizePath(tempdir(), winslash = "/", mustWork = FALSE)
-    )
-
-    expect_true(is_session)
-  })
-})
-
-test_that("gutenberg_set_cache toggles between different paths", {
-  with_gutenberg_cache({
-    session_path <- gutenberg_set_cache("session", quiet = TRUE)
-
-    # Define a separate, writable temp path for the mock persistent storage
-    mock_persistent_path <- tempfile("mock_persistent_")
-    withr::defer(unlink(mock_persistent_path, recursive = TRUE))
-
-    # Mock dlr to return this specific temp path when 'persistent' is requested
-    testthat::local_mocked_bindings(
-      app_cache_dir = function(appname, cache_dir = NULL) {
-        if (is.null(cache_dir)) {
-          return(mock_persistent_path)
-        }
-        return(cache_dir)
-      },
-      .package = "dlr"
-    )
-
-    persistent_path <- gutenberg_set_cache("persistent", quiet = TRUE)
-    expect_false(identical(session_path, persistent_path))
-    expect_equal(persistent_path, mock_persistent_path)
-    expect_true(dir.exists(persistent_path))
+      expect_message(
+        gutenberg_clear_cache(),
+        "Deleted 1 cached file"
+      )
+    })
   })
 })

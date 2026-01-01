@@ -10,7 +10,6 @@
   invisible()
 }
 
-
 .onAttach <- function(libname, pkgname) {
   path <- gutenberg_cache_dir()
 
