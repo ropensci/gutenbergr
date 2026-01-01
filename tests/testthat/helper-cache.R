@@ -15,18 +15,24 @@ with_gutenberg_cache <- function(code, type = "persistent") {
     options(gutenbergr_cache_type = "persistent")
     dlr::set_app_cache_dir("gutenbergr", cache_dir = tmp)
 
-    on.exit({
-      options(gutenbergr_cache_type = old_type)
-      dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
-      unlink(tmp, recursive = TRUE)
-    }, add = TRUE)
+    on.exit(
+      {
+        options(gutenbergr_cache_type = old_type)
+        dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
+        unlink(tmp, recursive = TRUE)
+      },
+      add = TRUE
+    )
   } else {
     options(gutenbergr_cache_type = "session")
 
-    on.exit({
-      options(gutenbergr_cache_type = old_type)
-      dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
-    }, add = TRUE)
+    on.exit(
+      {
+        options(gutenbergr_cache_type = old_type)
+        dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
+      },
+      add = TRUE
+    )
   }
 
   force(code)

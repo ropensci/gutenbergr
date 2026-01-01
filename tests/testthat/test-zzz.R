@@ -19,10 +19,13 @@ describe(".onLoad()", {
     old_type <- getOption("gutenbergr_cache_type")
     old_path <- dlr::app_cache_dir("gutenbergr")
 
-    on.exit({
-      options(gutenbergr_cache_type = old_type)
-      dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
-    }, add = TRUE)
+    on.exit(
+      {
+        options(gutenbergr_cache_type = old_type)
+        dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
+      },
+      add = TRUE
+    )
 
     options(gutenbergr_cache_type = "invalid_type")
 
