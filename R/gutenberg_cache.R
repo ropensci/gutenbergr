@@ -74,14 +74,11 @@ gutenberg_set_cache <- function(
   verbose = TRUE
 ) {
   if (!type %in% c("session", "persistent")) {
-    warning(
-      "Invalid gutenbergr_cache_type: '",
-      type,
-      "'. Defaulting to 'session'.\n",
-      "Must be either 'session' or 'persistent'.\n",
-      "Set with: options(gutenbergr_cache_type = \"session\") or \"persistent\"",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Invalid gutenbergr_cache_type: {.val {type}}. Defaulting to {.val session}.",
+      "i" = "Must be either {.val session} or {.val persistent}.",
+      "i" = "Set with {.code options(gutenbergr_cache_type = \"session\")} or {.code options(gutenbergr_cache_type = \"persistent\")}"
+    ))
     type <- "session"
   }
 

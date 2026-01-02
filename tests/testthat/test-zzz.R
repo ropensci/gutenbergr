@@ -22,7 +22,7 @@ describe(".onLoad()", {
 
         expect_warning(
           .onLoad(NULL, NULL),
-          "Invalid gutenbergr_cache_type: 'invalid_type'. Defaulting to 'session'."
+          "Invalid gutenbergr_cache_type.*Defaulting to"
         )
       },
       type = "session"
