@@ -4,7 +4,10 @@
 \alias{gutenberg_set_cache}
 \title{Set the Gutenberg cache type}
 \usage{
-gutenberg_set_cache(type = c("session", "persistent"), verbose = TRUE)
+gutenberg_set_cache(
+  type = getOption("gutenbergr_cache_type", "session"),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{type}{Either \code{"session"} (default) or \code{"persistent"}.

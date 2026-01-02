@@ -16,22 +16,16 @@ describe(".onLoad()", {
   })
 
   test_that("warns and defaults to session when cache type is invalid", {
-    old_type <- getOption("gutenbergr_cache_type")
-    old_path <- dlr::app_cache_dir("gutenbergr")
-
-    on.exit(
+    with_gutenberg_cache(
       {
-        options(gutenbergr_cache_type = old_type)
-        dlr::set_app_cache_dir("gutenbergr", cache_dir = old_path)
+        options(gutenbergr_cache_type = "invalid_type")
+
+        expect_warning(
+          .onLoad(NULL, NULL),
+          "Invalid gutenbergr_cache_type: 'invalid_type'. Defaulting to 'session'."
+        )
       },
-      add = TRUE
-    )
-
-    options(gutenbergr_cache_type = "invalid_type")
-
-    expect_warning(
-      .onLoad(NULL, NULL),
-      "Invalid gutenbergr_cache_type. Defaulting to 'session'."
+      type = "session"
     )
 
     path <- gutenberg_cache_dir()
@@ -39,6 +33,8 @@ describe(".onLoad()", {
       normalizePath(path, mustWork = FALSE),
       normalizePath(tempdir(), mustWork = FALSE)
     ))
+
+    expect_identical(getOption("gutenbergr_cache_type"), "session")
   })
 })
 
