@@ -70,16 +70,25 @@ gutenberg_cache_files <- function() {
 #' @export
 #' @keywords cache
 gutenberg_set_cache <- function(
-  type = c("session", "persistent"),
+  type = getOption("gutenbergr_cache_type", "session"),
   verbose = TRUE
 ) {
-  type <- match.arg(type)
+  if (!type %in% c("session", "persistent")) {
+    cli::cli_warn(c(
+      "Invalid gutenbergr_cache_type: {.val {type}}. Defaulting to {.val session}.",
+      "i" = "Must be either {.val session} or {.val persistent}.",
+      "i" = "Set with {.code options(gutenbergr_cache_type = \"session\")} or {.code options(gutenbergr_cache_type = \"persistent\")}"
+    ))
+    type <- "session"
+  }
+
   options(gutenbergr_cache_type = type)
 
   if (type == "session") {
     path <- file.path(tempdir(), "gutenbergr_cache")
     dlr::set_app_cache_dir("gutenbergr", cache_dir = path)
   } else {
+    # Created by {dlr}
     options(gutenbergr.dir = NULL)
   }
 
