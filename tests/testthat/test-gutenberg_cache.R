@@ -135,7 +135,7 @@ describe("gutenberg_list_cache()", {
   })
 })
 
-describe("gutenberg_delete_cache()", {
+describe("gutenberg_cache_remove_ids()", {
   test_that("removes specific files by ID", {
     with_gutenberg_cache({
       path <- gutenberg_cache_dir()
@@ -144,7 +144,7 @@ describe("gutenberg_delete_cache()", {
       saveRDS(list(id = 105), file_105)
       saveRDS(list(id = 109), file_109)
 
-      n <- gutenberg_delete_cache(105, verbose = FALSE)
+      n <- gutenberg_cache_remove_ids(105, verbose = FALSE)
       expect_equal(n, 1)
       expect_false(file.exists(file_105))
       expect_true(file.exists(file_109))
@@ -154,7 +154,7 @@ describe("gutenberg_delete_cache()", {
   test_that("handles non-existent IDs gracefully", {
     with_gutenberg_cache({
       expect_message(
-        gutenberg_delete_cache(999),
+        gutenberg_cache_remove_ids(999),
         "None of the specified IDs"
       )
     })
@@ -166,26 +166,26 @@ describe("gutenberg_delete_cache()", {
       saveRDS(list(id = 1), file.path(path, "1.rds"))
 
       expect_message(
-        gutenberg_delete_cache(1, verbose = TRUE),
+        gutenberg_cache_remove_ids(1, verbose = TRUE),
         "Deleted 1 cached file"
       )
 
       expect_message(
-        gutenberg_delete_cache(999, verbose = TRUE),
+        gutenberg_cache_remove_ids(999, verbose = TRUE),
         "None of the specified IDs"
       )
     })
   })
 })
 
-describe("gutenberg_clear_cache()", {
+describe("gutenberg_cache_clear_all()", {
   test_that("deletes all cached files", {
     with_gutenberg_cache({
       path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "1.rds"))
       saveRDS("test", file.path(path, "2.rds"))
 
-      n <- suppressMessages(gutenberg_clear_cache())
+      n <- suppressMessages(gutenberg_cache_clear_all())
 
       expect_equal(n, 2)
       expect_equal(length(list.files(path, pattern = "\\.rds$")), 0)
@@ -198,7 +198,7 @@ describe("gutenberg_clear_cache()", {
       saveRDS("test", file.path(path, "1.rds"))
 
       expect_message(
-        gutenberg_clear_cache(),
+        gutenberg_cache_clear_all(),
         "Deleted 1 cached file"
       )
     })

@@ -109,7 +109,7 @@ gutenberg_set_cache <- function(
 #' @return The number of files deleted (invisibly).
 #' @keywords cache
 #' @export
-gutenberg_clear_cache <- function() {
+gutenberg_cache_clear_all <- function() {
   files <- gutenberg_cache_files()
   n_files <- length(files)
 
@@ -130,7 +130,7 @@ gutenberg_clear_cache <- function() {
 #' @return The number of files successfully deleted (invisibly).
 #' @keywords cache
 #' @export
-gutenberg_delete_cache <- function(ids, verbose = TRUE) {
+gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
   if (missing(ids) || length(ids) == 0) {
     cli::cli_abort("Please provide at least one Gutenberg ID to delete.")
   }
