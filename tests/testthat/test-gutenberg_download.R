@@ -62,6 +62,6 @@ test_that("gutenberg_download actually caches a file", {
 
     cache_path <- gutenberg_cache_dir()
     expect_true(file.exists(file.path(cache_path, "109.rds")))
-    expect_equal(nrow(gutenberg_list_cache(quiet = TRUE)), 1)
+    expect_equal(nrow(gutenberg_list_cache(verbose = FALSE)), 1)
   })
 })

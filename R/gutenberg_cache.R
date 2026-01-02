@@ -64,14 +64,14 @@ gutenberg_cache_files <- function() {
 #'     user cache directory. These files persist across sessions,
 #'     preventing redundant downloads of the same files in the future.
 #'  }
-#' @param quiet Whether to suppress the status message confirming the path.
+#' @param verbose Whether to show the status message confirming the path.
 #'
 #' @return The active cache path (invisibly).
 #' @export
 #' @keywords cache
 gutenberg_set_cache <- function(
   type = c("session", "persistent"),
-  quiet = FALSE
+  verbose = TRUE
 ) {
   type <- match.arg(type)
   options(gutenbergr_cache_type = type)
@@ -85,7 +85,7 @@ gutenberg_set_cache <- function(
 
   gutenberg_ensure_cache_dir()
   path <- gutenberg_cache_dir()
-  if (!quiet) {
+  if (verbose) {
     cli::cli_alert_success("Cache set to {.val {type}}: {.path {path}}")
   }
 
@@ -116,12 +116,12 @@ gutenberg_clear_cache <- function() {
 #'
 #' @param ids A numeric or character vector of Gutenberg IDs to remove
 #'   from the current cache.
-#' @param quiet Whether to suppress the status messages.
+#' @param verbose Whether to show the status messages.
 #'
 #' @return The number of files successfully deleted (invisibly).
 #' @keywords cache
 #' @export
-gutenberg_delete_cache <- function(ids, quiet = FALSE) {
+gutenberg_delete_cache <- function(ids, verbose = TRUE) {
   if (missing(ids) || length(ids) == 0) {
     cli::cli_abort("Please provide at least one Gutenberg ID to delete.")
   }
@@ -133,13 +133,13 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 
   if (n_deleted > 0) {
     unlink(existing_files)
-    if (!quiet) {
+    if (verbose) {
       cli::cli_alert_success(
         "Deleted {n_deleted} cached file{?s} from {.path {cache_root}}"
       )
     }
   } else {
-    if (!quiet) {
+    if (verbose) {
       cli::cli_alert_info(
         "None of the specified IDs ({.val {ids}}) were found in the current cache."
       )
@@ -154,7 +154,7 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 #' Provides a detailed list of files currently stored in the directory
 #' returned by [gutenberg_cache_dir()].
 #'
-#' @param quiet Whether to suppress the status message showing the cache directory path.
+#' @param verbose Whether to show the status message showing the cache directory path.
 #'
 #' @return A [tibble::tibble] with the following columns:
 #'   \describe{
@@ -165,11 +165,11 @@ gutenberg_delete_cache <- function(ids, quiet = FALSE) {
 #'   }
 #' @keywords cache
 #' @export
-gutenberg_list_cache <- function(quiet = FALSE) {
+gutenberg_list_cache <- function(verbose = TRUE) {
   cache_root <- gutenberg_cache_dir()
   files <- gutenberg_cache_files()
 
-  if (!quiet) {
+  if (verbose) {
     cli::cli_inform("Cache directory: {.path {cache_root}}")
   }
 

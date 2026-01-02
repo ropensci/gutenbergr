@@ -34,7 +34,7 @@ describe("gutenberg_cache_dir()", {
 describe("gutenberg_set_cache()", {
   test_that("session mode uses tempdir()", {
     with_gutenberg_cache({
-      path <- gutenberg_set_cache("session", quiet = TRUE)
+      path <- gutenberg_set_cache("session", verbose = FALSE)
       expect_true(
         startsWith(
           normalizePath(path, mustWork = FALSE),
@@ -47,14 +47,14 @@ describe("gutenberg_set_cache()", {
 
   test_that("persistent mode returns default cache", {
     with_gutenberg_cache({
-      path <- gutenberg_set_cache("persistent", quiet = TRUE)
+      path <- gutenberg_set_cache("persistent", verbose = FALSE)
       expect_type(path, "character")
     })
   })
 
   test_that("toggles between different paths", {
     with_gutenberg_cache({
-      session_path <- gutenberg_set_cache("session", quiet = TRUE)
+      session_path <- gutenberg_set_cache("session", verbose = FALSE)
 
       # Define a separate, writable temp path for the mock persistent storage
       mock_persistent_path <- tempfile("mock_persistent_")
@@ -71,7 +71,7 @@ describe("gutenberg_set_cache()", {
         .package = "dlr"
       )
 
-      persistent_path <- gutenberg_set_cache("persistent", quiet = TRUE)
+      persistent_path <- gutenberg_set_cache("persistent", verbose = FALSE)
       expect_false(identical(session_path, persistent_path))
       expect_equal(persistent_path, mock_persistent_path)
       expect_true(dir.exists(persistent_path))
@@ -80,7 +80,7 @@ describe("gutenberg_set_cache()", {
 
   test_that("session cache is detected as temporary", {
     with_gutenberg_cache({
-      gutenberg_set_cache("session", quiet = TRUE)
+      gutenberg_set_cache("session", verbose = FALSE)
       path <- gutenberg_cache_dir()
 
       is_session <- startsWith(
@@ -92,10 +92,10 @@ describe("gutenberg_set_cache()", {
     })
   })
 
-  test_that("emits success message when quiet = FALSE", {
+  test_that("emits success message when verbose = TRUE", {
     with_gutenberg_cache({
       expect_message(
-        gutenberg_set_cache("session", quiet = FALSE),
+        gutenberg_set_cache("session", verbose = TRUE),
         "Cache set to"
       )
     })
@@ -105,7 +105,7 @@ describe("gutenberg_set_cache()", {
 describe("gutenberg_list_cache()", {
   test_that("returns empty tibble when cache is empty", {
     with_gutenberg_cache({
-      out <- gutenberg_list_cache(quiet = TRUE)
+      out <- gutenberg_list_cache(verbose = FALSE)
       expect_s3_class(out, "tbl_df")
       expect_equal(nrow(out), 0)
     })
@@ -117,7 +117,7 @@ describe("gutenberg_list_cache()", {
       saveRDS("test", file.path(path, "123.rds"))
       saveRDS("test", file.path(path, "456.rds"))
 
-      out <- gutenberg_list_cache(quiet = TRUE)
+      out <- gutenberg_list_cache(verbose = FALSE)
 
       expect_equal(nrow(out), 2)
       expect_true(all(out$file %in% c("123.rds", "456.rds")))
@@ -125,10 +125,10 @@ describe("gutenberg_list_cache()", {
     })
   })
 
-  test_that("informs about directory when quiet = FALSE", {
+  test_that("informs about directory when verbose = TRUE", {
     with_gutenberg_cache({
       expect_message(
-        gutenberg_list_cache(quiet = FALSE),
+        gutenberg_list_cache(verbose = TRUE),
         "Cache directory:"
       )
     })
@@ -144,7 +144,7 @@ describe("gutenberg_delete_cache()", {
       saveRDS(list(id = 105), file_105)
       saveRDS(list(id = 109), file_109)
 
-      n <- gutenberg_delete_cache(105, quiet = TRUE)
+      n <- gutenberg_delete_cache(105, verbose = FALSE)
       expect_equal(n, 1)
       expect_false(file.exists(file_105))
       expect_true(file.exists(file_109))
@@ -160,18 +160,18 @@ describe("gutenberg_delete_cache()", {
     })
   })
 
-  test_that("messages on success and missing when quiet = FALSE", {
+  test_that("messages on success and missing when verbose = TRUE", {
     with_gutenberg_cache({
       path <- gutenberg_cache_dir()
       saveRDS(list(id = 1), file.path(path, "1.rds"))
 
       expect_message(
-        gutenberg_delete_cache(1, quiet = FALSE),
+        gutenberg_delete_cache(1, verbose = TRUE),
         "Deleted 1 cached file"
       )
 
       expect_message(
-        gutenberg_delete_cache(999, quiet = FALSE),
+        gutenberg_delete_cache(999, verbose = TRUE),
         "None of the specified IDs"
       )
     })
