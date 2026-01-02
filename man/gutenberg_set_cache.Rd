@@ -4,7 +4,7 @@
 \alias{gutenberg_set_cache}
 \title{Set the Gutenberg cache type}
 \usage{
-gutenberg_set_cache(type = c("session", "persistent"), quiet = FALSE)
+gutenberg_set_cache(type = c("session", "persistent"), verbose = TRUE)
 }
 \arguments{
 \item{type}{Either \code{"session"} (default) or \code{"persistent"}.
@@ -16,7 +16,7 @@ user cache directory. These files persist across sessions,
 preventing redundant downloads of the same files in the future.
 }}
 
-\item{quiet}{Whether to suppress the status message confirming the path.}
+\item{verbose}{Whether to show the status message confirming the path.}
 }
 \value{
 The active cache path (invisibly).

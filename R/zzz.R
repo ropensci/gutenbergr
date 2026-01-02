@@ -5,7 +5,7 @@
     cache_type <- "session"
   }
 
-  gutenberg_set_cache(cache_type, quiet = TRUE)
+  gutenberg_set_cache(cache_type, verbose = FALSE)
   gutenberg_ensure_cache_dir()
   invisible()
 }

@@ -4,13 +4,13 @@
 \alias{gutenberg_delete_cache}
 \title{Delete specific files from the cache}
 \usage{
-gutenberg_delete_cache(ids, quiet = FALSE)
+gutenberg_delete_cache(ids, verbose = TRUE)
 }
 \arguments{
 \item{ids}{A numeric or character vector of Gutenberg IDs to remove
 from the current cache.}
 
-\item{quiet}{Whether to suppress the status messages.}
+\item{verbose}{Whether to show the status messages.}
 }
 \value{
 The number of files successfully deleted (invisibly).

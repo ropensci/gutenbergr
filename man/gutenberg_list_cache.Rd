@@ -4,10 +4,10 @@
 \alias{gutenberg_list_cache}
 \title{List files in the Gutenberg cache}
 \usage{
-gutenberg_list_cache(quiet = FALSE)
+gutenberg_list_cache(verbose = TRUE)
 }
 \arguments{
-\item{quiet}{Whether to suppress the status message showing the cache directory path.}
+\item{verbose}{Whether to show the status message showing the cache directory path.}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble} with the following columns:
