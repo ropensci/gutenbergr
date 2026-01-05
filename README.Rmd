@@ -42,8 +42,8 @@ Install the released version of gutenbergr from [CRAN](https://cran.r-project.or
 
 ```{r, eval = FALSE}
 install.packages("gutenbergr")
-``
-`
+```
+
 :::
 
 ::: .pkgdown-devel
@@ -52,8 +52,8 @@ Install the development version of gutenbergr from [GitHub](https://github.com/)
 ```{r, eval = FALSE}
 # install.packages("pak")
 pak::pak("ropensci/gutenbergr")
-`
-``
+```
+
 :::
 
 ## Examples
