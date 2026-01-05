@@ -1,12 +1,3 @@
-# Skip integration tests unless explicitly enabled
-skip_if_not_integration <- function() {
-  if (!identical(Sys.getenv("RUN_INTEGRATION_TESTS"), "true")) {
-    skip(
-      "Integration tests not enabled. Set RUN_INTEGRATION_TESTS=true to run."
-    )
-  }
-}
-
 test_that("gutenberg_download works with real API - single book", {
   skip_if_not_integration()
   skip_on_cran()
