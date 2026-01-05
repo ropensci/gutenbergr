@@ -1,0 +1,67 @@
+name: Integration Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+  # Run weekly to catch API changes
+  schedule:
+    - cron: '0 0 * * 0' # Every Sunday at midnight UTC
+
+jobs:
+  integration-tests:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: macos-latest, r: 'release'}
+          - {os: windows-latest, r: 'release'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::testthat
+            any::rcmdcheck
+          needs: check
+
+      - name: Run Integration Tests
+        run: |
+          # Set environment variable to run integration tests
+          Sys.setenv(RUN_INTEGRATION_TESTS = "true")
+
+          # Run only integration tests
+          testthat::test_local(
+            filter = "integration",
+            reporter = "progress",
+            stop_on_failure = TRUE
+          )
+        shell: Rscript {0}
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.config.os }}-r-${{ matrix.config.r }}
+          path: |
+            tests/testthat/*.Rout
+            tests/testthat/*.rds
