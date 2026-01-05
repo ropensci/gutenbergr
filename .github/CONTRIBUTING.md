@@ -31,12 +31,12 @@ See the Tidyverse guide on [how to create a great issue](https://code-review.tid
 
 ### Code style
 
-*   New code should follow the styling and formatting provided by [Air](https://github.com/posit-dev/air).
+*  New code should follow the styling and formatting provided by [Air](https://github.com/posit-dev/air).
 
 *  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.
 
-*  We use [testthat](https://cran.r-project.org/package=testthat) for unit tests.
-   Contributions with test cases included are easier to accept.
+*  We use [testthat](https://cran.r-project.org/package=testthat) for tests.
+   Contributions with test cases included are easier to accept. See the [`tests` `README`](/tests/README.md) for info.
 
 ## Code of Conduct
 
