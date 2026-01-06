@@ -108,6 +108,11 @@ describe("gutenberg_list_cache()", {
       out <- gutenberg_list_cache(verbose = FALSE)
       expect_s3_class(out, "tbl_df")
       expect_equal(nrow(out), 0)
+      expect_named(
+        out,
+        c("title", "file", "size_mb", "modified", "path"),
+        ignore.order = TRUE
+      )
     })
   })
 
@@ -116,12 +121,37 @@ describe("gutenberg_list_cache()", {
       path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "123.rds"))
       saveRDS("test", file.path(path, "456.rds"))
+      out <- gutenberg_list_cache(verbose = FALSE)
+      expect_equal(nrow(out), 2)
+      expect_true(all(out$file %in% c("123.rds", "456.rds")))
+      expect_true(all(out$size_mb > 0))
+      expect_true("title" %in% names(out))
+      expect_type(out$title, "character")
+    })
+  })
+
+  test_that("includes titles from metadata when available", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_dir()
+      # 84: Frankenstein"
+      # 1342: Pride and Prejudice
+      saveRDS("test", file.path(path, "84.rds"))
+      saveRDS("test", file.path(path, "1342.rds"))
 
       out <- gutenberg_list_cache(verbose = FALSE)
 
       expect_equal(nrow(out), 2)
-      expect_true(all(out$file %in% c("123.rds", "456.rds")))
-      expect_true(all(out$size_mb > 0))
+      expect_true(any(!is.na(out$title)))
+    })
+  })
+
+  test_that("handles files with IDs not in metadata", {
+    with_gutenberg_cache({
+      path <- gutenberg_cache_dir()
+      saveRDS("test", file.path(path, "9999999.rds"))
+      out <- gutenberg_list_cache(verbose = FALSE)
+      expect_equal(nrow(out), 1)
+      expect_true(is.na(out$title[1]))
     })
   })
 
