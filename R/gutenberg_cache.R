@@ -166,12 +166,13 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #' @param verbose Whether to show the status message showing the cache directory path.
 #'
 #' @return A [tibble::tibble] with the following columns:
-#'   \describe{
+#' \describe{
+#'     \item{title}{The title of the work.}
 #'     \item{file}{The filename.}
 #'     \item{size_mb}{Size of the file in megabytes.}
 #'     \item{modified}{The last modification time.}
 #'     \item{path}{The file's absolute path.}
-#'   }
+#' }
 #' @keywords cache
 #' @export
 gutenberg_list_cache <- function(verbose = TRUE) {
@@ -184,6 +185,7 @@ gutenberg_list_cache <- function(verbose = TRUE) {
 
   if (length(files) == 0) {
     return(tibble::tibble(
+      title = character(),
       file = character(),
       size_mb = double(),
       modified = as.POSIXct(character()),
@@ -192,9 +194,19 @@ gutenberg_list_cache <- function(verbose = TRUE) {
   }
 
   info <- file.info(files)
+  filenames <- basename(files)
+  gutenberg_ids <- as.integer(sub("\\..*$", "", filenames))
+
+  titles <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
+    dplyr::left_join(
+      gutenberg_metadata |> dplyr::select(gutenberg_id, title),
+      by = "gutenberg_id"
+    ) |>
+    dplyr::pull(title)
 
   tibble::tibble(
-    file = basename(files),
+    title = titles,
+    file = filenames,
     size_mb = info$size / 1024^2,
     modified = info$mtime,
     path = normalizePath(files, winslash = "/", mustWork = FALSE)
