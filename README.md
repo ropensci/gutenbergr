@@ -84,20 +84,20 @@ gutenberg_works() |>
   filter(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
+#>          <int> <chr>             <chr>                       <int> <fct>
+#> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
 #> # A tibble: 1 × 8
 #>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
+#>          <int> <chr>             <chr>                       <int> <fct>
+#> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
+#>   <chr>                                                                              <fct>  <lgl>
 #> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
 ```
 
@@ -106,24 +106,20 @@ Since we see that it has `gutenberg_id` 768, we can download it with the
 
 ``` r
 wuthering_heights <- gutenberg_download(768)
-#> [1] "https://aleph.pglaf.org/README"
-#> https://aleph.pglaf.org/7/6/768/768.zip
-#> https://aleph.pglaf.org/7/6/768/768-8.zip
-#> https://aleph.pglaf.org/7/6/768/768-0.zip
 wuthering_heights
 #> # A tibble: 12,342 × 2
-#>    gutenberg_id text               
-#>           <int> <chr>              
+#>    gutenberg_id text
+#>           <int> <chr>
 #>  1          768 "Wuthering Heights"
-#>  2          768 ""                 
-#>  3          768 "by Emily Brontë"  
-#>  4          768 ""                 
-#>  5          768 ""                 
-#>  6          768 ""                 
-#>  7          768 ""                 
-#>  8          768 "CHAPTER I"        
-#>  9          768 ""                 
-#> 10          768 ""                 
+#>  2          768 ""
+#>  3          768 "by Emily Brontë"
+#>  4          768 ""
+#>  5          768 ""
+#>  6          768 ""
+#>  7          768 ""
+#>  8          768 "CHAPTER I"
+#>  9          768 ""
+#> 10          768 ""
 #> # ℹ 12,332 more rows
 ```
 
@@ -134,17 +130,10 @@ the metadata.
 ``` r
 # 1260 is the ID of Jane Eyre
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-#> [1] "https://aleph.pglaf.org/README"
-#> https://aleph.pglaf.org/1/2/6/1260/1260.zip
-#> https://aleph.pglaf.org/1/2/6/1260/1260-8.zip
-#> https://aleph.pglaf.org/1/2/6/1260/1260-0.zip
-#> https://aleph.pglaf.org/1/2/6/1260/1260.txt
-#> https://aleph.pglaf.org/1/2/6/1260/1260-8.txt
-#> https://aleph.pglaf.org/1/2/6/1260/1260-0.txt
 books
 #> # A tibble: 33,343 × 3
-#>    gutenberg_id text                title            
-#>           <int> <chr>               <chr>            
+#>    gutenberg_id text                title
+#>           <int> <chr>               <chr>
 #>  1          768 "Wuthering Heights" Wuthering Heights
 #>  2          768 ""                  Wuthering Heights
 #>  3          768 "by Emily Brontë"   Wuthering Heights
@@ -173,41 +162,23 @@ we could get the text of all Aristotle’s works, each annotated with both
 ``` r
 aristotle_books <- gutenberg_works(author == "Aristotle") |>
   gutenberg_download(meta_fields = "title")
-#> [1] "https://aleph.pglaf.org/README"
-#> https://aleph.pglaf.org/1/9/7/1974/1974.zip
-#> https://aleph.pglaf.org/2/4/1/2412/2412.zip
-#> https://aleph.pglaf.org/6/7/6/6762/6762.zip
-#> https://aleph.pglaf.org/6/7/6/6763/6763.zip
-#> https://aleph.pglaf.org/8/4/3/8438/8438.zip
-#> https://aleph.pglaf.org/8/4/3/8438/8438-8.zip
-#> https://aleph.pglaf.org/8/4/3/8438/8438-0.zip
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685.zip
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685-8.zip
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685-0.zip
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685.txt
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685-8.txt
-#> https://aleph.pglaf.org/2/0/6/8/20685/20685-0.txt
-#> https://aleph.pglaf.org/2/6/0/9/26095/26095.zip
-#> https://aleph.pglaf.org/5/9/0/5/59058/59058.zip
-#> https://aleph.pglaf.org/5/9/0/5/59058/59058-8.zip
-#> https://aleph.pglaf.org/5/9/0/5/59058/59058-0.zip
 
 aristotle_books
 #> # A tibble: 43,801 × 3
-#>    gutenberg_id text                                                                    
-#>           <int> <chr>                                                                   
-#>  1         1974 "THE POETICS OF ARISTOTLE"                                              
-#>  2         1974 ""                                                                      
-#>  3         1974 "By Aristotle"                                                          
-#>  4         1974 ""                                                                      
-#>  5         1974 "A Translation By S. H. Butcher"                                        
-#>  6         1974 ""                                                                      
-#>  7         1974 ""                                                                      
-#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"       
+#>    gutenberg_id text
+#>           <int> <chr>
+#>  1         1974 "THE POETICS OF ARISTOTLE"
+#>  2         1974 ""
+#>  3         1974 "By Aristotle"
+#>  4         1974 ""
+#>  5         1974 "A Translation By S. H. Butcher"
+#>  6         1974 ""
+#>  7         1974 ""
+#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"
 #>  9         1974 "intact some Greek words to illustrate a specific point of the original"
-#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"  
-#>    title                   
-#>    <chr>                   
+#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"
+#>    title
+#>    <chr>
 #>  1 The Poetics of Aristotle
 #>  2 The Poetics of Aristotle
 #>  3 The Poetics of Aristotle
