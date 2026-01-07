@@ -33,4 +33,16 @@ The cache type can also be set with an option:
 
 \code{options(gutenbergr_cache_type = "persistent")}
 }
+\examples{
+\dontrun{
+# Set to persistent (survives R sessions)
+gutenberg_cache_set("persistent")
+
+# Set back to session cache (temporary)
+gutenberg_cache_set("session")
+
+# Check current cache location
+gutenberg_cache_dir()
+}
+}
 \keyword{cache}

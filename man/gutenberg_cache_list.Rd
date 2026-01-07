@@ -24,4 +24,13 @@ A \link[tibble:tibble]{tibble::tibble} with the following columns:
 Provides a detailed list of files currently stored in the directory
 returned by \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}}.
 }
+\examples{
+\dontrun{
+# List all works in the currently set cache
+gutenberg_cache_list()
+
+# Suppress the directory path message
+gutenberg_cache_list(verbose = FALSE)
+}
+}
 \keyword{cache}
