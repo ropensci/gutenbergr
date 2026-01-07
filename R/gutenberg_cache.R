@@ -168,6 +168,7 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #' @return A [tibble::tibble] with the following columns:
 #' \describe{
 #'     \item{title}{The title of the work.}
+#'     \item{author}{The author(s) of the work.}
 #'     \item{file}{The filename.}
 #'     \item{size_mb}{Size of the file in megabytes.}
 #'     \item{modified}{The last modification time.}
@@ -186,6 +187,7 @@ gutenberg_cache_list <- function(verbose = TRUE) {
   if (length(files) == 0) {
     return(tibble::tibble(
       title = character(),
+      author = character(),
       file = character(),
       size_mb = double(),
       modified = as.POSIXct(character()),
@@ -197,15 +199,22 @@ gutenberg_cache_list <- function(verbose = TRUE) {
   filenames <- basename(files)
   gutenberg_ids <- as.integer(sub("\\..*$", "", filenames))
 
-  titles <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
+  metadata <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
     dplyr::left_join(
-      gutenberg_metadata |> dplyr::select(gutenberg_id, title),
+      gutenberg_metadata |>
+        dplyr::select(gutenberg_id, title, author) |>
+        dplyr::group_by(gutenberg_id) |>
+        dplyr::summarise(
+          title = dplyr::first(title),
+          author = paste(author, collapse = " & "),
+          .groups = "drop"
+        ),
       by = "gutenberg_id"
-    ) |>
-    dplyr::pull(title)
+    )
 
   tibble::tibble(
-    title = titles,
+    title = metadata$title,
+    author = metadata$author,
     file = filenames,
     size_mb = info$size / 1024^2,
     modified = info$mtime,

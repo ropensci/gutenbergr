@@ -13,6 +13,7 @@ gutenberg_cache_list(verbose = TRUE)
 A \link[tibble:tibble]{tibble::tibble} with the following columns:
 \describe{
 \item{title}{The title of the work.}
+\item{author}{The author(s) of the work.}
 \item{file}{The filename.}
 \item{size_mb}{Size of the file in megabytes.}
 \item{modified}{The last modification time.}

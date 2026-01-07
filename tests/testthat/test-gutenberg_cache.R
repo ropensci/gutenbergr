@@ -110,7 +110,7 @@ describe("gutenberg_cache_list()", {
       expect_equal(nrow(out), 0)
       expect_named(
         out,
-        c("title", "file", "size_mb", "modified", "path"),
+        c("title", "author", "file", "size_mb", "modified", "path"),
         ignore.order = TRUE
       )
     })
