@@ -69,7 +69,7 @@ gutenberg_cache_files <- function() {
 #' @return The active cache path (invisibly).
 #' @export
 #' @keywords cache
-gutenberg_set_cache <- function(
+gutenberg_cache_set <- function(
   type = getOption("gutenbergr_cache_type", "session"),
   verbose = TRUE
 ) {
@@ -175,7 +175,7 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #' }
 #' @keywords cache
 #' @export
-gutenberg_list_cache <- function(verbose = TRUE) {
+gutenberg_cache_list <- function(verbose = TRUE) {
   cache_root <- gutenberg_cache_dir()
   files <- gutenberg_cache_files()
 

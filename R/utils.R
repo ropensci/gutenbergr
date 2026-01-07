@@ -20,6 +20,7 @@ dl_and_read <- function(url) {
   mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
   tmp <- tempfile()
   on.exit(unlink(tmp))
+  print(url)
   utils::download.file(url, tmp, mode = mode, quiet = TRUE)
   readr::read_lines(tmp)
 } # nocov end

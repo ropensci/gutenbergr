@@ -18,7 +18,7 @@
 #'   that was chosen
 #' @param use_cache Whether to use caching. Defaults to `TRUE`.
 #'
-#'   See [gutenberg_set_cache()] for details on configuring caching.
+#'   See [gutenberg_cache_set()] for details on configuring caching.
 #'
 #'   See [gutenberg_cache_dir()] to check your current cache location.
 #'
