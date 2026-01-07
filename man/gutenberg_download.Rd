@@ -32,7 +32,7 @@ that was chosen}
 
 \item{use_cache}{Whether to use caching. Defaults to \code{TRUE}.
 
-See \code{\link[=gutenberg_set_cache]{gutenberg_set_cache()}} for details on configuring caching.
+See \code{\link[=gutenberg_cache_set]{gutenberg_cache_set()}} for details on configuring caching.
 
 See \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}} to check your current cache location.
 

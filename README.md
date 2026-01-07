@@ -13,7 +13,8 @@ peer-review](https://badges.ropensci.org/41_status.svg)](https://github.com/rope
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/R-CMD-check.yaml)
-[![Integration Tests](https://github.com/ropensci/gutenbergr/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/integration-tests.yaml)
+[![Integration
+Tests](https://github.com/ropensci/gutenbergr/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/ropensci/gutenbergr/actions/workflows/integration-tests.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/gutenbergr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/gutenbergr)
 [![Monthly
@@ -87,7 +88,7 @@ gutenberg_works() |>
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
 #>   <chr>                                                                              <fct>  <lgl>
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
+#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
 
 # or just:
 gutenberg_works(title == "Wuthering Heights")
@@ -97,7 +98,7 @@ gutenberg_works(title == "Wuthering Heights")
 #> 1          768 Wuthering Heights Brontë, Emily                 405 en
 #>   gutenberg_bookshelf                                                                rights has_text
 #>   <chr>                                                                              <fct>  <lgl>
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Browsing: Literature/Browsing… Publi… TRUE
+#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
 ```
 
 Since we see that it has `gutenberg_id` 768, we can download it with the
@@ -256,8 +257,8 @@ details.
 
 See [`CONTRIBUTING.md`](./.github/CONTRIBUTING.md).
 
-Please note that this package is released with a
-[Contributor Code of Conduct](https://ropensci.org/code-of-conduct/).
-By contributing to this project, you agree to abide by its terms.
+Please note that this package is released with a [Contributor Code of
+Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
+project, you agree to abide by its terms.
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)

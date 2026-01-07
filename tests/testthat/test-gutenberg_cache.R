@@ -31,10 +31,10 @@ describe("gutenberg_cache_dir()", {
   })
 })
 
-describe("gutenberg_set_cache()", {
+describe("gutenberg_cache_set()", {
   test_that("session mode uses tempdir()", {
     with_gutenberg_cache({
-      path <- gutenberg_set_cache("session", verbose = FALSE)
+      path <- gutenberg_cache_set("session", verbose = FALSE)
       expect_true(
         startsWith(
           normalizePath(path, mustWork = FALSE),
@@ -47,14 +47,14 @@ describe("gutenberg_set_cache()", {
 
   test_that("persistent mode returns default cache", {
     with_gutenberg_cache({
-      path <- gutenberg_set_cache("persistent", verbose = FALSE)
+      path <- gutenberg_cache_set("persistent", verbose = FALSE)
       expect_type(path, "character")
     })
   })
 
   test_that("toggles between different paths", {
     with_gutenberg_cache({
-      session_path <- gutenberg_set_cache("session", verbose = FALSE)
+      session_path <- gutenberg_cache_set("session", verbose = FALSE)
 
       # Define a separate, writable temp path for the mock persistent storage
       mock_persistent_path <- tempfile("mock_persistent_")
@@ -71,7 +71,7 @@ describe("gutenberg_set_cache()", {
         .package = "dlr"
       )
 
-      persistent_path <- gutenberg_set_cache("persistent", verbose = FALSE)
+      persistent_path <- gutenberg_cache_set("persistent", verbose = FALSE)
       expect_false(identical(session_path, persistent_path))
       expect_equal(persistent_path, mock_persistent_path)
       expect_true(dir.exists(persistent_path))
@@ -80,7 +80,7 @@ describe("gutenberg_set_cache()", {
 
   test_that("session cache is detected as temporary", {
     with_gutenberg_cache({
-      gutenberg_set_cache("session", verbose = FALSE)
+      gutenberg_cache_set("session", verbose = FALSE)
       path <- gutenberg_cache_dir()
 
       is_session <- startsWith(
@@ -95,22 +95,22 @@ describe("gutenberg_set_cache()", {
   test_that("emits success message when verbose = TRUE", {
     with_gutenberg_cache({
       expect_message(
-        gutenberg_set_cache("session", verbose = TRUE),
+        gutenberg_cache_set("session", verbose = TRUE),
         "Cache set to"
       )
     })
   })
 })
 
-describe("gutenberg_list_cache()", {
+describe("gutenberg_cache_list()", {
   test_that("returns empty tibble when cache is empty", {
     with_gutenberg_cache({
-      out <- gutenberg_list_cache(verbose = FALSE)
+      out <- gutenberg_cache_list(verbose = FALSE)
       expect_s3_class(out, "tbl_df")
       expect_equal(nrow(out), 0)
       expect_named(
         out,
-        c("title", "file", "size_mb", "modified", "path"),
+        c("title", "author", "file", "size_mb", "modified", "path"),
         ignore.order = TRUE
       )
     })
@@ -121,7 +121,7 @@ describe("gutenberg_list_cache()", {
       path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "123.rds"))
       saveRDS("test", file.path(path, "456.rds"))
-      out <- gutenberg_list_cache(verbose = FALSE)
+      out <- gutenberg_cache_list(verbose = FALSE)
       expect_equal(nrow(out), 2)
       expect_true(all(out$file %in% c("123.rds", "456.rds")))
       expect_true(all(out$size_mb > 0))
@@ -138,7 +138,7 @@ describe("gutenberg_list_cache()", {
       saveRDS("test", file.path(path, "84.rds"))
       saveRDS("test", file.path(path, "1342.rds"))
 
-      out <- gutenberg_list_cache(verbose = FALSE)
+      out <- gutenberg_cache_list(verbose = FALSE)
 
       expect_equal(nrow(out), 2)
       expect_true(any(!is.na(out$title)))
@@ -149,7 +149,7 @@ describe("gutenberg_list_cache()", {
     with_gutenberg_cache({
       path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "9999999.rds"))
-      out <- gutenberg_list_cache(verbose = FALSE)
+      out <- gutenberg_cache_list(verbose = FALSE)
       expect_equal(nrow(out), 1)
       expect_true(is.na(out$title[1]))
     })
@@ -158,7 +158,7 @@ describe("gutenberg_list_cache()", {
   test_that("informs about directory when verbose = TRUE", {
     with_gutenberg_cache({
       expect_message(
-        gutenberg_list_cache(verbose = TRUE),
+        gutenberg_cache_list(verbose = TRUE),
         "Cache directory:"
       )
     })

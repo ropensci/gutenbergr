@@ -18,4 +18,13 @@ The number of files successfully deleted (invisibly).
 \description{
 Delete specific files from the cache
 }
+\examples{
+\dontrun{
+# Remove specific books from cache
+gutenberg_cache_remove_ids(c(1, 2))
+
+# Remove silently
+gutenberg_cache_remove_ids(1, verbose = FALSE)
+}
+}
 \keyword{cache}

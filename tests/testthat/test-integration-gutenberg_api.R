@@ -106,7 +106,7 @@ test_that("gutenberg_download caching works with real API", {
       use_cache = TRUE
     )
 
-    cache_files <- gutenberg_list_cache(verbose = FALSE)
+    cache_files <- gutenberg_cache_list(verbose = FALSE)
     expect_true(nrow(cache_files) > 0)
     expect_true(cache_files$file %in% c("1.rds"))
 

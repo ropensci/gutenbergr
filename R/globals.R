@@ -10,6 +10,7 @@ globalVariables(
     "number",
     "total",
     "title",
+    "author",
     "gutenberg_author_id",
     "total_languages"
   )

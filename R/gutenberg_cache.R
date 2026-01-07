@@ -4,6 +4,11 @@
 #' based on the current `gutenbergr_cache_type` option.
 #'
 #' @return A character string representing the path to the cache directory.
+#' @examples
+#' \dontrun{
+#' # Get current cache directory
+#' gutenberg_cache_dir()
+#' }
 #' @keywords cache
 #' @export
 gutenberg_cache_dir <- function() {
@@ -65,11 +70,21 @@ gutenberg_cache_files <- function() {
 #'     preventing redundant downloads of the same files in the future.
 #'  }
 #' @param verbose Whether to show the status message confirming the path.
+#' @examples
+#' \dontrun{
+#' # Set to persistent (survives R sessions)
+#' gutenberg_cache_set("persistent")
 #'
+#' # Set back to session cache (temporary)
+#' gutenberg_cache_set("session")
+#'
+#' # Check current cache location
+#' gutenberg_cache_dir()
+#' }
 #' @return The active cache path (invisibly).
 #' @export
 #' @keywords cache
-gutenberg_set_cache <- function(
+gutenberg_cache_set <- function(
   type = getOption("gutenbergr_cache_type", "session"),
   verbose = TRUE
 ) {
@@ -107,6 +122,11 @@ gutenberg_set_cache <- function(
 #' [gutenberg_cache_dir()].
 #'
 #' @return The number of files deleted (invisibly).
+#' @examples
+#' \dontrun{
+#' # Clear entire current cache
+#' gutenberg_cache_clear_all()
+#' }
 #' @keywords cache
 #' @export
 gutenberg_cache_clear_all <- function() {
@@ -128,6 +148,14 @@ gutenberg_cache_clear_all <- function() {
 #' @param verbose Whether to show the status messages.
 #'
 #' @return The number of files successfully deleted (invisibly).
+#' @examples
+#' \dontrun{
+#' # Remove specific books from cache
+#' gutenberg_cache_remove_ids(c(1, 2))
+#'
+#' # Remove silently
+#' gutenberg_cache_remove_ids(1, verbose = FALSE)
+#' }
 #' @keywords cache
 #' @export
 gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
@@ -168,14 +196,23 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #' @return A [tibble::tibble] with the following columns:
 #' \describe{
 #'     \item{title}{The title of the work.}
+#'     \item{author}{The author(s) of the work.}
 #'     \item{file}{The filename.}
 #'     \item{size_mb}{Size of the file in megabytes.}
 #'     \item{modified}{The last modification time.}
 #'     \item{path}{The file's absolute path.}
 #' }
+#' @examples
+#' \dontrun{
+#' # List all works in the currently set cache
+#' gutenberg_cache_list()
+#'
+#' # Suppress the directory path message
+#' gutenberg_cache_list(verbose = FALSE)
+#' }
 #' @keywords cache
 #' @export
-gutenberg_list_cache <- function(verbose = TRUE) {
+gutenberg_cache_list <- function(verbose = TRUE) {
   cache_root <- gutenberg_cache_dir()
   files <- gutenberg_cache_files()
 
@@ -186,6 +223,7 @@ gutenberg_list_cache <- function(verbose = TRUE) {
   if (length(files) == 0) {
     return(tibble::tibble(
       title = character(),
+      author = character(),
       file = character(),
       size_mb = double(),
       modified = as.POSIXct(character()),
@@ -197,15 +235,22 @@ gutenberg_list_cache <- function(verbose = TRUE) {
   filenames <- basename(files)
   gutenberg_ids <- as.integer(sub("\\..*$", "", filenames))
 
-  titles <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
+  metadata <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
     dplyr::left_join(
-      gutenberg_metadata |> dplyr::select(gutenberg_id, title),
+      gutenberg_metadata |>
+        dplyr::select(gutenberg_id, title, author) |>
+        dplyr::group_by(gutenberg_id) |>
+        dplyr::summarise(
+          title = dplyr::first(title),
+          author = paste(author, collapse = " & "),
+          .groups = "drop"
+        ),
       by = "gutenberg_id"
-    ) |>
-    dplyr::pull(title)
+    )
 
   tibble::tibble(
-    title = titles,
+    title = metadata$title,
+    author = metadata$author,
     file = filenames,
     size_mb = info$size / 1024^2,
     modified = info$mtime,

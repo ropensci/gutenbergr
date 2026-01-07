@@ -1,5 +1,5 @@
 .onLoad <- function(libname, pkgname) {
-  gutenberg_set_cache(verbose = FALSE)
+  gutenberg_cache_set(verbose = FALSE)
   gutenberg_ensure_cache_dir()
 }
 

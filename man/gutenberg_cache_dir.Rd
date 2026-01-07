@@ -13,4 +13,10 @@ A character string representing the path to the cache directory.
 Calculates the path to the directory where Gutenberg files are stored,
 based on the current \code{gutenbergr_cache_type} option.
 }
+\examples{
+\dontrun{
+# Get current cache directory
+gutenberg_cache_dir()
+}
+}
 \keyword{cache}
