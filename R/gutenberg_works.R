@@ -26,7 +26,7 @@
 #'   besides the ones provided. For example, whether to include `en/fr`
 #'   when English works are requested.
 #'
-#' @return A [tibble::tibble()] with one row for each work, in the same format 
+#' @return A [tibble::tibble()] with one row for each work, in the same format
 #'   as [gutenberg_metadata].
 #'
 #' @details By default, returns:
