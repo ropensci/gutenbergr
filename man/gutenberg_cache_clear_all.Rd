@@ -14,9 +14,9 @@ Deletes all cached \code{.rds} files in the directory currently returned by
 \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}}.
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Clear entire current cache
 gutenberg_cache_clear_all()
-}
+\dontshow{\}) # examplesIf}
 }
 \keyword{cache}

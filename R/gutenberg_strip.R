@@ -1,24 +1,38 @@
 #' Strip header and footer content from a Project Gutenberg book
 #'
 #' Strip header and footer content from a Project Gutenberg book. This
-#' is based on some formatting guesses so it may not be perfect. It
-#' will also not strip tables of contents, prologues, or other text
-#' that appears at the start of a book.
+#' is based on formatting heuristics (regular expression guesses), so it
+#' may not be perfect.
 #'
-#' @param text A character vector with lines of a book.
+#' @details
+#' This function identifies the  Project Gutenberg "start" and "end" markers.
+#' It also attempts to strip out initial metadata paragraphs (such as
+#' "Produced by...", "Transcribed from...", etc.).
 #'
-#' @return A character vector with Project Gutenberg headers and footers removed
+#' Note that this will **not** strip:
+#' * Tables of contents
+#' * Prologues or introductions
+#' * Other author-written text that appears at the start of a book
+#'
+#' @param text A character vector where each element is a line of a book.
+#'
+#' @return A character vector with Project Gutenberg headers and footers removed.
 #'
 #' @examplesIf interactive()
+#' library(dplyr)
 #'
+#' # Download a book without stripping to see the headers
 #' book <- gutenberg_works(title == "Pride and Prejudice") |>
 #'   gutenberg_download(strip = FALSE)
 #'
-#' head(book$text, 10)
-#' tail(book$text, 10)
+#' # Look at the raw header and footer
+#' head(book$text, 20)
+#' tail(book$text, 20)
 #'
+#' # Manually strip the text
 #' text_stripped <- gutenberg_strip(book$text)
 #'
+#' # Check the cleaned results
 #' head(text_stripped, 10)
 #' tail(text_stripped, 10)
 #'

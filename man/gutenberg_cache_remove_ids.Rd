@@ -19,12 +19,12 @@ The number of files successfully deleted (invisibly).
 Delete specific files from the cache
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Remove specific books from cache
 gutenberg_cache_remove_ids(c(1, 2))
 
 # Remove silently
 gutenberg_cache_remove_ids(1, verbose = FALSE)
-}
+\dontshow{\}) # examplesIf}
 }
 \keyword{cache}

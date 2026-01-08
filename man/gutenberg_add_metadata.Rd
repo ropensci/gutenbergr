@@ -7,7 +7,7 @@
 gutenberg_add_metadata(gutenberg_tbl, meta_fields)
 }
 \arguments{
-\item{gutenberg_tbl}{A two column \code{tbl_df} from \code{gutenberg_download}.}
+\item{gutenberg_tbl}{A two column \code{tbl_df} from \code{\link[=gutenberg_download]{gutenberg_download()}}.}
 
 \item{meta_fields}{Additional fields describing each book, such as \code{title}
 and \code{author}, to add from \link{gutenberg_metadata}.}

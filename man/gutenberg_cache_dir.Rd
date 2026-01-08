@@ -14,9 +14,9 @@ Calculates the path to the directory where Gutenberg files are stored,
 based on the current \code{gutenbergr_cache_type} option.
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Get current cache directory
 gutenberg_cache_dir()
-}
+\dontshow{\}) # examplesIf}
 }
 \keyword{cache}

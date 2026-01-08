@@ -16,7 +16,7 @@
 #'   \item{gutenberg_author_id}{Project Gutenberg author ID}
 #'   \item{language}{Language ISO 639 code, separated by / if multiple. Two
 #'   letter code if one exists, otherwise three letter. See
-#'   \url{https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes}}
+#'   <https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes>}
 #'   \item{gutenberg_bookshelf}{Which collection or collections this
 #'   is found in, separated by / if multiple}
 #'   \item{rights}{Generally one of three options: "Public domain in the USA."
@@ -63,8 +63,7 @@
 #' # date last updated
 #' attr(gutenberg_metadata, "date_updated")
 #'
-#' @seealso \link{gutenberg_works}, \link{gutenberg_authors},
-#'   \link{gutenberg_subjects}
+#' @seealso [gutenberg_works()], [gutenberg_authors], [gutenberg_subjects]
 "gutenberg_metadata"
 
 
@@ -74,11 +73,11 @@
 #' Library of Congress Classifications (lcc) and Library of Congress
 #' Subject Headings (lcsh).
 #'
-#' @format A tbl_df (see tibble or dplyr) with one row for each pairing
+#' @format A [tibble::tibble()] with one row for each pairing
 #' of work and subject, with columns:
 #' \describe{
 #'   \item{gutenberg_id}{ID describing a work that can be joined with
-#'   \link{gutenberg_metadata}}
+#'   [gutenberg_metadata]}
 #'   \item{subject_type}{Either "lcc" (Library of Congress Classification) or
 #'   "lcsh" (Library of Congress Subject Headings)}
 #'   \item{subject}{Subject}
@@ -87,12 +86,12 @@
 #' @keywords datasets
 #'
 #' @details Find more information about Library of Congress Categories
-#' here: \url{https://www.loc.gov/catdir/cpso/lcco/}, and about
+#' here: <https://www.loc.gov/catdir/cpso/lcco/>, and about
 #' Library of Congress Subject Headings here:
-#' \url{https://id.loc.gov/authorities/subjects.html}.
+#' <https://id.loc.gov/authorities/subjects.html>.
 #'
 #' To find the date on which this metadata was last updated,
-#' run \code{attr(gutenberg_subjects, "date_updated")}.
+#' run `attr(gutenberg_subjects, "date_updated")`.
 #'
 #' @examplesIf interactive()
 #'
@@ -123,7 +122,7 @@
 #' # date last updated
 #' attr(gutenberg_subjects, "date_updated")
 #'
-#' @seealso \link{gutenberg_metadata}, \link{gutenberg_authors}
+#' @seealso [gutenberg_metadata], [gutenberg_authors]
 "gutenberg_subjects"
 
 
@@ -136,14 +135,14 @@
 #' single author of at least one work.
 #'
 #' @details To find the date on which this metadata was last updated,
-#' run \code{attr(gutenberg_authors, "date_updated")}.
+#' run `attr(gutenberg_authors, "date_updated")`.
 #'
-#' @format A tbl_df (see tibble or dplyr) with one row for each
+#' @format A [tibble::tibble()] with one row for each
 #' author, with the columns:
 #' \describe{
 #'   \item{gutenberg_author_id}{Unique identifier for the author that can
-#'   be used to join with the \link{gutenberg_metadata} dataset}
-#'   \item{author}{The \code{agent_name} field from the original metadata}
+#'   be used to join with the [gutenberg_metadata] dataset}
+#'   \item{author}{The `agent_name` field from the original metadata}
 #'   \item{alias}{Alias}
 #'   \item{birthdate}{Year of birth}
 #'   \item{deathdate}{Year of death}
@@ -160,7 +159,7 @@
 #' # date last updated
 #' attr(gutenberg_authors, "date_updated")
 #'
-#' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
+#' @seealso [gutenberg_metadata], [gutenberg_subjects]
 "gutenberg_authors"
 
 #' Metadata about Project Gutenberg languages
@@ -169,13 +168,13 @@
 #' Gutenberg work.
 #'
 #' @details To find the date on which this metadata was last updated,
-#' run \code{attr(gutenberg_languages, "date_updated")}.
+#' run `attr(gutenberg_languages, "date_updated")`.
 #'
-#' @format A tbl_df (see tibble or dplyr) with one row for each
-#' author, with the columns:
+#' @format A [tibble::tibble()] with one row for each
+#' work-language pair, with the columns:
 #' \describe{
 #'   \item{gutenberg_id}{Unique identifier for the work that can
-#'   be used to join with the \link{gutenberg_metadata} dataset}
+#'   be used to join with the [gutenberg_metadata] dataset}
 #'   \item{language}{Language ISO 639 code. Two
 #'   letter code if one exists, otherwise three letter.}
 #'   \item{total_languages}{Number of languages for this work.}
@@ -188,23 +187,23 @@
 #' # date last updated
 #' attr(gutenberg_languages, "date_updated")
 #'
-#' @seealso \link{gutenberg_metadata}, \link{gutenberg_subjects}
+#' @seealso [gutenberg_metadata], [gutenberg_subjects]
 "gutenberg_languages"
 
 
 #' Sample Book Downloads
 #'
-#' A tibble of book text for two sample books, generated using
+#' A [tibble::tibble()] of book text for two sample books, generated using
 #' [gutenberg_download()].
 #'
 #' @details This code was used to download the books:
 #' `gutenberg_download(c(109, 105), meta_fields = c("title", "author"))`
 #'
-#' @format A tbl_df (from [tibble::tibble()]) with one row for each
+#' @format A [tibble::tibble()] with one row for each
 #' line of text from each book, with columns:
 #' \describe{
 #'   \item{gutenberg_id}{Unique identifier for the work that can
-#'   be used to join with the \link{gutenberg_metadata} dataset.}
+#'   be used to join with the [gutenberg_metadata] dataset.}
 #'   \item{text}{A character vector of lines of text.}
 #'   \item{title}{The title of this work.}
 #'   \item{author}{The author of this work.}

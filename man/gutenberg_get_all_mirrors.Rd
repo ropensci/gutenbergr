@@ -7,19 +7,13 @@
 gutenberg_get_all_mirrors()
 }
 \value{
-A tbl_df of Project Gutenberg mirrors and related data
+A \code{\link[tibble:tibble]{tibble::tibble()}} of Project Gutenberg mirrors and related data:
 \describe{
-
 \item{continent}{Continent where the mirror is located}
-
 \item{nation}{Nation where the mirror is located}
-
 \item{location}{Location of the mirror}
-
 \item{provider}{Provider of the mirror}
-
 \item{url}{URL of the mirror}
-
 \item{note}{Special notes}
 }
 }
@@ -31,7 +25,6 @@ mirror listed, see \url{https://www.gutenberg.org/help/mirroring.html}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-
 gutenberg_get_all_mirrors()
 \dontshow{\}) # examplesIf}
 }

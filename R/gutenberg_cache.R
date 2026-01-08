@@ -4,11 +4,10 @@
 #' based on the current `gutenbergr_cache_type` option.
 #'
 #' @return A character string representing the path to the cache directory.
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' # Get current cache directory
 #' gutenberg_cache_dir()
-#' }
+#'
 #' @keywords cache
 #' @export
 gutenberg_cache_dir <- function() {
@@ -57,21 +56,21 @@ gutenberg_cache_files <- function() {
 #' Configures whether the cache should be temporary (per-session) or
 #' persistent across sessions.
 #'
+#' @details
 #' The cache type can also be set with an option:
-#'
 #' `options(gutenbergr_cache_type = "persistent")`
 #'
 #' @param type Either `"session"` (default) or `"persistent"`.
-#'  \itemize{
-#'    \item `"session"`: Files are stored in a [tempdir()].
-#'     This is the default behavior.
-#'    \item `"persistent"`: Files are stored in an OS-specific
-#'     user cache directory. These files persist across sessions,
-#'     preventing redundant downloads of the same files in the future.
-#'  }
+#' * `"session"`: Files are stored in a [tempdir()].
+#'   This is the default behavior.
+#' * `"persistent"`: Files are stored in an OS-specific
+#'   user cache directory. These files persist across sessions,
+#'   preventing redundant downloads of the same files in the future.
 #' @param verbose Whether to show the status message confirming the path.
-#' @examples
-#' \dontrun{
+#'
+#' @return The active cache path (invisibly).
+#'
+#' @examplesIf interactive()
 #' # Set to persistent (survives R sessions)
 #' gutenberg_cache_set("persistent")
 #'
@@ -80,8 +79,7 @@ gutenberg_cache_files <- function() {
 #'
 #' # Check current cache location
 #' gutenberg_cache_dir()
-#' }
-#' @return The active cache path (invisibly).
+#'
 #' @export
 #' @keywords cache
 gutenberg_cache_set <- function(
@@ -122,11 +120,10 @@ gutenberg_cache_set <- function(
 #' [gutenberg_cache_dir()].
 #'
 #' @return The number of files deleted (invisibly).
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' # Clear entire current cache
 #' gutenberg_cache_clear_all()
-#' }
+#'
 #' @keywords cache
 #' @export
 gutenberg_cache_clear_all <- function() {
@@ -148,14 +145,13 @@ gutenberg_cache_clear_all <- function() {
 #' @param verbose Whether to show the status messages.
 #'
 #' @return The number of files successfully deleted (invisibly).
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' # Remove specific books from cache
 #' gutenberg_cache_remove_ids(c(1, 2))
 #'
 #' # Remove silently
 #' gutenberg_cache_remove_ids(1, verbose = FALSE)
-#' }
+#'
 #' @keywords cache
 #' @export
 gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
@@ -193,7 +189,7 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #'
 #' @param verbose Whether to show the status message showing the cache directory path.
 #'
-#' @return A [tibble::tibble] with the following columns:
+#' @return A [tibble::tibble()] with the following columns:
 #' \describe{
 #'     \item{title}{The title of the work.}
 #'     \item{author}{The author(s) of the work.}
@@ -202,14 +198,13 @@ gutenberg_cache_remove_ids <- function(ids, verbose = TRUE) {
 #'     \item{modified}{The last modification time.}
 #'     \item{path}{The file's absolute path.}
 #' }
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' # List all works in the currently set cache
 #' gutenberg_cache_list()
 #'
 #' # Suppress the directory path message
 #' gutenberg_cache_list(verbose = FALSE)
-#' }
+#'
 #' @keywords cache
 #' @export
 gutenberg_cache_list <- function(verbose = TRUE) {

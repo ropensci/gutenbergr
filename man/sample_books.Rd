@@ -5,7 +5,7 @@
 \alias{sample_books}
 \title{Sample Book Downloads}
 \format{
-A tbl_df (from \code{\link[tibble:tibble]{tibble::tibble()}}) with one row for each
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row for each
 line of text from each book, with columns:
 \describe{
 \item{gutenberg_id}{Unique identifier for the work that can
@@ -19,7 +19,7 @@ be used to join with the \link{gutenberg_metadata} dataset.}
 sample_books
 }
 \description{
-A tibble of book text for two sample books, generated using
+A \code{\link[tibble:tibble]{tibble::tibble()}} of book text for two sample books, generated using
 \code{\link[=gutenberg_download]{gutenberg_download()}}.
 }
 \details{

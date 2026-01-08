@@ -28,20 +28,19 @@ mirror from \code{\link[=gutenberg_get_mirror]{gutenberg_get_mirror()}}.}
 and \code{author}, to add from \link{gutenberg_metadata}.}
 
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
-that was chosen}
+that was chosen.}
 
 \item{use_cache}{Whether to use caching. Defaults to \code{TRUE}.
-
-See \code{\link[=gutenberg_cache_set]{gutenberg_cache_set()}} for details on configuring caching.
-
-See \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}} to check your current cache location.
-
-The files in the cache are \code{.rds} files that have already been processed
-into a \code{tbl_df}.}
+\itemize{
+\item See \code{\link[=gutenberg_cache_set]{gutenberg_cache_set()}} for details on configuring caching.
+\item See \code{\link[=gutenberg_cache_dir]{gutenberg_cache_dir()}} to check your current cache location.
+\item The files in the cache are \code{.rds} files that have already been processed
+into a \code{tbl_df}.
+}}
 }
 \value{
 A two column \code{tbl_df} (see \code{\link[tibble:tibble]{tibble::tibble()}}) with one row for each
-line of the text or texts, with columns
+line of the text or texts, with columns:
 \describe{
 \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
 each text}
@@ -56,15 +55,15 @@ using \code{\link[=gutenberg_works]{gutenberg_works()}} or the \link{gutenberg_m
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-# download The Count of Monte Cristo
+# Download "The Count of Monte Cristo"
 gutenberg_download(1184)
 
-# download two books: Wuthering Heights and Jane Eyre
+# Download two books: "Wuthering Heights" and "Jane Eyre"
 books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 books
 dplyr::count(books, title)
 
-# download all books from Jane Austen
+# Download all books from Jane Austen
 austen <- gutenberg_works(author == "Austen, Jane") |>
   gutenberg_download(meta_fields = "title")
 austen

@@ -8,6 +8,18 @@ read_url <- function(url) {
   return(suppressWarnings(purrr::possibly(dl_and_read)(url)))
 }
 
+#' Loop through paths to find a file
+#'
+#' @param possible_urls URLs to try.
+#'
+#' @return A character vector of lines of text or `NULL` if the book could not be
+#'   downloaded.
+#' @keywords internal
+read_next <- function(possible_urls) {
+  if (length(possible_urls)) {
+    read_url(possible_urls[[1]]) %||% read_next(possible_urls[-1])
+  }
+}
 
 #' Download and read a file
 #'
@@ -35,7 +47,6 @@ discard_start_while <- function(.x, .p) {
   }
   .x
 }
-
 
 #' Keep values at the start of .x while .p is true
 #'

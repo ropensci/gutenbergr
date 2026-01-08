@@ -5,7 +5,7 @@
 \alias{gutenberg_subjects}
 \title{Gutenberg metadata about the subject of each work}
 \format{
-A tbl_df (see tibble or dplyr) with one row for each pairing
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row for each pairing
 of work and subject, with columns:
 \describe{
 \item{gutenberg_id}{ID describing a work that can be joined with
