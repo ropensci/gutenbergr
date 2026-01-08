@@ -74,7 +74,6 @@ attr(gutenberg_metadata, "date_updated")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\link{gutenberg_works}, \link{gutenberg_authors},
-\link{gutenberg_subjects}
+\code{\link[=gutenberg_works]{gutenberg_works()}}, \link{gutenberg_authors}, \link{gutenberg_subjects}
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 #' Download one or more works by their Project Gutenberg IDs into a data frame
 #' with one row per line per work. This can be used to download a single work of
 #' interest or multiple at a time. You can look up the Gutenberg IDs of a work
-#' using [gutenberg_works()] or the \link{gutenberg_metadata} dataset.
+#' using [gutenberg_works()] or the [gutenberg_metadata] dataset.
 #'
 #' @param gutenberg_id A vector of Project Gutenberg IDs, or a data frame
 #'   containing a `gutenberg_id` column, such as from the results of
@@ -15,18 +15,16 @@
 #' @param meta_fields Additional fields describing each book, such as `title`
 #'   and `author`, to add from [gutenberg_metadata].
 #' @param verbose Whether to show messages about the Project Gutenberg mirror
-#'   that was chosen
+#'   that was chosen.
 #' @param use_cache Whether to use caching. Defaults to `TRUE`.
 #'
-#'   See [gutenberg_cache_set()] for details on configuring caching.
-#'
-#'   See [gutenberg_cache_dir()] to check your current cache location.
-#'
-#'   The files in the cache are `.rds` files that have already been processed
+#' * See [gutenberg_cache_set()] for details on configuring caching.
+#' * See [gutenberg_cache_dir()] to check your current cache location.
+#' * The files in the cache are `.rds` files that have already been processed
 #'   into a `tbl_df`.
 #'
 #' @return A two column `tbl_df` (see [tibble::tibble()]) with one row for each
-#'   line of the text or texts, with columns
+#'   line of the text or texts, with columns:
 #' \describe{
 #'   \item{gutenberg_id}{Integer column with the Project Gutenberg ID of
 #'   each text}
@@ -34,15 +32,15 @@
 #' }
 #'
 #' @examplesIf interactive()
-#' # download The Count of Monte Cristo
+#' # Download "The Count of Monte Cristo"
 #' gutenberg_download(1184)
 #'
-#' # download two books: Wuthering Heights and Jane Eyre
+#' # Download two books: "Wuthering Heights" and "Jane Eyre"
 #' books <- gutenberg_download(c(768, 1260), meta_fields = "title")
 #' books
 #' dplyr::count(books, title)
 #'
-#' # download all books from Jane Austen
+#' # Download all books from Jane Austen
 #' austen <- gutenberg_works(author == "Austen, Jane") |>
 #'   gutenberg_download(meta_fields = "title")
 #' austen
@@ -95,7 +93,7 @@ gutenberg_download <- function(
 #'
 #' @inheritParams gutenberg_download
 #'
-#' @return A named character vector of urls
+#' @return A named character vector of urls.
 #' @keywords internal
 gutenberg_url <- function(gutenberg_id, mirror, verbose) {
   gutenberg_id <- flatten_gutenberg_id(gutenberg_id)
@@ -110,7 +108,7 @@ gutenberg_url <- function(gutenberg_id, mirror, verbose) {
 #' Subset gutenberg_id from df if necessary
 #'
 #' @inheritParams gutenberg_download
-#' @return A character vector of gutenberg_ids.
+#' @return A character vector of `gutenberg_id` values.
 #' @keywords internal
 flatten_gutenberg_id <- function(gutenberg_id) {
   if (is.data.frame(gutenberg_id)) {
@@ -139,7 +137,7 @@ gutenberg_path_from_id <- function(gutenberg_id) {
 #'
 #' @param url The base URL of a book.
 #'
-#' @return A character vector of lines of text or NULL if the book could not be
+#' @return A character vector of lines of text or `NULL` if the book could not be
 #'   downloaded.
 #' @keywords internal
 try_gutenberg_download <- function(url) {
@@ -167,22 +165,9 @@ try_gutenberg_download <- function(url) {
   return(ret)
 }
 
-#' Loop through paths to find a file
-#'
-#' @param possible_urls URLs to try.
-#'
-#' @return A character vector of lines of text or NULL if the book could not be
-#'   downloaded.
-#' @keywords internal
-read_next <- function(possible_urls) {
-  if (length(possible_urls)) {
-    read_url(possible_urls[[1]]) %||% read_next(possible_urls[-1])
-  }
-}
-
 #' Join metadata fields to Gutenberg works
 #'
-#' @param gutenberg_tbl A two column `tbl_df` from `gutenberg_download`.
+#' @param gutenberg_tbl A two column `tbl_df` from [gutenberg_download()].
 #' @inheritParams gutenberg_download
 #'
 #' @return A `tbl_df` of the Gutenberg works with joined metadata.

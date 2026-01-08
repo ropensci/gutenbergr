@@ -12,7 +12,7 @@ containing a \code{gutenberg_id} column, such as from the results of
 \code{\link[=gutenberg_works]{gutenberg_works()}}.}
 }
 \value{
-A character vector of gutenberg_ids.
+A character vector of \code{gutenberg_id} values.
 }
 \description{
 Subset gutenberg_id from df if necessary

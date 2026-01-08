@@ -8,18 +8,17 @@ gutenberg_get_mirror(verbose = TRUE)
 }
 \arguments{
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
-that was chosen}
+that was chosen.}
 }
 \value{
-A character vector with the url for the chosen mirror.
+A character vector with the URL for the chosen mirror.
 }
 \description{
 Get the recommended mirror for Gutenberg files and set the global
-\code{gutenberg_mirror} options.
+\code{gutenberg_mirror} option.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-
 gutenberg_get_mirror()
 \dontshow{\}) # examplesIf}
 }

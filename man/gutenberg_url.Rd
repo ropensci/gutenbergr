@@ -15,10 +15,10 @@ containing a \code{gutenberg_id} column, such as from the results of
 mirror from \code{\link[=gutenberg_get_mirror]{gutenberg_get_mirror()}}.}
 
 \item{verbose}{Whether to show messages about the Project Gutenberg mirror
-that was chosen}
+that was chosen.}
 }
 \value{
-A named character vector of urls
+A named character vector of urls.
 }
 \description{
 Construct a Project Gutenberg url

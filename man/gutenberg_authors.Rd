@@ -5,7 +5,7 @@
 \alias{gutenberg_authors}
 \title{Metadata about Project Gutenberg authors}
 \format{
-A tbl_df (see tibble or dplyr) with one row for each
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row for each
 author, with the columns:
 \describe{
 \item{gutenberg_author_id}{Unique identifier for the author that can

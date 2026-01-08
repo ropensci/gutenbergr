@@ -2,9 +2,12 @@
 % Please edit documentation in R/gutenberg_mirrors.R
 \name{is_working_gutenberg_mirror}
 \alias{is_working_gutenberg_mirror}
-\title{Check if an http(s) or ftp(s) \code{url} resolves to a working Gutenberg mirror.}
+\title{Check if a URL resolves to a working Gutenberg mirror}
 \usage{
 is_working_gutenberg_mirror(url)
+}
+\arguments{
+\item{url}{An http(s) or ftp(s) URL to check.}
 }
 \value{
 Boolean: whether the \code{url} resolves to a mirror.

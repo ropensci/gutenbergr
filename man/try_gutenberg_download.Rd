@@ -10,7 +10,7 @@ try_gutenberg_download(url)
 \item{url}{The base URL of a book.}
 }
 \value{
-A character vector of lines of text or NULL if the book could not be
+A character vector of lines of text or \code{NULL} if the book could not be
 downloaded.
 }
 \description{

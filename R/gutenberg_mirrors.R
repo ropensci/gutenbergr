@@ -1,15 +1,14 @@
 #' Get the recommended mirror for Gutenberg files
 #'
 #' Get the recommended mirror for Gutenberg files and set the global
-#' `gutenberg_mirror` options.
+#' `gutenberg_mirror` option.
 #'
 #' @param verbose Whether to show messages about the Project Gutenberg mirror
-#'   that was chosen
+#'   that was chosen.
 #'
-#' @return A character vector with the url for the chosen mirror.
+#' @return A character vector with the URL for the chosen mirror.
 #'
 #' @examplesIf interactive()
-#'
 #' gutenberg_get_mirror()
 #'
 #' @keywords mirror
@@ -56,31 +55,24 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
   return(mirror)
 }
 
-
 #' Get all mirror data from Project Gutenberg
 #'
-#' Get all mirror data from \url{https://www.gutenberg.org/MIRRORS.ALL}. This
+#' Get all mirror data from <https://www.gutenberg.org/MIRRORS.ALL>. This
 #' only includes mirrors reported to Project Gutenberg and verified to be
 #' relatively stable. For more information on mirroring and getting your own
-#' mirror listed, see \url{https://www.gutenberg.org/help/mirroring.html}.
+#' mirror listed, see <https://www.gutenberg.org/help/mirroring.html>.
 #'
-#' @return A tbl_df of Project Gutenberg mirrors and related data
+#' @return A [tibble::tibble()] of Project Gutenberg mirrors and related data:
 #' \describe{
-#'
 #'   \item{continent}{Continent where the mirror is located}
-#'
 #'   \item{nation}{Nation where the mirror is located}
-#'
 #'   \item{location}{Location of the mirror}
-#'
 #'   \item{provider}{Provider of the mirror}
-#'
 #'   \item{url}{URL of the mirror}
-#'
 #'   \item{note}{Special notes}
 #' }
-#' @examplesIf interactive()
 #'
+#' @examplesIf interactive()
 #' gutenberg_get_all_mirrors()
 #'
 #' @keywords mirror
@@ -111,11 +103,13 @@ gutenberg_get_all_mirrors <- function() {
   return(mirrors)
 }
 
-#' Check if an http(s) or ftp(s) `url` resolves to a working Gutenberg mirror.
+#' Check if a URL resolves to a working Gutenberg mirror
 #'
 #' Checks for a root level `README` file at `url` with reference to
 #' `GUTINDEX.ALL`. If this exists, `url` is most likely a working
 #' Gutenberg mirror.
+#'
+#' @param url An http(s) or ftp(s) URL to check.
 #'
 #' @return Boolean: whether the `url` resolves to a mirror.
 #'

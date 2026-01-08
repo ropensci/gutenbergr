@@ -30,11 +30,10 @@ persistent across sessions.
 }
 \details{
 The cache type can also be set with an option:
-
 \code{options(gutenbergr_cache_type = "persistent")}
 }
 \examples{
-\dontrun{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Set to persistent (survives R sessions)
 gutenberg_cache_set("persistent")
 
@@ -43,6 +42,6 @@ gutenberg_cache_set("session")
 
 # Check current cache location
 gutenberg_cache_dir()
-}
+\dontshow{\}) # examplesIf}
 }
 \keyword{cache}

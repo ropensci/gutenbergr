@@ -5,8 +5,8 @@
 \alias{gutenberg_languages}
 \title{Metadata about Project Gutenberg languages}
 \format{
-A tbl_df (see tibble or dplyr) with one row for each
-author, with the columns:
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row for each
+work-language pair, with the columns:
 \describe{
 \item{gutenberg_id}{Unique identifier for the work that can
 be used to join with the \link{gutenberg_metadata} dataset}
