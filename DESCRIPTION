@@ -15,13 +15,13 @@ Description: Download and process public domain works in the Project
     retrieved.
 License: GPL-2
 URL: https://docs.ropensci.org/gutenbergr/,
+     https://ropensci.r-universe.dev/gutenbergr,
      https://github.com/ropensci/gutenbergr
 BugReports: https://github.com/ropensci/gutenbergr/issues
 Depends:
     R (>= 4.1)
 Imports:
     cli,
-    dlr,
     dplyr,
     glue,
     purrr,

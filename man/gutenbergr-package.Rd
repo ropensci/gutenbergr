@@ -12,6 +12,7 @@ Download and process public domain works in the Project Gutenberg collection \ur
 Useful links:
 \itemize{
   \item \url{https://docs.ropensci.org/gutenbergr/}
+  \item \url{https://ropensci.r-universe.dev/gutenbergr}
   \item \url{https://github.com/ropensci/gutenbergr}
   \item Report bugs at \url{https://github.com/ropensci/gutenbergr/issues}
 }

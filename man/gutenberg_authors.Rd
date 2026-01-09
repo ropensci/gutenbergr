@@ -36,7 +36,7 @@ run \code{attr(gutenberg_authors, "date_updated")}.
 }
 \examples{
 
-# date last updated
+# See date last updated
 attr(gutenberg_authors, "date_updated")
 
 }

@@ -24,17 +24,22 @@ describe(".onLoad()", {
           .onLoad(NULL, NULL),
           "Invalid gutenbergr_cache_type.*Defaulting to"
         )
+
+        expect_identical(
+          getOption("gutenbergr_cache_type"),
+          "session"
+        )
+
+        path <- gutenberg_cache_dir()
+        expect_true(
+          startsWith(
+            normalizePath(path, mustWork = FALSE),
+            normalizePath(tempdir(), mustWork = FALSE)
+          )
+        )
       },
       type = "session"
     )
-
-    path <- gutenberg_cache_dir()
-    expect_true(startsWith(
-      normalizePath(path, mustWork = FALSE),
-      normalizePath(tempdir(), mustWork = FALSE)
-    ))
-
-    expect_identical(getOption("gutenbergr_cache_type"), "session")
   })
 })
 

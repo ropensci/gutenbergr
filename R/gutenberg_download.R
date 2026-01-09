@@ -58,14 +58,19 @@ gutenberg_download <- function(
   urls <- gutenberg_url(gutenberg_id, mirror, verbose)
   downloaded <- purrr::imap(urls, function(url, id) {
     if (use_cache) {
-      dlr::read_or_cache(
-        source_path = id,
-        appname = "gutenbergr",
-        filename = paste0(id, ".rds"),
-        process_f = function(x) {
-          try_gutenberg_download(url)
+      cache_dir <- gutenberg_cache_dir()
+      cache_file <- file.path(cache_dir, paste0(id, ".rds"))
+
+      if (file.exists(cache_file)) {
+        readRDS(cache_file)
+      } else {
+        result <- try_gutenberg_download(url)
+        if (!is.null(result)) {
+          gutenberg_ensure_cache_dir()
+          saveRDS(result, cache_file)
         }
-      )
+        result
+      }
     } else {
       try_gutenberg_download(url)
     }
