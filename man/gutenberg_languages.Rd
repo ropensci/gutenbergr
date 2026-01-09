@@ -28,7 +28,7 @@ run \code{attr(gutenberg_languages, "date_updated")}.
 }
 \examples{
 
-# date last updated
+# See date last updated
 attr(gutenberg_languages, "date_updated")
 
 }

@@ -4,7 +4,10 @@
 \alias{gutenberg_cache_clear_all}
 \title{Clear all files from the Gutenberg cache}
 \usage{
-gutenberg_cache_clear_all()
+gutenberg_cache_clear_all(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Whether to show the status message confirming the path.}
 }
 \value{
 The number of files deleted (invisibly).

@@ -59,7 +59,7 @@ holmes_books <- gutenberg_download(sherlock_holmes_metadata$gutenberg_id)
 holmes_books
 }
 
-# date last updated
+# See date last updated
 attr(gutenberg_subjects, "date_updated")
 \dontshow{\}) # examplesIf}
 }

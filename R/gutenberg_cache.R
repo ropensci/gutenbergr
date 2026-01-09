@@ -1,7 +1,8 @@
 #' Get the active cache directory path
 #'
 #' Calculates the path to the directory where Gutenberg files are stored,
-#' based on the current `gutenbergr_cache_type` option.
+#' based on the current `gutenbergr_cache_type` and `gutenbergr_base_cache_dir`
+#' options.
 #'
 #' @return A character string representing the path to the cache directory.
 #' @examplesIf interactive()
@@ -9,6 +10,7 @@
 #' gutenberg_cache_dir()
 #'
 #' @keywords cache
+#' @inheritSection gutenberg_cache_set Cache options
 #' @export
 gutenberg_cache_dir <- function() {
   type <- getOption("gutenbergr_cache_type", "session")
@@ -16,11 +18,14 @@ gutenberg_cache_dir <- function() {
   if (type == "session") {
     # Return the temp path directly
     return(file.path(tempdir(), "gutenbergr_cache"))
-  } else {
-    # If persistent, let dlr find the standard OS path.
-    # We use as.character because dlr can sometimes return a fs_path object
-    return(as.character(dlr::app_cache_dir("gutenbergr")))
   }
+
+  base_path <- getOption(
+    "gutenbergr_base_cache_dir",
+    tools::R_user_dir("gutenbergr", "cache")
+  )
+
+  file.path(as.character(base_path), "works_rds")
 }
 
 #' Ensure the Gutenberg cache directory exists
@@ -56,18 +61,25 @@ gutenberg_cache_files <- function() {
 #' Configures whether the cache should be temporary (per-session) or
 #' persistent across sessions.
 #'
-#' @details
-#' The cache type can also be set with an option:
-#' `options(gutenbergr_cache_type = "persistent")`
-#'
 #' @param type Either `"session"` (default) or `"persistent"`.
 #' * `"session"`: Files are stored in a [tempdir()].
 #'   This is the default behavior.
 #' * `"persistent"`: Files are stored in an OS-specific
-#'   user cache directory. These files persist across sessions,
+#'   user cache directory under `works_rds/`. These files persist across sessions,
 #'   preventing redundant downloads of the same files in the future.
 #' @param verbose Whether to show the status message confirming the path.
 #'
+#' @section Cache options:
+#' The following options control caching behavior:
+#'
+#' * `gutenbergr_cache_type`: Character string indicating how downloaded works
+#'   are cached. Must be either `"session"` (default) or `"persistent"`.
+#'
+#' * `gutenbergr_base_cache_dir`: Base directory used for persistent caching when
+#'   `gutenbergr_cache_type = "persistent"`.
+#'   By default, this is an OS-specific cache directory determined by
+#'   `tools::R_user_dir("gutenbergr", "cache")`. Advanced users may set this
+#'   to a custom path.
 #' @return The active cache path (invisibly).
 #'
 #' @examplesIf interactive()
@@ -98,11 +110,14 @@ gutenberg_cache_set <- function(
   options(gutenbergr_cache_type = type)
 
   if (type == "session") {
-    path <- file.path(tempdir(), "gutenbergr_cache")
-    dlr::set_app_cache_dir("gutenbergr", cache_dir = path)
+    options(gutenbergr_base_cache_dir = NULL)
   } else {
-    # Created by {dlr}
-    options(gutenbergr.dir = NULL)
+    # For persistent mode, use default unless already set
+    if (is.null(getOption("gutenbergr_base_cache_dir"))) {
+      options(
+        gutenbergr_base_cache_dir = tools::R_user_dir("gutenbergr", "cache")
+      )
+    }
   }
 
   gutenberg_ensure_cache_dir()
@@ -119,6 +134,8 @@ gutenberg_cache_set <- function(
 #' Deletes all cached `.rds` files in the directory currently returned by
 #' [gutenberg_cache_dir()].
 #'
+#' @param verbose Whether to show the status message confirming the path.
+
 #' @return The number of files deleted (invisibly).
 #' @examplesIf interactive()
 #' # Clear entire current cache
@@ -126,7 +143,7 @@ gutenberg_cache_set <- function(
 #'
 #' @keywords cache
 #' @export
-gutenberg_cache_clear_all <- function() {
+gutenberg_cache_clear_all <- function(verbose = TRUE) {
   files <- gutenberg_cache_files()
   n_files <- length(files)
 
@@ -134,7 +151,10 @@ gutenberg_cache_clear_all <- function() {
     unlink(files)
   }
 
-  cli::cli_alert_success("Deleted {n_files} cached file{?s}")
+  if (verbose) {
+    cli::cli_alert_success("Deleted {n_files} cached file{?s}")
+  }
+
   invisible(n_files)
 }
 

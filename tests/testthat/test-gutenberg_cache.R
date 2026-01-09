@@ -22,7 +22,8 @@ describe("gutenberg_cache_dir()", {
     with_gutenberg_cache(type = "persistent", {
       path <- gutenberg_cache_dir()
       expect_type(path, "character")
-      expected_path <- dlr::app_cache_dir("gutenbergr")
+      base_path <- getOption("gutenbergr_base_cache_dir")
+      expected_path <- file.path(base_path, "works_rds")
       expect_equal(
         normalizePath(path, mustWork = FALSE),
         normalizePath(expected_path, mustWork = FALSE)
@@ -58,22 +59,19 @@ describe("gutenberg_cache_set()", {
 
       # Define a separate, writable temp path for the mock persistent storage
       mock_persistent_path <- tempfile("mock_persistent_")
+      dir.create(mock_persistent_path, recursive = TRUE)
       withr::defer(unlink(mock_persistent_path, recursive = TRUE))
 
-      # Mock dlr to return this specific temp path when 'persistent' is requested
-      testthat::local_mocked_bindings(
-        app_cache_dir = function(appname, cache_dir = NULL) {
-          if (is.null(cache_dir)) {
-            return(mock_persistent_path)
-          }
-          return(cache_dir)
-        },
-        .package = "dlr"
+      withr::local_options(
+        gutenbergr_base_cache_dir = mock_persistent_path
       )
 
       persistent_path <- gutenberg_cache_set("persistent", verbose = FALSE)
       expect_false(identical(session_path, persistent_path))
-      expect_equal(persistent_path, mock_persistent_path)
+      expect_equal(
+        persistent_path,
+        file.path(mock_persistent_path, "works_rds")
+      )
       expect_true(dir.exists(persistent_path))
     })
   })
@@ -214,9 +212,7 @@ describe("gutenberg_cache_clear_all()", {
       path <- gutenberg_cache_dir()
       saveRDS("test", file.path(path, "1.rds"))
       saveRDS("test", file.path(path, "2.rds"))
-
-      n <- suppressMessages(gutenberg_cache_clear_all())
-
+      n <- gutenberg_cache_clear_all(verbose = FALSE)
       expect_equal(n, 2)
       expect_equal(length(list.files(path, pattern = "\\.rds$")), 0)
     })
@@ -233,4 +229,40 @@ describe("gutenberg_cache_clear_all()", {
       )
     })
   })
+})
+
+test_that("test cache operations do not touch the real persistent user cache directory", {
+  real_cache_root <- file.path(
+    tools::R_user_dir("gutenbergr", "cache"),
+    "works_rds"
+  )
+
+  real_exists_before <- dir.exists(real_cache_root)
+  real_files_before <- if (real_exists_before) {
+    list.files(real_cache_root, full.names = TRUE)
+  } else {
+    character()
+  }
+
+  with_gutenberg_cache(
+    {
+      path <- gutenberg_cache_dir()
+      saveRDS("test", file.path(path, "12345.rds"))
+      saveRDS("test", file.path(path, "67890.rds"))
+      out <- gutenberg_cache_list(verbose = FALSE)
+      expect_equal(nrow(out), 2)
+      gutenberg_cache_clear_all(verbose = FALSE)
+    },
+    type = "persistent"
+  )
+
+  real_exists_after <- dir.exists(real_cache_root)
+  real_files_after <- if (real_exists_after) {
+    list.files(real_cache_root, full.names = TRUE)
+  } else {
+    character()
+  }
+
+  expect_identical(real_exists_after, real_exists_before)
+  expect_identical(real_files_after, real_files_before)
 })

@@ -49,7 +49,7 @@ gutenberg_metadata
 gutenberg_metadata |>
   count(author, sort = TRUE)
 
-# look for Shakespeare, excluding collections (containing "Works") and
+# Look for Shakespeare, excluding collections (containing "Works") and
 # translations
 shakespeare_metadata <- gutenberg_metadata |>
   filter(
@@ -61,7 +61,7 @@ shakespeare_metadata <- gutenberg_metadata |>
   ) |>
   distinct(title)
 
-# note that the gutenberg_works() function filters for English
+# Note that the gutenberg_works() function filters for English
 # non-copyrighted works and does de-duplication by default:
 
 shakespeare_metadata2 <- gutenberg_works(
@@ -69,7 +69,7 @@ shakespeare_metadata2 <- gutenberg_works(
   !str_detect(title, "Works")
 )
 
-# date last updated
+# See date last updated
 attr(gutenberg_metadata, "date_updated")
 \dontshow{\}) # examplesIf}
 }

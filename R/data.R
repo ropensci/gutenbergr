@@ -40,7 +40,7 @@
 #' gutenberg_metadata |>
 #'   count(author, sort = TRUE)
 #'
-#' # look for Shakespeare, excluding collections (containing "Works") and
+#' # Look for Shakespeare, excluding collections (containing "Works") and
 #' # translations
 #' shakespeare_metadata <- gutenberg_metadata |>
 #'   filter(
@@ -52,7 +52,7 @@
 #'   ) |>
 #'   distinct(title)
 #'
-#' # note that the gutenberg_works() function filters for English
+#' # Note that the gutenberg_works() function filters for English
 #' # non-copyrighted works and does de-duplication by default:
 #'
 #' shakespeare_metadata2 <- gutenberg_works(
@@ -60,7 +60,7 @@
 #'   !str_detect(title, "Works")
 #' )
 #'
-#' # date last updated
+#' # See date last updated
 #' attr(gutenberg_metadata, "date_updated")
 #'
 #' @seealso [gutenberg_works()], [gutenberg_authors], [gutenberg_subjects]
@@ -119,7 +119,7 @@
 #' holmes_books
 #' }
 #'
-#' # date last updated
+#' # See date last updated
 #' attr(gutenberg_subjects, "date_updated")
 #'
 #' @seealso [gutenberg_metadata], [gutenberg_authors]
@@ -156,7 +156,7 @@
 #'
 #' @examples
 #'
-#' # date last updated
+#' # See date last updated
 #' attr(gutenberg_authors, "date_updated")
 #'
 #' @seealso [gutenberg_metadata], [gutenberg_subjects]
@@ -184,7 +184,7 @@
 #'
 #' @examples
 #'
-#' # date last updated
+#' # See date last updated
 #' attr(gutenberg_languages, "date_updated")
 #'
 #' @seealso [gutenberg_metadata], [gutenberg_subjects]
