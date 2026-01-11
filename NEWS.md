@@ -1,4 +1,4 @@
-# gutenbergr (development version)
+# gutenbergr 0.4.0
 
 * gutenbergr now caches works downloaded with `gutenberg_download()`. They are saved in a temporary directory by default, but they can be configured to persist in your OS-specific application cache directory across sessions (@jrdnbradford, #112, #123).
 * A new family of `gutenberg_cache_*` functions are now available. These allow users to list and delete items in their cache, as well as update their cache type (@jrdnbradford, #112, #123).
