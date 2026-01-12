@@ -8,3 +8,10 @@ We checked 1 reverse dependencies, comparing R CMD check results across CRAN and
 
  * We saw 0 new problems
  * We failed to check 0 packages
+
+## Maintainer change
+
+Maintainer changed from [@jonthegeek](https://github.com/jonthegeek) to [@jrdnbradford](https://github.com/jrdnbradford):
+
+ * [Issue #95](https://github.com/ropensci/gutenbergr/issues/95)
+ * [PR #98](https://github.com/ropensci/gutenbergr/pull/98)
