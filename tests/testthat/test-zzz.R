@@ -46,14 +46,13 @@ describe(".onLoad()", {
 describe(".onAttach()", {
   test_that("shows session cache message when type is session", {
     with_gutenberg_cache(type = "session", {
-      local_interactive(TRUE)
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "session \\(temporary\\)"
       )
       path <- gutenberg_cache_dir()
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         path,
         fixed = TRUE
       )
@@ -63,17 +62,14 @@ describe(".onAttach()", {
   test_that("shows persistent cache message when type is persistent", {
     with_gutenberg_cache(type = "persistent", {
       testthat::local_mocked_bindings(
-        gutenberg_cache_dir = function() "/fake/persistent/path",
-        .package = "gutenbergr"
+        gutenberg_cache_dir = function() "/fake/persistent/path"
       )
-      local_interactive(TRUE)
-
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "persistent"
       )
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "/fake/persistent/path",
         fixed = TRUE
       )
@@ -82,9 +78,8 @@ describe(".onAttach()", {
 
   test_that("message contains 'gutenbergr: using' prefix", {
     with_gutenberg_cache({
-      local_interactive(TRUE)
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "gutenbergr: using"
       )
     })
@@ -92,9 +87,8 @@ describe(".onAttach()", {
 
   test_that("message contains 'cache directory:' label", {
     with_gutenberg_cache({
-      local_interactive(TRUE)
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "cache directory:"
       )
     })
@@ -102,9 +96,8 @@ describe(".onAttach()", {
 
   test_that("no message shown in non-interactive mode", {
     with_gutenberg_cache({
-      local_interactive(FALSE)
       expect_silent(
-        .onAttach(NULL, NULL)
+        .onAttach(NULL, NULL, interactive_session = FALSE)
       )
     })
   })
