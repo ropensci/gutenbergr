@@ -3,8 +3,8 @@
   gutenberg_ensure_cache_dir()
 }
 
-.onAttach <- function(libname, pkgname, interactive_session = interactive()) {
-  if (!interactive_session) {
+.onAttach <- function(libname, pkgname) {
+  if (!interactive()) {
     return(invisible())
   }
 
