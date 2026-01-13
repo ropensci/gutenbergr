@@ -4,6 +4,10 @@
 }
 
 .onAttach <- function(libname, pkgname) {
+  if (!interactive()) {
+    return(invisible())
+  }
+
   path <- gutenberg_cache_dir()
   type <- getOption("gutenbergr_cache_type", "session")
 
