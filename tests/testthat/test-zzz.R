@@ -47,13 +47,12 @@ describe(".onAttach()", {
   test_that("shows session cache message when type is session", {
     with_gutenberg_cache(type = "session", {
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "session \\(temporary\\)"
       )
-
       path <- gutenberg_cache_dir()
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         path,
         fixed = TRUE
       )
@@ -62,18 +61,15 @@ describe(".onAttach()", {
 
   test_that("shows persistent cache message when type is persistent", {
     with_gutenberg_cache(type = "persistent", {
-      # Mock the path to appear as non-temp
       testthat::local_mocked_bindings(
         gutenberg_cache_dir = function() "/fake/persistent/path"
       )
-
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "persistent"
       )
-
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "/fake/persistent/path",
         fixed = TRUE
       )
@@ -83,7 +79,7 @@ describe(".onAttach()", {
   test_that("message contains 'gutenbergr: using' prefix", {
     with_gutenberg_cache({
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "gutenbergr: using"
       )
     })
@@ -92,8 +88,16 @@ describe(".onAttach()", {
   test_that("message contains 'cache directory:' label", {
     with_gutenberg_cache({
       expect_message(
-        .onAttach(NULL, NULL),
+        .onAttach(NULL, NULL, interactive_session = TRUE),
         "cache directory:"
+      )
+    })
+  })
+
+  test_that("no message shown in non-interactive mode", {
+    with_gutenberg_cache({
+      expect_silent(
+        .onAttach(NULL, NULL, interactive_session = FALSE)
       )
     })
   })
