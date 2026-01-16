@@ -45,9 +45,10 @@ test_that("try_gutenberg_download errors informatively with no return", {
 })
 
 test_that("gutenberg_download actually caches a file", {
-  local_dl_and_read()
   with_gutenberg_cache({
     testthat::local_mocked_bindings(
+      # Mock the mirror selection to avoid the initial network ping
+      gutenberg_get_mirror = function(...) "http://mock-mirror.com",
       try_gutenberg_download = function(url) {
         c("Line 1", "Line 2")
       },
