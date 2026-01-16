@@ -117,14 +117,16 @@ gutenberg_get_all_mirrors <- function() {
       force = TRUE,
       show_col_types = FALSE
     ),
-    error = function(e) {
-      return(NULL)
-    }
+    error = function(e) return(invisible(NULL))
   )
 
   # Hard failure to retrieve anything
   if (is.null(mirrors)) {
-    return(NULL)
+    cli::cli_inform(c(
+      "i" = "The Project Gutenberg mirror list is currently unavailable at {.url {mirrors_url}}.",
+      "!" = "This may be due to network issues or a change in the website structure."
+    ))
+    return(invisible(NULL))
   }
 
   # Unexpected warnings still error
@@ -145,7 +147,10 @@ gutenberg_get_all_mirrors <- function() {
   result <- mirrors$result
 
   if (is.null(result) || nrow(result) < 3) {
-    return(NULL)
+    cli::cli_inform(c(
+      "i" = "The Project Gutenberg mirror list was retrieved but appears to be empty or malformed."
+    ))
+    return(invisible(NULL))
   }
 
   dplyr::slice(result, 2:(dplyr::n() - 1))
