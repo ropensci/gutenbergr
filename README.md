@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gutenbergr <a href="https://docs.ropensci.org/gutenbergr"><img src="man/figures/logo.png" align="right" height="120" alt="gutenbergr website" /></a>
+# gutenbergr <a href="https://docs.ropensci.org/gutenbergr"><img src="man/figures/logo.png" align="right" height="160" alt="gutenbergr website" /></a>
 
 <!-- badges: start -->
 
