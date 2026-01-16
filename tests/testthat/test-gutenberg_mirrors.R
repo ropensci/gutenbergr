@@ -1,19 +1,43 @@
-test_that("gutenberg_get_mirror works with no option set", {
-  local_dl_and_read()
+test_that("gutenberg_get_mirror falls back when mirror list unavailable", {
+  local_mocked_bindings(
+    gutenberg_get_all_mirrors = function() NULL,
+    is_working_gutenberg_mirror = function(url) {
+      url == "https://aleph.pglaf.org"
+    },
+    .package = "gutenbergr"
+  )
+
   withr::local_options(gutenberg_mirror = NULL)
+
   expect_message(
     expect_identical(
       gutenberg_get_mirror(),
       "https://aleph.pglaf.org"
     ),
-    "Using mirror",
-    class = "gutenbergr-msg-mirror-found"
+    "Falling back",
+    class = "gutenbergr-msg-mirror-fallback"
   )
+
   expect_no_message(
     expect_identical(
       gutenberg_get_mirror(),
       "https://aleph.pglaf.org"
     )
+  )
+})
+
+test_that("gutenberg_get_mirror errors if fallback mirror is also unavailable", {
+  local_mocked_bindings(
+    gutenberg_get_all_mirrors = function() NULL,
+    is_working_gutenberg_mirror = function(url) FALSE,
+    .package = "gutenbergr"
+  )
+
+  withr::local_options(gutenberg_mirror = NULL)
+
+  expect_error(
+    gutenberg_get_mirror(),
+    class = "gutenbergr-error-no_working_mirror"
   )
 })
 
@@ -33,15 +57,34 @@ test_that("gutenberg_get_mirror uses existing option", {
 })
 
 test_that("gutenberg_get_mirror catches bad option", {
+  local_mocked_bindings(
+    gutenberg_get_all_mirrors = function() NULL,
+    is_working_gutenberg_mirror = function(url) {
+      # Bad mirror returns FALSE, fallback mirror returns TRUE
+      if (url == "https://not-a-gutenberg-mirror.org") {
+        return(FALSE)
+      }
+      if (url == "https://aleph.pglaf.org") {
+        return(TRUE)
+      }
+      FALSE
+    },
+    .package = "gutenbergr"
+  )
+
   withr::local_options(gutenberg_mirror = "https://not-a-gutenberg-mirror.org")
+
   expect_message(
     expect_message(
-      gutenberg_get_mirror(),
+      expect_identical(
+        gutenberg_get_mirror(),
+        "https://aleph.pglaf.org"
+      ),
       "Checking for new mirror",
       class = "gutenbergr-msg-mirror-refresh"
     ),
-    "Using mirror",
-    class = "gutenbergr-msg-mirror-found"
+    "Falling back",
+    class = "gutenbergr-msg-mirror-fallback"
   )
 })
 

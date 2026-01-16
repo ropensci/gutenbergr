@@ -22,7 +22,7 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
       maybe_message(
         verbose,
         paste0(
-          "Mirror {mirror} set by options(gutenberg_mirror = {mirror}) is not ",
+          "Mirror {mirror} set by options(gutenberg_mirror = '{mirror}') is not ",
           "accessible. It may not be a Gutenberg mirror or may no longer be ",
           "maintained. Checking for new mirror."
         ),
@@ -31,8 +31,38 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
     }
   }
 
-  # Default to mirror maintained by Project Gutenberg
-  all_mirrors <- gutenberg_get_all_mirrors()
+  all_mirrors <- tryCatch(
+    gutenberg_get_all_mirrors(),
+    error = function(e) NULL
+  )
+
+  # If no option is set && MIRRORS.ALL does not return anything,
+  # fall back to a known stable mirror
+  if (is.null(all_mirrors) || nrow(all_mirrors) == 0) {
+    fallback_mirror <- "https://aleph.pglaf.org"
+
+    # If fallback doesn't work, provide some guidance
+    if (!is_working_gutenberg_mirror(fallback_mirror)) {
+      cli::cli_abort(
+        c(
+          "Unable to determine a working Project Gutenberg mirror.",
+          i = "The Project Gutenberg mirror list is unavailable.",
+          i = "The default fallback mirror ({fallback_mirror}) could not be reached.",
+          i = "You can set a mirror manually with {.code options(gutenberg_mirror = <url>)}."
+        ),
+        class = "gutenbergr-error-no_working_mirror"
+      )
+    }
+    maybe_message(
+      verbose,
+      "Mirror list unavailable. Falling back to '{fallback_mirror}'.",
+      class = "mirror-fallback"
+    )
+    options(gutenberg_mirror = fallback_mirror)
+    return(fallback_mirror)
+  }
+
+  # otherwise use https mirror from gutenberg_get_all_mirrors()
   mirror_full_url <- dplyr::filter(
     all_mirrors,
     .data$provider == "Project Gutenberg",
@@ -79,12 +109,25 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #' @export
 gutenberg_get_all_mirrors <- function() {
   mirrors_url <- "https://www.gutenberg.org/MIRRORS.ALL"
-  mirrors <- purrr::quietly(read_md_table)(
-    mirrors_url,
-    warn = FALSE,
-    force = TRUE,
-    show_col_types = FALSE
+
+  mirrors <- tryCatch(
+    purrr::quietly(read_md_table)(
+      mirrors_url,
+      warn = FALSE,
+      force = TRUE,
+      show_col_types = FALSE
+    ),
+    error = function(e) {
+      return(NULL)
+    }
   )
+
+  # Hard failure to retrieve anything
+  if (is.null(mirrors)) {
+    return(NULL)
+  }
+
+  # Unexpected warnings still error
   if (
     length(mirrors$warnings) &&
       !(length(mirrors$warnings) == 1 &&
@@ -98,9 +141,14 @@ gutenberg_get_all_mirrors <- function() {
       class = "gutenbergr-error-mirror_table_reading"
     )
   }
-  mirrors <- dplyr::slice(mirrors$result, 2:(dplyr::n() - 1))
 
-  return(mirrors)
+  result <- mirrors$result
+
+  if (is.null(result) || nrow(result) < 3) {
+    return(NULL)
+  }
+
+  dplyr::slice(result, 2:(dplyr::n() - 1))
 }
 
 #' Check if a URL resolves to a working Gutenberg mirror
