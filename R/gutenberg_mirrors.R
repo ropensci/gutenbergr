@@ -163,9 +163,16 @@ gutenberg_get_all_mirrors <- function() {
 #'
 #' @keywords internal
 is_working_gutenberg_mirror <- function(url) {
-  base_url <- sub("/+$", "", url)
-  readme_url <- paste0(base_url, "/README")
-  readme <- read_url(readme_url)
-  contains_pg_string <- any(grepl("GUTINDEX.ALL", readme))
-  contains_pg_string
+  tryCatch(
+    {
+      base_url <- sub("/+$", "", url)
+      readme_url <- paste0(base_url, "/README")
+      readme <- read_url(readme_url)
+      contains_pg_string <- any(grepl("GUTINDEX.ALL", readme))
+      contains_pg_string
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
 }

@@ -46,20 +46,15 @@ test_that("try_gutenberg_download errors informatively with no return", {
 
 test_that("gutenberg_download actually caches a file", {
   with_gutenberg_cache({
+    mock_mirror_logic(gutenberg_mirror_opt = "http://mock-mirror.com")
+
     testthat::local_mocked_bindings(
-      # Mock the mirror selection to avoid the initial network ping
-      gutenberg_get_mirror = function(...) "http://mock-mirror.com",
-      try_gutenberg_download = function(url) {
-        c("Line 1", "Line 2")
-      },
+      try_gutenberg_download = function(url) c("Line 1", "Line 2"),
+      gutenberg_add_metadata = function(tbl, ...) tbl,
       .package = "gutenbergr"
     )
 
-    gutenberg_download(
-      109,
-      use_cache = TRUE,
-      strip = FALSE
-    )
+    gutenberg_download(109, use_cache = TRUE, strip = FALSE)
 
     cache_path <- gutenberg_cache_dir()
     expect_true(file.exists(file.path(cache_path, "109.rds")))
