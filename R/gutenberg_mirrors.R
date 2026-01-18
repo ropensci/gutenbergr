@@ -46,16 +46,15 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
       cli::cli_abort(
         c(
           "Unable to determine a working Project Gutenberg mirror.",
-          i = "The Project Gutenberg mirror list is unavailable.",
-          i = "The default fallback mirror ({fallback_mirror}) could not be reached.",
-          i = "You can set a mirror manually with {.code options(gutenberg_mirror = <url>)}."
+          "!" = "The default fallback mirror {.url {fallback_mirror}} could not be reached.",
+          "i" = "You can set a mirror manually with {.code options(gutenberg_mirror = <url>)}."
         ),
         class = "gutenbergr-error-no_working_mirror"
       )
     }
     maybe_message(
       verbose,
-      "Mirror list unavailable. Falling back to '{fallback_mirror}'.",
+      "Mirror list unavailable. Falling back to  {.url {fallback_mirror}}.",
       class = "mirror-fallback"
     )
     options(gutenberg_mirror = fallback_mirror)
@@ -123,8 +122,8 @@ gutenberg_get_all_mirrors <- function() {
   # Hard failure to retrieve anything
   if (is.null(mirrors)) {
     cli::cli_inform(c(
-      "i" = "The Project Gutenberg mirror list is currently unavailable at {.url {mirrors_url}}.",
-      "!" = "This may be due to network issues or a change in the website structure."
+      "!" = "The Project Gutenberg mirror list is currently unavailable at {.url {mirrors_url}}.",
+      "i" = "This may be due to network issues or a change in the website structure."
     ))
     return(invisible(NULL))
   }
