@@ -2,7 +2,7 @@
 skip_if_not_integration <- function() {
   if (!identical(Sys.getenv("RUN_INTEGRATION_TESTS"), "true")) {
     skip(
-      "Integration tests not enabled. Set RUN_INTEGRATION_TESTS=true to run."
+      "Integration tests not enabled. Run `Sys.setenv(RUN_INTEGRATION_TESTS = 'true')` to enable."
     )
   }
 }

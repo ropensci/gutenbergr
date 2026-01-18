@@ -44,7 +44,7 @@ Suggests:
     tidytext,
     usethis (>= 3.2.1),
     withr,
-    xml2 (>= 1.5.1)
+    xml2
 VignetteBuilder:
     knitr
 Encoding: UTF-8
