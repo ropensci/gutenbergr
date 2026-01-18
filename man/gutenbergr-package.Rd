@@ -6,6 +6,8 @@
 \alias{gutenbergr-package}
 \title{gutenbergr: Download and Process Public Domain Works from Project Gutenberg}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Download and process public domain works in the Project Gutenberg collection \url{https://www.gutenberg.org/}. Includes metadata for all Project Gutenberg works, so that they can be searched and retrieved.
 }
 \seealso{
