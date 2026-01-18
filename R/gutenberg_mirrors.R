@@ -91,7 +91,10 @@ gutenberg_get_mirror <- function(verbose = TRUE) {
 #' relatively stable. For more information on mirroring and getting your own
 #' mirror listed, see <https://www.gutenberg.org/help/mirroring.html>.
 #'
-#' @return A [tibble::tibble()] of Project Gutenberg mirrors and related data:
+#' @return A [tibble::tibble()] of Project Gutenberg mirrors and related data,
+#' or `NULL` (invisibly) if the mirror list cannot be retrieved or parsed.
+#'
+#' If a [tibble::tibble()] is returned, it contains:
 #' \describe{
 #'   \item{continent}{Continent where the mirror is located}
 #'   \item{nation}{Nation where the mirror is located}
