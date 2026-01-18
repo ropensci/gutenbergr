@@ -7,7 +7,10 @@
 gutenberg_get_all_mirrors()
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}} of Project Gutenberg mirrors and related data:
+A \code{\link[tibble:tibble]{tibble::tibble()}} of Project Gutenberg mirrors and related data,
+or \code{NULL} (invisibly) if the mirror list cannot be retrieved or parsed.
+
+If a \code{\link[tibble:tibble]{tibble::tibble()}} is returned, it contains:
 \describe{
 \item{continent}{Continent where the mirror is located}
 \item{nation}{Nation where the mirror is located}
