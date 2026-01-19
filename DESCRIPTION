@@ -1,6 +1,6 @@
 Package: gutenbergr
 Title: Download and Process Public Domain Works from Project Gutenberg
-Version: 0.4.1
+Version: 0.4.1.9000
 Authors@R: c(
     person("Jordan", "Bradford", , "jrdnbradford@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0000-8570-3474")),
