@@ -1,5 +1,13 @@
 # gutenbergr (development version)
 
+# gutenbergr 0.4.1
+
+* `cli` messaging has been improved (@jrdnbradford, #134)
+* gutenbergr now has a logo (@jrdnbradford, #133)
+* `gutenberg_get_all_mirrors()` now provides helpful instructional messaging instead of erroring if https://www.gutenberg.org/MIRRORS.ALL is not unavailable or cannot be parsed (@jrdnbradford, #132)
+* `gutenberg_get_mirror()` now falls back to a known stable mirror (https://aleph.pglaf.org) if there is no `gutenberg_mirror` option set and `gutenberg_get_all_mirrors()` cannot determine a mirror (@jrdnbradford, #132)
+* The package startup message now only appears if `interactive()` (@jrdnbradford, #128)
+
 # gutenbergr 0.4.0
 
 * gutenbergr now caches works downloaded with `gutenberg_download()`. They are saved in a temporary directory by default, but they can be configured to persist in your OS-specific application cache directory across sessions (@jrdnbradford, #112, #123).
