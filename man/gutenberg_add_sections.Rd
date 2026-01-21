@@ -7,31 +7,35 @@
 gutenberg_add_sections(
   data,
   pattern,
-  format_fn = NULL,
   ignore_case = TRUE,
-  group_by = NULL
+  format_fn = NULL,
+  group_by = "auto"
 )
 }
 \arguments{
-\item{data}{A \link[tibble:tibble]{tibble::tibble} returned by \link{gutenberg_download}.}
+\item{data}{A \link[tibble:tibble]{tibble::tibble} with a \code{text} column containing the text to analyze.
+Typically \code{data} should be piped from \link{gutenberg_download} and contain a
+\code{gutenberg_id} column, but this is not required.}
 
 \item{pattern}{A regex pattern to identify headers. Must match the specific
 formatting of your book. See Details and Examples for common patterns.}
+
+\item{ignore_case}{Logical; should pattern matching be case-insensitive?
+Default is \code{TRUE}.}
 
 \item{format_fn}{Optional function to format section text. Receives the
 matched text and returns formatted text. Common options include
 \link[stringr:case]{stringr::str_to_title} and \link[stringr:case]{stringr::str_to_upper} but a custom function
 can also be provided.}
 
-\item{ignore_case}{Logical; should pattern matching be case-insensitive?
-Default is \code{TRUE}.}
-
 \item{group_by}{Character vector of column names to group by before filling
-sections. Defaults to \code{"gutenberg_id"} if that column exists, otherwise \code{NULL}.
-Set to \code{NULL} to treat entire dataset as one document.}
+sections, or \code{NULL} to disable grouping. Defaults to \code{"auto"}, which
+automatically uses \code{"gutenberg_id"} if that column exists. Set to \code{NULL}
+to treat the entire dataset as one document, or specify custom column
+names for grouping (e.g., \code{group_by = "book_title"}).}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}} with an added \code{section} column containing the section marker
+A \link[tibble:tibble]{tibble::tibble} with an added \code{section} column containing the section marker
 for each row. Rows before the first section marker will have \code{NA}.
 }
 \description{
@@ -41,19 +45,20 @@ Sections are forward-filled, so all text between markers belongs to the
 previous section.
 }
 \details{
-\subsection{Common Patterns for Project Gutenberg Books}{
+\subsection{Common Section Patterns for Project Gutenberg Books}{
 
 Different books use different formatting for their section markers. Here are
 patterns for common formats:
 \itemize{
-\item \strong{Dante's Inferno (1001)}: \code{"^CANTO [IVXLCDM]+"}
-\item \strong{A Christmas Carol (46)}: \code{"^STAVE [IVXLCDM]+"}
-\item \strong{Frankenstein (84)}: \code{"^(Letter|Chapter) [0-9]+"}
-\item \strong{Pride and Prejudice (1342)}: \code{"^Chapter [0-9]+"}
-\item \strong{Moby Dick (2701)}: \code{"^CHAPTER [0-9]+\\\\."}
-\item \strong{Paradise Lost (26)}: \code{"^BOOK [IVXLCDM]+"}
-\item \strong{Shakespeare plays}: \code{"^(ACT|SCENE) [IVXLCDM]+"}
-\item \strong{Letter-based books}: \code{"^Letter [IVXLCDM0-9]+"}
+\item Chapters with Roman numerals: \code{"^Chapter [IVXLCDM]+"}
+\item Chapters with Arabic numerals: \code{"^Chapter [0-9]+"}
+\item Books (e.g., \emph{Paradise Lost}): \code{"^BOOK [IVXLCDM]+"}
+\item Cantos (e.g., \emph{Dante's Inferno}): \code{"^CANTO [IVXLCDM]+"}
+\item Staves (e.g., \emph{A Christmas Carol}): \code{"^STAVE [IVXLCDM]+"}
+\item Parts or sections: \code{"^(PART|SECTION) [IVXLCDM0-9]+"}
+\item Letters: \code{"^Letter [IVXLCDM0-9]+"}
+\item Plays (acts and scenes): \code{"^(ACT|SCENE) [IVXLCDM]+"}
+\item Multiple formats (e.g., \emph{Frankenstein}): \code{"^(Letter|Chapter) [0-9]+"}
 }
 
 Use \code{\link[=gutenberg_works]{gutenberg_works()}} to search for books and examine a few lines with
@@ -62,16 +67,6 @@ Use \code{\link[=gutenberg_works]{gutenberg_works()}} to search for books and ex
 }
 \examples{
 \dontrun{
-# Pride and Prejudice - Chapters with numbers
-pride_and_prejudice <- gutenberg_download(1342) |>
-  gutenberg_add_sections(pattern = "^Chapter [0-9]+")
-
-# Convert to numeric for analysis
-pride_and_prejudice <- gutenberg_download(1342) |>
-  gutenberg_add_sections(
-    pattern = "^Chapter [0-9]+",
-    format_fn = function(x) as.numeric(stringr::str_extract(x, "\\\\d+"))
-  )
 
 # Dante's Inferno - Cantos with Roman numerals
 inferno <- gutenberg_download(1001) |>
@@ -84,20 +79,17 @@ frankenstein <- gutenberg_download(84) |>
     format_fn = stringr::str_to_title
   )
 
-# Classic Brontë works - Chapters with Roman Numerals
+# Classic Brontë works - Chapters with Roman numerals
 # Remove trailing periods from section text
-bronte_sisters <- gutenberg_download(c(1260, 768, 969, 9182, 767)) |>
- gutenberg_add_sections(
-   pattern = "^\\\\s*CHAPTER [IVXLCDM]+",
-   format_fn = function(x) str_remove(x, "\\\\.$")
-)
-
-# Disable automatic grouping for multiple books
-# Treat as one continuous document
-books <- gutenberg_download(c(1342, 84)) |>
+# Consider using `options(gutenbergr_cache_type = "persistent")`
+# to prevent redownloading in the future.
+bronte_sisters <- gutenberg_download(
+  c(1260, 768, 969, 9182, 767),
+  meta_fields = c("author", "title")
+) |>
   gutenberg_add_sections(
-    pattern = "^Chapter [0-9]+",
-    group_by = NULL
+    pattern = "^\\\\s*CHAPTER [IVXLCDM]+",
+    format_fn = function(x) str_remove(x, "\\\\.$")
   )
 }
 

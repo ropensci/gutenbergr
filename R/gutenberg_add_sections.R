@@ -6,7 +6,9 @@
 #' Sections are forward-filled, so all text between markers belongs to the
 #' previous section.
 #'
-#' @param data A [tibble::tibble] returned by [gutenberg_download].
+#' @param data A [tibble::tibble] with a `text` column containing the text to analyze.
+#'   Typically `data` should be piped from [gutenberg_download] and contain a
+#'   `gutenberg_id` column, but this is not required.
 #' @param pattern A regex pattern to identify headers. Must match the specific
 #'   formatting of your book. See Details and Examples for common patterns.
 #' @param format_fn Optional function to format section text. Receives the
@@ -16,42 +18,35 @@
 #' @param ignore_case Logical; should pattern matching be case-insensitive?
 #'   Default is `TRUE`.
 #' @param group_by Character vector of column names to group by before filling
-#'   sections. Defaults to `"gutenberg_id"` if that column exists, otherwise `NULL`.
-#'   Set to `NULL` to treat entire dataset as one document.
+#'   sections, or `NULL` to disable grouping. Defaults to `"auto"`, which
+#'   automatically uses `"gutenberg_id"` if that column exists. Set to `NULL`
+#'   to treat the entire dataset as one document, or specify custom column
+#'   names for grouping (e.g., `group_by = "book_title"`).
 #'
 #' @details
-#' ## Common Patterns for Project Gutenberg Books
+#' ## Common Section Patterns for Project Gutenberg Books
 #'
 #' Different books use different formatting for their section markers. Here are
 #' patterns for common formats:
 #'
-#' - **Dante's Inferno (1001)**: `"^CANTO [IVXLCDM]+"`
-#' - **A Christmas Carol (46)**: `"^STAVE [IVXLCDM]+"`
-#' - **Frankenstein (84)**: `"^(Letter|Chapter) [0-9]+"`
-#' - **Pride and Prejudice (1342)**: `"^Chapter [0-9]+"`
-#' - **Moby Dick (2701)**: `"^CHAPTER [0-9]+\\."`
-#' - **Paradise Lost (26)**: `"^BOOK [IVXLCDM]+"`
-#' - **Shakespeare plays**: `"^(ACT|SCENE) [IVXLCDM]+"`
-#' - **Letter-based books**: `"^Letter [IVXLCDM0-9]+"`
+#' - Chapters with Roman numerals: `"^Chapter [IVXLCDM]+"`
+#' - Chapters with Arabic numerals: `"^Chapter [0-9]+"`
+#' - Books (e.g., *Paradise Lost*): `"^BOOK [IVXLCDM]+"`
+#' - Cantos (e.g., *Dante's Inferno*): `"^CANTO [IVXLCDM]+"`
+#' - Staves (e.g., *A Christmas Carol*): `"^STAVE [IVXLCDM]+"`
+#' - Parts or sections: `"^(PART|SECTION) [IVXLCDM0-9]+"`
+#' - Letters: `"^Letter [IVXLCDM0-9]+"`
+#' - Plays (acts and scenes): `"^(ACT|SCENE) [IVXLCDM]+"`
+#' - Multiple formats (e.g., *Frankenstein*): `"^(Letter|Chapter) [0-9]+"`
 #'
 #' Use [gutenberg_works()] to search for books and examine a few lines with
 #' [gutenberg_download()] to determine the exact format before writing your pattern.
 #'
-#' @return A [tibble::tibble()] with an added `section` column containing the section marker
+#' @return A [tibble::tibble] with an added `section` column containing the section marker
 #'   for each row. Rows before the first section marker will have `NA`.
 #'
 #' @examples
 #' \dontrun{
-#' # Pride and Prejudice - Chapters with numbers
-#' pride_and_prejudice <- gutenberg_download(1342) |>
-#'   gutenberg_add_sections(pattern = "^Chapter [0-9]+")
-#'
-#' # Convert to numeric for analysis
-#' pride_and_prejudice <- gutenberg_download(1342) |>
-#'   gutenberg_add_sections(
-#'     pattern = "^Chapter [0-9]+",
-#'     format_fn = function(x) as.numeric(stringr::str_extract(x, "\\d+"))
-#'   )
 #'
 #' # Dante's Inferno - Cantos with Roman numerals
 #' inferno <- gutenberg_download(1001) |>
@@ -64,20 +59,17 @@
 #'     format_fn = stringr::str_to_title
 #'   )
 #'
-#' # Classic Brontë works - Chapters with Roman Numerals
+#' # Classic Brontë works - Chapters with Roman numerals
 #' # Remove trailing periods from section text
-#' bronte_sisters <- gutenberg_download(c(1260, 768, 969, 9182, 767)) |>
-#'  gutenberg_add_sections(
-#'    pattern = "^\\s*CHAPTER [IVXLCDM]+",
-#'    format_fn = function(x) str_remove(x, "\\.$")
-#' )
-#'
-#' # Disable automatic grouping for multiple books
-#' # Treat as one continuous document
-#' books <- gutenberg_download(c(1342, 84)) |>
+#' # Consider using `options(gutenbergr_cache_type = "persistent")`
+#' # to prevent redownloading in the future.
+#' bronte_sisters <- gutenberg_download(
+#'   c(1260, 768, 969, 9182, 767),
+#'   meta_fields = c("author", "title")
+#' ) |>
 #'   gutenberg_add_sections(
-#'     pattern = "^Chapter [0-9]+",
-#'     group_by = NULL
+#'     pattern = "^\\s*CHAPTER [IVXLCDM]+",
+#'     format_fn = function(x) str_remove(x, "\\.$")
 #'   )
 #' }
 #'
@@ -85,21 +77,32 @@
 gutenberg_add_sections <- function(
   data,
   pattern,
-  format_fn = NULL,
   ignore_case = TRUE,
-  group_by = NULL
+  format_fn = NULL,
+  group_by = "auto"
 ) {
-  # Default to gutenberg_id if it exists and group_by not specified
-  if (is.null(group_by) && "gutenberg_id" %in% colnames(data)) {
-    group_by <- "gutenberg_id"
+  # Default to gutenberg_id if it exists and group_by is "auto"
+  if (identical(group_by, "auto")) {
+    if ("gutenberg_id" %in% colnames(data)) {
+      group_by <- "gutenberg_id"
+    } else {
+      group_by <- NULL
+    }
   }
 
   # Group if grouping variable(s) specified
   if (!is.null(group_by)) {
-    data <- dplyr::group_by(data, dplyr::across(dplyr::all_of(group_by)))
+    data <- dplyr::group_by(
+      data,
+      dplyr::across(
+        dplyr::all_of(
+          group_by
+        )
+      )
+    )
   }
 
-  data <- data %>%
+  data <- data |>
     dplyr::mutate(
       is_header = stringr::str_detect(
         text,
@@ -114,14 +117,14 @@ gutenberg_add_sections <- function(
 
   # Apply formatting function if provided
   if (!is.null(format_fn)) {
-    data <- data %>%
+    data <- data |>
       dplyr::mutate(
         section = ifelse(!is.na(section), format_fn(section), NA)
       )
   }
 
-  data <- data %>%
-    tidyr::fill(section, .direction = "down") %>%
+  data <- data |>
+    tidyr::fill(section, .direction = "down") |>
     dplyr::select(-is_header)
 
   # Ungroup if we grouped

@@ -50,24 +50,25 @@ test_that("gutenberg_download and gutenberg_add_sections work with multiple book
   expect_true(all(counts > 0))
 
   # Frankenstein has 4 letters + 24 chapters = 28 sections
-  frankenstein_section_nrows <- result %>%
-    filter(gutenberg_id == 84, !is.na(section)) %>%
-    distinct(section) %>%
+  frankenstein_section_nrows <- result |>
+    dplyr::filter(gutenberg_id == 84, !is.na(section)) |>
+    dplyr::distinct(section) |>
     nrow()
   expect_equal(frankenstein_section_nrows, 28)
 
   # Bill of Rights has 10 articles
-  bill_section_nrows <- result %>%
-    filter(gutenberg_id == 2, !is.na(section)) %>%
-    distinct(section) %>%
+  bill_section_nrows <- result |>
+    dplyr::filter(gutenberg_id == 2, !is.na(section)) |>
+    dplyr::distinct(section) |>
     nrow()
   expect_equal(bill_section_nrows, 10)
 
   # Count letters and chapters
-  frankenstein_sections <- result %>%
-    filter(gutenberg_id == 84, !is.na(section)) %>%
-    pull(section) %>%
+  frankenstein_sections <- result |>
+    dplyr::filter(gutenberg_id == 84, !is.na(section)) |>
+    dplyr::pull(section) |>
     unique()
+
   letter_count <- sum(grepl("^Letter", frankenstein_sections))
   chapter_count <- sum(grepl("^Chapter", frankenstein_sections))
   expect_equal(letter_count, 4)
