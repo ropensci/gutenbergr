@@ -188,4 +188,23 @@ describe("gutenberg_add_sections()", {
       c("CHAPTER I", "CHAPTER II", "CHAPTER III")
     )
   })
+
+  test_that("handles custom and nested section columns", {
+    res <- nested_sections_data |>
+      gutenberg_add_sections(
+        pattern = "^BOOK [A-Z]+",
+        section_col = "book_name"
+      ) |>
+      gutenberg_add_sections(
+        pattern = "^CHAPTER [IVXLCDM]+",
+        section_col = "chapter_name"
+      )
+
+    expect_true(all(c("book_name", "chapter_name") %in% colnames(res)))
+    expect_equal(res$book_name[1:5], rep("BOOK ONE", 5))
+    expect_equal(res$book_name[6:8], rep("BOOK TWO", 3))
+    expect_true(is.na(res$chapter_name[1]))
+    expect_equal(res$chapter_name[2:3], rep("CHAPTER I", 2))
+    expect_equal(res$chapter_name[4:5], rep("CHAPTER II", 2))
+  })
 })

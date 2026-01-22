@@ -22,6 +22,8 @@
 #'   automatically uses `"gutenberg_id"` if that column exists. Set to `NULL`
 #'   to treat the entire dataset as one document, or specify custom column
 #'   names for grouping (e.g., `group_by = "book_title"`).
+#' @param section_col Character string specifying the name of the section column
+#'   to create. Defaults to `"section"`.
 #'
 #' @details
 #' ## Common Section Patterns for Project Gutenberg Books
@@ -42,8 +44,9 @@
 #' Use [gutenberg_works()] to search for books and examine a few lines with
 #' [gutenberg_download()] to determine the exact format before writing your pattern.
 #'
-#' @return A [tibble::tibble] with an added `section` column containing the section marker
-#'   for each row. Rows before the first section marker will have `NA`.
+#' @return A [tibble::tibble] with an added column named according to
+#'   `section_col`, containing the section marker for each row. Rows before the
+#'   first section marker will have `NA`.
 #'
 #' @examples
 #' \dontrun{
@@ -73,13 +76,26 @@
 #'   )
 #' }
 #'
+#' # Leo Tolstoy's War and Peace
+#' # Add two custom named columns for hierarchical sections
+#' war_and_peace <- gutenberg_download(2600) |>
+#'   gutenberg_add_sections(
+#'     pattern = "^BOOK [A-Z]+",
+#'     section_col = "book"
+#'   ) |>
+#'  gutenberg_add_sections(
+#'    pattern = "^CHAPTER [IVXLCDM]+",
+#'    section_col = "chapter"
+#'  )
+#'
 #' @export
 gutenberg_add_sections <- function(
   data,
   pattern,
   ignore_case = TRUE,
   format_fn = NULL,
-  group_by = "auto"
+  group_by = "auto",
+  section_col = "section"
 ) {
   # Default to gutenberg_id if it exists and group_by is "auto"
   if (identical(group_by, "auto")) {
@@ -94,13 +110,11 @@ gutenberg_add_sections <- function(
   if (!is.null(group_by)) {
     data <- dplyr::group_by(
       data,
-      dplyr::across(
-        dplyr::all_of(
-          group_by
-        )
-      )
+      dplyr::across(dplyr::all_of(group_by))
     )
   }
+
+  section_sym <- rlang::sym(section_col)
 
   data <- data |>
     dplyr::mutate(
@@ -108,7 +122,7 @@ gutenberg_add_sections <- function(
         text,
         stringr::regex(pattern, ignore_case = ignore_case)
       ),
-      section = dplyr::if_else(
+      !!section_sym := dplyr::if_else(
         is_header,
         stringr::str_squish(text),
         NA_character_
@@ -119,12 +133,16 @@ gutenberg_add_sections <- function(
   if (!is.null(format_fn)) {
     data <- data |>
       dplyr::mutate(
-        section = ifelse(!is.na(section), format_fn(section), NA)
+        !!section_sym := {
+          out <- format_fn(!!section_sym)
+          out[is.na(!!section_sym)] <- NA
+          out
+        }
       )
   }
 
   data <- data |>
-    tidyr::fill(section, .direction = "down") |>
+    tidyr::fill(!!section_sym, .direction = "down") |>
     dplyr::select(-is_header)
 
   # Ungroup if we grouped
@@ -132,5 +150,5 @@ gutenberg_add_sections <- function(
     data <- dplyr::ungroup(data)
   }
 
-  return(data)
+  data
 }

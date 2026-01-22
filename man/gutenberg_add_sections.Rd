@@ -9,7 +9,8 @@ gutenberg_add_sections(
   pattern,
   ignore_case = TRUE,
   format_fn = NULL,
-  group_by = "auto"
+  group_by = "auto",
+  section_col = "section"
 )
 }
 \arguments{
@@ -33,10 +34,14 @@ sections, or \code{NULL} to disable grouping. Defaults to \code{"auto"}, which
 automatically uses \code{"gutenberg_id"} if that column exists. Set to \code{NULL}
 to treat the entire dataset as one document, or specify custom column
 names for grouping (e.g., \code{group_by = "book_title"}).}
+
+\item{section_col}{Character string specifying the name of the section column
+to create. Defaults to \code{"section"}.}
 }
 \value{
-A \link[tibble:tibble]{tibble::tibble} with an added \code{section} column containing the section marker
-for each row. Rows before the first section marker will have \code{NA}.
+A \link[tibble:tibble]{tibble::tibble} with an added column named according to
+\code{section_col}, containing the section marker for each row. Rows before the
+first section marker will have \code{NA}.
 }
 \description{
 Identifies section markers (chapters, cantos, letters, etc.) in Project
@@ -92,5 +97,17 @@ bronte_sisters <- gutenberg_download(
     format_fn = function(x) str_remove(x, "\\\\.$")
   )
 }
+
+# Leo Tolstoy's War and Peace
+# Add two custom named columns for hierarchical sections
+war_and_peace <- gutenberg_download(2600) |>
+  gutenberg_add_sections(
+    pattern = "^BOOK [A-Z]+",
+    section_col = "book"
+  ) |>
+ gutenberg_add_sections(
+   pattern = "^CHAPTER [IVXLCDM]+",
+   section_col = "chapter"
+ )
 
 }

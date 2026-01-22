@@ -57,3 +57,16 @@ multiple_group_cols <- tibble::tibble(
     "CHAPTER I"
   )
 )
+
+nested_sections_data <- tibble::tibble(
+  text = c(
+    "BOOK ONE",
+    "CHAPTER I",
+    "Text 1",
+    "CHAPTER II",
+    "Text 2",
+    "BOOK TWO",
+    "CHAPTER I",
+    "Text 3"
+  )
+)
