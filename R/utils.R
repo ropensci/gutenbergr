@@ -32,7 +32,15 @@ dl_and_read <- function(url) {
   mode <- ifelse(.Platform$OS.type == "windows", "wb", "w")
   tmp <- tempfile()
   on.exit(unlink(tmp))
-  utils::download.file(url, tmp, mode = mode, quiet = TRUE)
+  utils::download.file(
+    url,
+    tmp,
+    mode = mode,
+    quiet = TRUE,
+    headers = c(
+      "User-Agent" = "gutenbergr (https://github.com/ropensci/gutenbergr)"
+    )
+  )
   readr::read_lines(tmp)
 } # nocov end
 
