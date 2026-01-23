@@ -71,8 +71,7 @@ Use \code{\link[=gutenberg_works]{gutenberg_works()}} to search for books and ex
 }
 }
 \examples{
-\dontrun{
-
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Dante's Inferno - Cantos with Roman numerals
 inferno <- gutenberg_download(1001) |>
   gutenberg_add_sections(pattern = "^CANTO [IVXLCDM]+")
@@ -96,7 +95,6 @@ bronte_sisters <- gutenberg_download(
     pattern = "^\\\\s*CHAPTER [IVXLCDM]+",
     format_fn = function(x) str_remove(x, "\\\\.$")
   )
-}
 
 # Leo Tolstoy's War and Peace
 # Add two custom named columns for hierarchical sections
@@ -109,5 +107,5 @@ war_and_peace <- gutenberg_download(2600) |>
    pattern = "^CHAPTER [IVXLCDM]+",
    section_col = "chapter"
  )
-
+\dontshow{\}) # examplesIf}
 }

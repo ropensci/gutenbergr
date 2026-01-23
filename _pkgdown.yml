@@ -11,6 +11,7 @@ reference:
   - gutenberg_download
   - gutenberg_works
   - gutenberg_strip
+  - gutenberg_add_sections
 
 - title: Cache Functions
 - contents:

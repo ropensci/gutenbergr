@@ -1,3 +1,106 @@
+# Basic data without IDs
+chapter_basic <- tibble::tribble(
+  ~text        ,
+  "CHAPTER I"  ,
+  "Text 1"     ,
+  "Text 2"     ,
+  "CHAPTER II" ,
+  "Text 3"
+)
+
+# Data with IDs for grouping tests
+chapter_with_ids <- tibble::tribble(
+  ~gutenberg_id , ~text       ,
+              1 , "CHAPTER I" ,
+              1 , "Text 1"    ,
+              1 , "Text 2"    ,
+              2 , "CHAPTER I" ,
+              2 , "Text 3"
+)
+
+# Mixed case data for case sensitivity tests
+mixed_case_chapters <- tibble::tribble(
+  ~text         ,
+  "chapter i"   ,
+  "Text 1"      ,
+  "CHAPTER II"  ,
+  "Text 2"      ,
+  "Chapter III" ,
+  "Text 3"
+)
+
+# Data with no chapter markers for no-match tests
+only_text <- tibble::tribble(
+  ~text              ,
+  "Just some text"   ,
+  "No chapters here" ,
+  "Nothing to see"
+)
+
+# Data with multiple grouping columns
+multiple_group_cols <- tibble::tribble(
+  ~author , ~book , ~text       ,
+  "A"     ,     1 , "CHAPTER I" ,
+  "A"     ,     1 , "Text"      ,
+  "A"     ,     2 , "CHAPTER I" ,
+  "B"     ,     1 , "CHAPTER I" ,
+  "B"     ,     1 , "Text"      ,
+  "B"     ,     2 , "CHAPTER I"
+)
+
+# Data with nested sections (books and chapters)
+nested_sections_data <- tibble::tribble(
+  ~text        ,
+  "BOOK ONE"   ,
+  "CHAPTER I"  ,
+  "Text 1"     ,
+  "CHAPTER II" ,
+  "Text 2"     ,
+  "BOOK TWO"   ,
+  "CHAPTER I"  ,
+  "Text 3"
+)
+
+# Data with extra columns for preserving columns test
+data_with_extra_col <- tibble::tribble(
+  ~gutenberg_id , ~text       , ~other_col ,
+              1 , "CHAPTER I" , "a"        ,
+              1 , "Text 1"    , "b"        ,
+              1 , "Text 2"    , "c"
+)
+
+# Numeric chapter data for format_fn type conversion test
+numeric_chapters <- tibble::tribble(
+  ~text       ,
+  "Chapter 1" ,
+  "Text"      ,
+  "Chapter 2" ,
+  "More text"
+)
+
+# Data for group_by = NULL test (crosses books)
+cross_book_data <- tibble::tribble(
+  ~gutenberg_id , ~text        ,
+              1 , "CHAPTER I"  ,
+              1 , "Text 1"     ,
+              1 , "Text 2"     ,
+              2 , "CHAPTER II" ,
+              2 , "Text 3"     ,
+              2 , "Text 4"
+)
+
+# Edge case data
+empty_data <- tibble::tribble(
+  ~text
+)
+
+headers_only <- tibble::tribble(
+  ~text         ,
+  "CHAPTER I"   ,
+  "CHAPTER II"  ,
+  "CHAPTER III"
+)
+
 describe("gutenberg_add_sections()", {
   test_that("adds section column and preserves data", {
     result <- gutenberg_add_sections(
@@ -30,14 +133,8 @@ describe("gutenberg_add_sections()", {
   })
 
   test_that("preserves non-text columns", {
-    data <- tibble::tibble(
-      gutenberg_id = c(1, 1, 1),
-      text = c("CHAPTER I", "Text 1", "Text 2"),
-      other_col = c("a", "b", "c")
-    )
-
     result <- gutenberg_add_sections(
-      data,
+      data_with_extra_col,
       pattern = "^CHAPTER [IVXLCDM]+"
     )
 
@@ -58,14 +155,10 @@ describe("gutenberg_add_sections()", {
   })
 
   test_that("format_fn can change type", {
-    data <- tibble::tibble(
-      text = c("Chapter 1", "Text", "Chapter 2", "More text")
-    )
-
     to_numeric <- function(x) as.numeric(stringr::str_extract(x, "\\d+"))
 
     result <- gutenberg_add_sections(
-      data,
+      numeric_chapters,
       pattern = "^Chapter \\d+",
       format_fn = to_numeric
     )
@@ -74,40 +167,44 @@ describe("gutenberg_add_sections()", {
     expect_equal(result$section[c(1, 3)], c(1, 2))
   })
 
-  test_that("ignore_case controls matching (table-driven)", {
-    cases <- tibble::tibble(
-      ignore_case = c(TRUE, FALSE),
-      expected = list(
-        # ignore_case = TRUE
-        c(
-          "chapter i",
-          "chapter i",
-          "CHAPTER II",
-          "CHAPTER II",
-          "Chapter III",
-          "Chapter III"
-        ),
-        # ignore_case = FALSE
-        c(
-          NA,
-          NA,
-          "CHAPTER II",
-          "CHAPTER II",
-          "CHAPTER II",
-          "CHAPTER II"
-        )
-      )
+  test_that("ignore_case = TRUE matches case-insensitively", {
+    result <- gutenberg_add_sections(
+      mixed_case_chapters,
+      pattern = "^CHAPTER [IVXLCDM]+",
+      ignore_case = TRUE
     )
 
-    for (i in seq_len(nrow(cases))) {
-      result <- gutenberg_add_sections(
-        mixed_case_chapters,
-        pattern = "^CHAPTER [IVXLCDM]+",
-        ignore_case = cases$ignore_case[i]
+    expect_equal(
+      result$section,
+      c(
+        "chapter i",
+        "chapter i",
+        "CHAPTER II",
+        "CHAPTER II",
+        "Chapter III",
+        "Chapter III"
       )
+    )
+  })
 
-      expect_equal(result$section, cases$expected[[i]])
-    }
+  test_that("ignore_case = FALSE matches case-sensitively", {
+    result <- gutenberg_add_sections(
+      mixed_case_chapters,
+      pattern = "^CHAPTER [IVXLCDM]+",
+      ignore_case = FALSE
+    )
+
+    expect_equal(
+      result$section,
+      c(
+        NA,
+        NA,
+        "CHAPTER II",
+        "CHAPTER II",
+        "CHAPTER II",
+        "CHAPTER II"
+      )
+    )
   })
 
   test_that("groups by gutenberg_id by default", {
@@ -134,20 +231,8 @@ describe("gutenberg_add_sections()", {
   })
 
   test_that("group_by = NULL treats input as a single document", {
-    data <- tibble::tibble(
-      gutenberg_id = c(1, 1, 1, 2, 2, 2),
-      text = c(
-        "CHAPTER I",
-        "Text 1",
-        "Text 2",
-        "CHAPTER II",
-        "Text 3",
-        "Text 4"
-      )
-    )
-
     result <- gutenberg_add_sections(
-      data,
+      cross_book_data,
       pattern = "^CHAPTER [IVXLCDM]+",
       group_by = NULL
     )
@@ -166,13 +251,8 @@ describe("gutenberg_add_sections()", {
   })
 
   test_that("handles edge cases", {
-    empty <- tibble::tibble(text = character())
-    headers_only <- tibble::tibble(
-      text = c("CHAPTER I", "CHAPTER II", "CHAPTER III")
-    )
-
     result_empty <- gutenberg_add_sections(
-      empty,
+      empty_data,
       pattern = "^CHAPTER [IVXLCDM]+"
     )
 

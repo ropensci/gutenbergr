@@ -48,9 +48,7 @@
 #'   `section_col`, containing the section marker for each row. Rows before the
 #'   first section marker will have `NA`.
 #'
-#' @examples
-#' \dontrun{
-#'
+#' @examplesIf interactive()
 #' # Dante's Inferno - Cantos with Roman numerals
 #' inferno <- gutenberg_download(1001) |>
 #'   gutenberg_add_sections(pattern = "^CANTO [IVXLCDM]+")
@@ -74,7 +72,6 @@
 #'     pattern = "^\\s*CHAPTER [IVXLCDM]+",
 #'     format_fn = function(x) str_remove(x, "\\.$")
 #'   )
-#' }
 #'
 #' # Leo Tolstoy's War and Peace
 #' # Add two custom named columns for hierarchical sections
