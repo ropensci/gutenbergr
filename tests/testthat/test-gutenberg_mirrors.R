@@ -60,6 +60,64 @@ describe("gutenberg_get_mirror", {
       class = "gutenbergr-msg-mirror-fallback"
     )
   })
+
+  test_that("selects https mirror from list and sets option", {
+    mock_mirrors <- tibble::tribble(
+      ~continent      , ~nation   , ~location    , ~provider           , ~url                                      , ~note ,
+      "North America" , "USA"     , "California" , "Project Gutenberg" , "https://gutenberg.pglaf.org/cache/epub/" , ""    ,
+      "Europe"        , "Germany" , "Berlin"     , "Project Gutenberg" , "http://mirror.eu.gutenberg.org/"         , ""    ,
+      "Asia"          , "Japan"   , "Tokyo"      , "Other Provider"    , "https://other-provider.org/"             , ""
+    )
+
+    mock_mirror_logic(
+      mirrors = mock_mirrors,
+      is_working = TRUE,
+      gutenberg_mirror_opt = NULL
+    )
+
+    expect_message(
+      result <- gutenberg_get_mirror(),
+      "Using mirror https://gutenberg.pglaf.org",
+      class = "gutenbergr-msg-mirror-found"
+    )
+
+    expect_identical(result, "https://gutenberg.pglaf.org")
+
+    expect_identical(
+      getOption("gutenberg_mirror"),
+      "https://gutenberg.pglaf.org"
+    )
+  })
+
+  test_that("handles hard failure when mirrors is NULL", {
+    testthat::local_mocked_bindings(
+      read_md_table = function(file, ...) {
+        stop("Network error")
+      },
+      .package = "gutenbergr"
+    )
+
+    expect_message(
+      result <- gutenberg_get_all_mirrors(),
+      "mirror list is currently unavailable"
+    )
+    expect_null(result)
+  })
+
+  test_that("handles result table with fewer than 3 rows", {
+    testthat::local_mocked_bindings(
+      read_md_table = function(file, ...) {
+        NULL
+      },
+      .package = "gutenbergr"
+    )
+
+    expect_message(
+      result <- gutenberg_get_all_mirrors(),
+      "appears to be empty or malformed"
+    )
+    expect_null(result)
+  })
 })
 
 describe("is_working_gutenberg_mirror", {
