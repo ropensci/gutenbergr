@@ -3,6 +3,7 @@
   gutenberg_ensure_cache_dir()
 }
 
+# nocov start
 .onAttach <- function(libname, pkgname) {
   if (!interactive()) {
     return(invisible())
@@ -24,3 +25,4 @@
   )
   invisible()
 }
+# nocov end
