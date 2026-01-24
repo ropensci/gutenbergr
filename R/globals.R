@@ -1,17 +1,20 @@
 globalVariables(
   c(
     ".",
-    "gutenberg_id",
-    "language",
-    "has_text",
-    "gutenberg_metadata",
-    "gutenberg_languages",
-    "n",
-    "number",
-    "total",
-    "title",
     "author",
     "gutenberg_author_id",
+    "gutenberg_id",
+    "gutenberg_languages",
+    "gutenberg_metadata",
+    "has_text",
+    "is_header",
+    "language",
+    "n",
+    "number",
+    "section",
+    "text",
+    "title",
+    "total",
     "total_languages"
   )
 )
