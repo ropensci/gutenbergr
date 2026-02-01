@@ -11,6 +11,9 @@ discard_start_while(.x, .p)
 
 \item{.p}{Logical vector}
 }
+\value{
+A vector the same type as \code{.x} with leading elements removed.
+}
 \description{
 Discard all values at the start of .x while .p is true
 }

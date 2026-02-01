@@ -33,12 +33,10 @@
 #'
 #' - Chapters with Roman numerals: `"^Chapter [IVXLCDM]+"`
 #' - Chapters with Arabic numerals: `"^Chapter [0-9]+"`
+#' - Plays with both Roman and Arabic numerals: `"^(ACT|SCENE) [IVXLCDM0-9]+"`
 #' - Books (e.g., *Paradise Lost*): `"^BOOK [IVXLCDM]+"`
 #' - Cantos (e.g., *Dante's Inferno*): `"^CANTO [IVXLCDM]+"`
 #' - Staves (e.g., *A Christmas Carol*): `"^STAVE [IVXLCDM]+"`
-#' - Parts or sections: `"^(PART|SECTION) [IVXLCDM0-9]+"`
-#' - Letters: `"^Letter [IVXLCDM0-9]+"`
-#' - Plays (acts and scenes): `"^(ACT|SCENE) [IVXLCDM]+"`
 #' - Multiple formats (e.g., *Frankenstein*): `"^(Letter|Chapter) [0-9]+"`
 #'
 #' Use [gutenberg_works()] to search for books and examine a few lines with
@@ -49,23 +47,30 @@
 #'   first section marker will have `NA`.
 #'
 #' @examplesIf interactive()
-#' # Dante's Inferno - Cantos with Roman numerals
+#' # Dante's "Inferno" - Cantos with Roman numerals
 #' inferno <- gutenberg_download(1001) |>
 #'   gutenberg_add_sections(pattern = "^CANTO [IVXLCDM]+")
 #'
-#' # Frankenstein - Letters and Chapters, normalized to title case
+#' # Mary Shelley's "Frankenstein"
+#' # Letters and Chapters with Arabic numerals, normalized to title case
 #' frankenstein <- gutenberg_download(84) |>
 #'   gutenberg_add_sections(
 #'     pattern = "^(Letter|Chapter) [0-9]+",
 #'     format_fn = stringr::str_to_title
 #'   )
 #'
-#' # Classic Brontë works - Chapters with Roman numerals
-#' # Remove trailing periods from section text
+#' # Classic Brontë sisters' works
+#' # Chapters with Roman numerals, with trailing periods removed from section text
 #' # Consider using `options(gutenbergr_cache_type = "persistent")`
 #' # to prevent redownloading in the future.
 #' bronte_sisters <- gutenberg_download(
-#'   c(1260, 768, 969, 9182, 767),
+#'   c(
+#'     767,  # "Agnes Grey" by Anne Brontë
+#'     768,  # "Wuthering Heights" by Emily Brontë
+#'     969,  # "The Tenant of Wildfell Hall" by Anne Brontë
+#'     1260, # "Jane Eyre" by Charlotte Brontë
+#'     9182, # "Villette" by Charlotte Brontë
+#'   ),
 #'   meta_fields = c("author", "title")
 #' ) |>
 #'   gutenberg_add_sections(
@@ -73,7 +78,7 @@
 #'     format_fn = function(x) str_remove(x, "\\.$")
 #'   )
 #'
-#' # Leo Tolstoy's War and Peace
+#' # Leo Tolstoy's "War and Peace"
 #' # Add two custom named columns for hierarchical sections
 #' war_and_peace <- gutenberg_download(2600) |>
 #'   gutenberg_add_sections(

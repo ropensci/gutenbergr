@@ -1,5 +1,8 @@
 # gutenbergr (development version)
 
+* A new `gutenberg_add_sections()` function is available to create forward-filled section markers (@jrdnbradford, #138)
+* `gutenberg_download()` now adds a `User-Agent` string to identify itself to the Project Gutenberg mirror (@jrdnbradford, #139)
+
 # gutenbergr 0.4.1
 
 * `cli` messaging has been improved (@jrdnbradford, #134)

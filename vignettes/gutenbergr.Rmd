@@ -82,7 +82,7 @@ persuasion <- gutenberg_download(105)
 persuasion
 ```
 
-Notice it is returned as a tbl_df (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line.
+Notice it is returned as a `tbl_df` (a type of data frame) including two variables: `gutenberg_id` (useful if multiple books are returned), and a character vector of the text, one row per line.
 
 You can also provide `gutenberg_download()` a vector of IDs to download multiple books. For example, to download _Renascence, and Other Poems_ (book [109](https://www.gutenberg.org/ebooks/109)) along with _Persuasion_, do:
 

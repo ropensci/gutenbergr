@@ -9,6 +9,10 @@ read_url(url)
 \arguments{
 \item{url}{URL to a file}
 }
+\value{
+A character vector of lines of text or \code{NULL} if the file could not be
+downloaded.
+}
 \description{
 Quietly download, read, and delete file
 }

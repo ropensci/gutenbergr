@@ -22,6 +22,7 @@ The following options control caching behavior:
 are cached. Must be either \code{"session"} (default) or \code{"persistent"}.
 \item \code{gutenbergr_base_cache_dir}: Base directory used for persistent caching when
 \code{gutenbergr_cache_type = "persistent"}.
+
 By default, this is an OS-specific cache directory determined by
 \code{tools::R_user_dir("gutenbergr", "cache")}. Advanced users may set this
 to a custom path.

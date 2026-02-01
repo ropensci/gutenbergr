@@ -57,12 +57,10 @@ patterns for common formats:
 \itemize{
 \item Chapters with Roman numerals: \code{"^Chapter [IVXLCDM]+"}
 \item Chapters with Arabic numerals: \code{"^Chapter [0-9]+"}
+\item Plays with both Roman and Arabic numerals: \code{"^(ACT|SCENE) [IVXLCDM0-9]+"}
 \item Books (e.g., \emph{Paradise Lost}): \code{"^BOOK [IVXLCDM]+"}
 \item Cantos (e.g., \emph{Dante's Inferno}): \code{"^CANTO [IVXLCDM]+"}
 \item Staves (e.g., \emph{A Christmas Carol}): \code{"^STAVE [IVXLCDM]+"}
-\item Parts or sections: \code{"^(PART|SECTION) [IVXLCDM0-9]+"}
-\item Letters: \code{"^Letter [IVXLCDM0-9]+"}
-\item Plays (acts and scenes): \code{"^(ACT|SCENE) [IVXLCDM]+"}
 \item Multiple formats (e.g., \emph{Frankenstein}): \code{"^(Letter|Chapter) [0-9]+"}
 }
 
@@ -72,23 +70,30 @@ Use \code{\link[=gutenberg_works]{gutenberg_works()}} to search for books and ex
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-# Dante's Inferno - Cantos with Roman numerals
+# Dante's "Inferno" - Cantos with Roman numerals
 inferno <- gutenberg_download(1001) |>
   gutenberg_add_sections(pattern = "^CANTO [IVXLCDM]+")
 
-# Frankenstein - Letters and Chapters, normalized to title case
+# Mary Shelley's "Frankenstein"
+# Letters and Chapters with Arabic numerals, normalized to title case
 frankenstein <- gutenberg_download(84) |>
   gutenberg_add_sections(
     pattern = "^(Letter|Chapter) [0-9]+",
     format_fn = stringr::str_to_title
   )
 
-# Classic Brontë works - Chapters with Roman numerals
-# Remove trailing periods from section text
+# Classic Brontë sisters' works
+# Chapters with Roman numerals, with trailing periods removed from section text
 # Consider using `options(gutenbergr_cache_type = "persistent")`
 # to prevent redownloading in the future.
 bronte_sisters <- gutenberg_download(
-  c(1260, 768, 969, 9182, 767),
+  c(
+    767,  # "Agnes Grey" by Anne Brontë
+    768,  # "Wuthering Heights" by Emily Brontë
+    969,  # "The Tenant of Wildfell Hall" by Anne Brontë
+    1260, # "Jane Eyre" by Charlotte Brontë
+    9182, # "Villette" by Charlotte Brontë
+  ),
   meta_fields = c("author", "title")
 ) |>
   gutenberg_add_sections(
@@ -96,7 +101,7 @@ bronte_sisters <- gutenberg_download(
     format_fn = function(x) str_remove(x, "\\\\.$")
   )
 
-# Leo Tolstoy's War and Peace
+# Leo Tolstoy's "War and Peace"
 # Add two custom named columns for hierarchical sections
 war_and_peace <- gutenberg_download(2600) |>
   gutenberg_add_sections(
