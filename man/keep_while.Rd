@@ -11,6 +11,9 @@ keep_while(.x, .p)
 
 \item{.p}{Logical vector}
 }
+\value{
+A vector the same type as \code{.x} with only leading elements where \code{.p} is \code{TRUE}.
+}
 \description{
 Keep values at the start of .x while .p is true
 }

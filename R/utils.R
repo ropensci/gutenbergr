@@ -3,6 +3,8 @@
 #' Quietly download, read, and delete file
 #'
 #' @param url URL to a file
+#' @return A character vector of lines of text or `NULL` if the file could not be
+#'   downloaded.
 #' @keywords internal
 read_url <- function(url) {
   return(suppressWarnings(purrr::possibly(dl_and_read)(url)))
@@ -48,6 +50,7 @@ dl_and_read <- function(url) {
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#' @return A vector the same type as `.x` with leading elements removed.
 #' @keywords internal
 discard_start_while <- function(.x, .p) {
   if (.p[1] && any(!.p)) {
@@ -60,6 +63,7 @@ discard_start_while <- function(.x, .p) {
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#' @return A vector the same type as `.x` with only leading elements where `.p` is `TRUE`.
 #' @keywords internal
 keep_while <- function(.x, .p) {
   if (.p[1] && any(!.p)) {
@@ -68,16 +72,25 @@ keep_while <- function(.x, .p) {
   .x
 }
 
-
-#' Discard all values at the start of .x while .p is true
+#' Discard all values at the end of .x while .p is true
 #'
 #' @param .x Vector
 #' @param .p Logical vector
+#' @return A vector the same type as `.x` with trailing elements removed.
 #' @keywords internal
 discard_end_while <- function(.x, .p) {
   rev(discard_start_while(rev(.x), rev(.p)))
 }
 
+#' Display a message conditionally
+#'
+#' @param verbose Logical; whether to display the message.
+#' @param message Message to display.
+#' @param class Optional message class.
+#' @param ... Additional arguments passed to `cli::cli_inform()`.
+#' @param call The execution environment of the calling function.
+#' @return Invisibly returns `NULL`. Called for its side effect of displaying a message.
+#' @keywords internal
 maybe_message <- function(
   verbose,
   message,

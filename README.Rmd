@@ -28,9 +28,9 @@ knitr::opts_chunk$set(
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 <!-- badges: end -->
 
-Download and process public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
+Search, download, and process public domain texts from the [Project Gutenberg](https://www.gutenberg.org/) collection. Includes
 
-* A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: for instance, `gutenberg_download(84)` downloads the text of "Frankenstein".
+* A function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID: for instance, `gutenberg_download(84)` downloads the text of [_Frankenstein_](https://www.gutenberg.org/ebooks/84).
 * Metadata for all Project Gutenberg works as R datasets, so that they can be searched and filtered:
   * `gutenberg_metadata` contains information about each work, pairing Gutenberg ID with title, author, language, etc
   * `gutenberg_authors` contains information about each author, such as aliases and birth/death year
@@ -66,7 +66,7 @@ options(dplyr.width = 140)
 options(width = 100)
 ```
 
-Suppose we wanted to download Emily Bronte's "Wuthering Heights." We could find the book's ID by filtering:
+Suppose we wanted to download Emily Brontë's [_Wuthering Heights_](https://www.gutenberg.org/ebooks/768). We could find the book's ID by filtering:
 
 ```{r}
 library(gutenbergr)
@@ -126,7 +126,7 @@ See the [data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw) 
 Yes! The package respects [these rules](https://www.gutenberg.org/policy/robot_access.html) and complies to the best of our ability. Namely:
 
 * Project Gutenberg allows harvesting with automated software using [this list of links](https://www.gutenberg.org/robot/harvest?filetypes[]=html).
-* We retrieve the book text directly from a default or user-specified mirror using links in the same format. For example, "Frankenstein" (book 84) is retrieved from `https://aleph.pglaf.org/8/84/84-0.txt`.
+* We retrieve the book text directly from a default or user-specified mirror using links in the same format. For example, _Frankenstein_ (book 84) is retrieved from `https://aleph.pglaf.org/8/84/84-0.txt`.
 * We give priority to retrieving `.zip` files to minimize bandwidth on the mirror. `.txt` files are only retrieved if there is no `.zip`.
 * gutenbergr supports both session and persistent caching of downloaded files to prevent redownloading.
 

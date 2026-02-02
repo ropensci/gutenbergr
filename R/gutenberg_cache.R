@@ -77,9 +77,11 @@ gutenberg_cache_files <- function() {
 #'
 #' * `gutenbergr_base_cache_dir`: Base directory used for persistent caching when
 #'   `gutenbergr_cache_type = "persistent"`.
+#'
 #'   By default, this is an OS-specific cache directory determined by
 #'   `tools::R_user_dir("gutenbergr", "cache")`. Advanced users may set this
 #'   to a custom path.
+#'
 #' @return The active cache path (invisibly).
 #'
 #' @examplesIf interactive()

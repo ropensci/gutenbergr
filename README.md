@@ -29,7 +29,7 @@ Gutenberg](https://www.gutenberg.org/) collection. Includes
 
 - A function `gutenberg_download()` that downloads one or more works
   from Project Gutenberg by ID: for instance, `gutenberg_download(84)`
-  downloads the text of “Frankenstein”.
+  downloads the text of *Frankenstein*.
 - Metadata for all Project Gutenberg works as R datasets, so that they
   can be searched and filtered:
   - `gutenberg_metadata` contains information about each work, pairing
@@ -71,7 +71,7 @@ metadata for all unique English-language Project Gutenberg works that
 have text associated with them. (The `gutenberg_metadata` dataset has
 all Gutenberg works, unfiltered).
 
-Suppose we wanted to download Emily Bronte’s “Wuthering Heights.” We
+Suppose we wanted to download Emily Brontë’s *Wuthering Heights*. We
 could find the book’s ID by filtering:
 
 ``` r

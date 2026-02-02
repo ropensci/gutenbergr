@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{discard_end_while}
 \alias{discard_end_while}
-\title{Discard all values at the start of .x while .p is true}
+\title{Discard all values at the end of .x while .p is true}
 \usage{
 discard_end_while(.x, .p)
 }
@@ -11,7 +11,10 @@ discard_end_while(.x, .p)
 
 \item{.p}{Logical vector}
 }
+\value{
+A vector the same type as \code{.x} with trailing elements removed.
+}
 \description{
-Discard all values at the start of .x while .p is true
+Discard all values at the end of .x while .p is true
 }
 \keyword{internal}
