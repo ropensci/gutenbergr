@@ -1,12 +1,13 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<!-- README.md is generated from README.qmd. Please edit that file -->
 
 # gutenbergr <a href="https://docs.ropensci.org/gutenbergr/"><img src="man/figures/logo.png" align="right" height="160" alt="gutenbergr website" /></a>
 
 <!-- badges: start -->
 
 [![CRAN
-version](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
+version](https://www.r-pkg.org/badges/version/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
 [![CRAN
 checks](https://badges.cranchecks.info/summary/gutenbergr.svg?label=CRAN%20Status)](https://cran.r-project.org/web/checks/check_results_gutenbergr.html)
 [![rOpenSci
@@ -19,32 +20,19 @@ Tests](https://github.com/ropensci/gutenbergr/actions/workflows/integration-test
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/gutenbergr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/gutenbergr)
 [![Monthly
-Downloads](https://cranlogs.r-pkg.org/badges/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
+Downloads](https://cranlogs.r-pkg.org/badges/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
 [![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
 <!-- badges: end -->
 
-Download and process public domain works from the [Project
-Gutenberg](https://www.gutenberg.org/) collection. Includes
-
-- A function `gutenberg_download()` that downloads one or more works
-  from Project Gutenberg by ID: for instance, `gutenberg_download(84)`
-  downloads the text of *Frankenstein*.
-- Metadata for all Project Gutenberg works as R datasets, so that they
-  can be searched and filtered:
-  - `gutenberg_metadata` contains information about each work, pairing
-    Gutenberg ID with title, author, language, etc
-  - `gutenberg_authors` contains information about each author, such as
-    aliases and birth/death year
-  - `gutenberg_subjects` contains pairings of works with Library of
-    Congress subjects and topics
+Search, download, and process public domain texts from the [Project
+Gutenberg](https://www.gutenberg.org/) collection.
 
 ## Installation
 
 <div class=".pkgdown-release">
 
-Install the released version of gutenbergr from
-[CRAN](https://cran.r-project.org/):
+Install the released version from [CRAN](https://cran.r-project.org/):
 
 ``` r
 install.packages("gutenbergr")
@@ -54,8 +42,7 @@ install.packages("gutenbergr")
 
 <div class=".pkgdown-devel">
 
-Install the development version of gutenbergr from
-[GitHub](https://github.com/):
+Install the development version from [GitHub](https://github.com/):
 
 ``` r
 # install.packages("pak")
@@ -64,201 +51,123 @@ pak::pak("ropensci/gutenbergr")
 
 </div>
 
-## Examples
-
-The `gutenberg_works()` function retrieves, by default, a table of
-metadata for all unique English-language Project Gutenberg works that
-have text associated with them. (The `gutenberg_metadata` dataset has
-all Gutenberg works, unfiltered).
-
-Suppose we wanted to download Emily Brontë’s *Wuthering Heights*. We
-could find the book’s ID by filtering:
+## Quick Start
 
 ``` r
 library(gutenbergr)
 library(dplyr)
 conflicted::conflict_prefer_all("dplyr", quiet = TRUE)
+```
+
+We’ll get and set our Project Gutenberg mirror:
+
+``` r
 gutenberg_get_mirror()
-#> [1] "https://aleph.pglaf.org"
-
-gutenberg_works() |>
-  filter(title == "Wuthering Heights")
-#> # A tibble: 1 × 8
-#>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
-
-# or just:
-gutenberg_works(title == "Wuthering Heights")
-#> # A tibble: 1 × 8
-#>   gutenberg_id title             author        gutenberg_author_id language
-#>          <int> <chr>             <chr>                       <int> <fct>   
-#> 1          768 Wuthering Heights Brontë, Emily                 405 en      
-#>   gutenberg_bookshelf                                                                rights has_text
-#>   <chr>                                                                              <fct>  <lgl>   
-#> 1 Best Books Ever Listings/Gothic Fiction/Movie Books/Category: Novels/Category: Cl… Publi… TRUE
 ```
 
-Since we see that it has `gutenberg_id` 768, we can download it with the
-`gutenberg_download()` function:
+    #> [1] "https://aleph.pglaf.org"
+
+Search through the metadata to find a book:
 
 ``` r
-wuthering_heights <- gutenberg_download(768)
-wuthering_heights
-#> # A tibble: 12,342 × 2
-#>    gutenberg_id text               
-#>           <int> <chr>              
-#>  1          768 "Wuthering Heights"
-#>  2          768 ""                 
-#>  3          768 "by Emily Brontë"  
-#>  4          768 ""                 
-#>  5          768 ""                 
-#>  6          768 ""                 
-#>  7          768 ""                 
-#>  8          768 "CHAPTER I"        
-#>  9          768 ""                 
-#> 10          768 ""                 
-#> # ℹ 12,332 more rows
+gutenberg_works(title == "Persuasion")
 ```
 
-`gutenberg_download` can download multiple books when given multiple
-IDs. It also takes a `meta_fields` argument that will add variables from
-the metadata.
+    #> # A tibble: 1 × 8
+    #>   gutenberg_id title      author       gutenberg_author_id language
+    #>          <int> <chr>      <chr>                      <int> <fct>   
+    #> 1          105 Persuasion Austen, Jane                  68 en      
+    #>   gutenberg_bookshelf                           rights                    has_text
+    #>   <chr>                                         <fct>                     <lgl>   
+    #> 1 Category: Novels/Category: British Literature Public domain in the USA. TRUE
+
+Use the `gutenberg_id` of the book to download it. We’ll set a cache
+option so that we don’t have to re-download it later.
 
 ``` r
-# 1260 is the ID of Jane Eyre
-books <- gutenberg_download(c(768, 1260), meta_fields = "title")
-books
-#> # A tibble: 33,343 × 3
-#>    gutenberg_id text                title            
-#>           <int> <chr>               <chr>            
-#>  1          768 "Wuthering Heights" Wuthering Heights
-#>  2          768 ""                  Wuthering Heights
-#>  3          768 "by Emily Brontë"   Wuthering Heights
-#>  4          768 ""                  Wuthering Heights
-#>  5          768 ""                  Wuthering Heights
-#>  6          768 ""                  Wuthering Heights
-#>  7          768 ""                  Wuthering Heights
-#>  8          768 "CHAPTER I"         Wuthering Heights
-#>  9          768 ""                  Wuthering Heights
-#> 10          768 ""                  Wuthering Heights
-#> # ℹ 33,333 more rows
-
-books |>
-  count(title)
-#> # A tibble: 2 × 2
-#>   title                           n
-#>   <chr>                       <int>
-#> 1 Jane Eyre: An Autobiography 21001
-#> 2 Wuthering Heights           12342
+options(gutenbergr_cache_type = "persistent")
+persuasion <- gutenberg_download(105, meta_fields = "title")
 ```
-
-It can also take the output of `gutenberg_works` directly. For example,
-we could get the text of all Aristotle’s works, each annotated with both
-`gutenberg_id` and `title`, using:
 
 ``` r
-aristotle_books <- gutenberg_works(author == "Aristotle") |>
-  gutenberg_download(meta_fields = "title")
-
-aristotle_books
-#> # A tibble: 43,801 × 3
-#>    gutenberg_id text                                                                    
-#>           <int> <chr>                                                                   
-#>  1         1974 "THE POETICS OF ARISTOTLE"                                              
-#>  2         1974 ""                                                                      
-#>  3         1974 "By Aristotle"                                                          
-#>  4         1974 ""                                                                      
-#>  5         1974 "A Translation By S. H. Butcher"                                        
-#>  6         1974 ""                                                                      
-#>  7         1974 ""                                                                      
-#>  8         1974 "[Transcriber's Annotations and Conventions: the translator left"       
-#>  9         1974 "intact some Greek words to illustrate a specific point of the original"
-#> 10         1974 "discourse. In this transcription, in order to retain the accuracy of"  
-#>    title                   
-#>    <chr>                   
-#>  1 The Poetics of Aristotle
-#>  2 The Poetics of Aristotle
-#>  3 The Poetics of Aristotle
-#>  4 The Poetics of Aristotle
-#>  5 The Poetics of Aristotle
-#>  6 The Poetics of Aristotle
-#>  7 The Poetics of Aristotle
-#>  8 The Poetics of Aristotle
-#>  9 The Poetics of Aristotle
-#> 10 The Poetics of Aristotle
-#> # ℹ 43,791 more rows
+persuasion
 ```
+
+    #> # A tibble: 8,357 × 3
+    #>    gutenberg_id text             title     
+    #>           <int> <chr>            <chr>     
+    #>  1          105 "Persuasion"     Persuasion
+    #>  2          105 ""               Persuasion
+    #>  3          105 ""               Persuasion
+    #>  4          105 "by Jane Austen" Persuasion
+    #>  5          105 ""               Persuasion
+    #>  6          105 "(1818)"         Persuasion
+    #>  7          105 ""               Persuasion
+    #>  8          105 ""               Persuasion
+    #>  9          105 ""               Persuasion
+    #> 10          105 ""               Persuasion
+    #> # ℹ 8,347 more rows
+
+Multiple works can be downloaded at once. We’ll add `title` and `author`
+data from the metadata.
+
+``` r
+books <- gutenberg_download(c(105, 161), meta_fields = "title", "author")
+books |> count(title)
+```
+
+``` r
+books |> count(title)
+```
+
+    #> # A tibble: 2 × 2
+    #>   title                           n
+    #>   <chr>                       <int>
+    #> 1 Persuasion                   8357
+    #> 2 Renascence, and Other Poems  1222
+
+## Learn More
+
+- [Getting Started with
+  gutenbergr](https://docs.ropensci.org/gutenbergr/articles/intro.html) -
+  explore metadata and download books
+- [Text Mining with gutenbergr and
+  tidytext](https://docs.ropensci.org/gutenbergr/articles/text-mining.html) -
+  complete analysis workflow with tidytext
 
 ## FAQ
 
-### What do I do with the text once I have it?
-
-- The [Natural Language Processing CRAN
-  View](https://CRAN.R-project.org/view=NaturalLanguageProcessing)
-  suggests many R packages related to text mining, especially around the
-  [tm package](https://cran.r-project.org/package=tm).
-- The [tidytext](https://github.com/juliasilge/tidytext) package is
-  useful for tokenization and analysis, especially since gutenbergr
-  downloads books as a data frame already.
-- You could match the `wikipedia` column in `gutenberg_author` to
-  Wikipedia content with the
-  [WikipediR](https://cran.r-project.org/package=WikipediR) package or
-  to pageview statistics with the
-  [wikipediatrend](https://cran.r-project.org/package=wikipediatrend)
-  package.
-- If you’re considering an analysis based on author name, you may find
-  the [humaniformat](https://cran.r-project.org/package=humaniformat)
-  (for extraction of first names) and
-  [gender](https://cran.r-project.org/package=gender) (prediction of
-  gender from first names) packages useful. (Note that humaniformat has
-  a `format_reverse` function for reversing “Last, First” names).
-
-### How were the metadata R files generated?
+### How were the metadata files generated?
 
 See the
-[data-raw](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
-directory for the scripts that generate these datasets. As of now, these
-were generated from [the Project Gutenberg
+[`data-raw`](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
+directory for scripts. Metadata was generated from [the Project
+Gutenberg
 catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **11
 January 2026**.
 
-### Do you respect the rules regarding robot access to Project Gutenberg?
+### Do you respect robot access rules?
 
-Yes! The package respects [these
-rules](https://www.gutenberg.org/policy/robot_access.html) and complies
-to the best of our ability. Namely:
+Yes! The package follows [Project Gutenberg’s
+rules](https://www.gutenberg.org/policy/robot_access.html):
 
-- Project Gutenberg allows harvesting with automated software using
-  [this list of
-  links](https://www.gutenberg.org/robot/harvest?filetypes%5B%5D=html).
-- We retrieve the book text directly from a default or user-specified
-  mirror using links in the same format. For example, “Frankenstein”
-  (book 84) is retrieved from `https://aleph.pglaf.org/8/84/84-0.txt`.
-- We give priority to retrieving `.zip` files to minimize bandwidth on
-  the mirror. `.txt` files are only retrieved if there is no `.zip`.
-- gutenbergr supports both session and persistent caching of downloaded
-  files to prevent redownloading.
+- Retrieves books directly from mirrors using the authorized link format
+- Prioritizes `.zip` files to minimize bandwidth
+- Supports session and persistent caching
+- This package is designed for downloading individual works or small
+  collections, not the entire corpus. For bulk downloads, [set up a
+  mirror](https://www.gutenberg.org/policy/robot_access.html).
 
-Still, this package is *not* the right way to download the entire
-Project Gutenberg corpus (or all from a particular language). For that,
-follow [their
-recommendation](https://www.gutenberg.org/policy/robot_access.html) to
-set up a mirror. This package is recommended for downloading a single
-work, or works for a particular author or topic. See their [Terms of
-Service](https://www.gutenberg.org/policy/terms_of_use.html) for
-details.
+See their [Terms of
+Use](https://www.gutenberg.org/policy/terms_of_use.html) for details.
 
 ## Contributing
 
 See
 [`CONTRIBUTING.md`](https://docs.ropensci.org/gutenbergr/CONTRIBUTING.html).
 
-Please note that this package is released with a [Contributor Code of
+Note that this package is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
 project, you agree to abide by its terms.
 
-[![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
+[![](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
