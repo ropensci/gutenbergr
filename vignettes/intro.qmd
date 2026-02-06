@@ -210,7 +210,7 @@ aristotle_books
 
 ## What's Next?
 
-Now that you have book texts as data frames, you can:
+Now that you have book texts as tibbles, you can:
 
 * Perform text analysis with the [tidytext](https://github.com/juliasilge/tidytext) package
 * See the [Text Mining Example](text-mining.html) vignette for a complete analysis workflow
@@ -221,3 +221,4 @@ Now that you have book texts as data frames, you can:
 * Match Wikipedia data with [WikipediR](https://cran.r-project.org/package=WikipediR) or [wikipediatrend](https://cran.r-project.org/package=wikipediatrend)
 * Parse author names with [humaniformat](https://cran.r-project.org/package=humaniformat)
 * Predict gender from names with [gender](https://cran.r-project.org/package=gender)
+

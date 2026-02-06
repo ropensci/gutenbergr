@@ -13,3 +13,4 @@
 ^\.vscode$
 ^CRAN-SUBMISSION$
 ^vignettes/.quarto$
+/.quarto/
