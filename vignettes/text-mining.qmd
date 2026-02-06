@@ -27,8 +27,19 @@ This vignette demonstrates a complete text mining workflow using gutenbergr and 
 ## Setup
 
 ```{r}
+#| label: windows-check
+#| include: false
+tryCatch(
+  library(gutenbergr),
+  error = function(e) {
+    # Fallback for Windows check environments
+    devtools::load_all("..")
+  }
+)
+```
+
+```{r}
 #| label: packages
-library(gutenbergr)
 library(dplyr)
 library(tidytext)
 library(ggplot2)
