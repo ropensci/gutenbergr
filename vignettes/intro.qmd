@@ -20,6 +20,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+The gutenbergr package helps you download and process public domain works from [Project Gutenberg](http://www.gutenberg.org/). This vignette introduces the package's metadata datasets and core downloading functionality.
+
+## Required Libraries
+
 ```{r}
 #| label: windows-check
 #| include: false
@@ -37,8 +41,6 @@ tryCatch(
 library(dplyr)
 library(stringr)
 ```
-
-The gutenbergr package helps you download and process public domain works from [Project Gutenberg](http://www.gutenberg.org/). This vignette introduces the package's metadata datasets and core downloading functionality.
 
 ## Exploring the Metadata
 
