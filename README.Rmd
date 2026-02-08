@@ -1,18 +1,22 @@
 ---
-format: gfm
-knitr:
-  opts_chunk:
-    collapse: false
-    comment: "#>"
-    fig.path: "man/figures/README-"
-    fig.width: 7
-    fig.height: 6
-execute:
-  warning: false
-  message: false
+output: github_document
 ---
 
-<!-- README.md is generated from README.qmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup-options, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  fig.width = 7,
+  fig.height = 6,
+  warning = FALSE,
+  message = FALSE
+)
+options(dplyr.width = 140)
+options(width = 100)
+```
 
 # gutenbergr <a href="https://docs.ropensci.org/gutenbergr/"><img src="man/figures/logo.png" align="right" height="160" alt="gutenbergr website" /></a>
 
@@ -35,9 +39,7 @@ Search, download, and process public domain texts from the [Project Gutenberg](h
 ::: .pkgdown-release
 Install the released version from [CRAN](https://cran.r-project.org/):
 
-```{r}
-#| label: install-cran
-#| eval: false
+```{r install-cran, eval=FALSE}
 install.packages("gutenbergr")
 ```
 
@@ -46,9 +48,7 @@ install.packages("gutenbergr")
 ::: .pkgdown-devel
 Install the development version from [GitHub](https://github.com/):
 
-```{r}
-#| label: install-dev
-#| eval: false
+```{r install-dev, eval=FALSE}
 # install.packages("pak")
 pak::pak("ropensci/gutenbergr")
 ```
@@ -57,80 +57,60 @@ pak::pak("ropensci/gutenbergr")
 
 ## Quick Start
 
-```{r}
-#| label: setup-options
-#| echo: false
-options(dplyr.width = 140)
-options(width = 100)
-```
-
-```{r}
-#| label: load-packages
+Load the package:
+```{r load-packages}
 library(gutenbergr)
 library(dplyr)
-conflicted::conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
 We'll get and set our Project Gutenberg mirror:
-```{r}
-#| label: get-mirror
+```{r get-mirror}
 gutenberg_get_mirror()
 ```
 
 Search through the metadata to find a book:
-```{r}
-#| label: find-book
+```{r find-book}
 gutenberg_works(title == "Persuasion")
 ```
 
-
-Use the `gutenberg_id` of the book to download it. We'll set a cache option so that we don't have to re-download it later.
-```{r}
-#| label: download-single
-#| eval: false
+_Persuasion_'s `gutenberg_id` is 105. We'll use it to download it. We’ll set our cache option to `"persistent"` so that we don’t have to re-download it later.
+```{r download-single, eval=FALSE}
 options(gutenbergr_cache_type = "persistent")
-persuasion <- gutenberg_download(105, meta_fields = "title")
+persuasion <- gutenberg_download(105)
 ```
 
-```{r}
-#| label: download-single-sample
-#| echo: false
+```{r download-single-sample, echo=FALSE}
 # For README building, use sample data
 persuasion <- gutenbergr::sample_books |>
   filter(gutenberg_id == 105) |>
-  select(gutenberg_id, text, title)
+  select(gutenberg_id, text)
 ```
 
-```{r}
-#| label: show-book
+```{r show-book}
 persuasion
 ```
 
-Multiple works can be downloaded at once. We'll add `title` and `author` data from the metadata.
-```{r}
-#| label: download-multiple
-#| eval: false
-books <- gutenberg_download(c(105, 161), meta_fields = "title", "author")
-books |> count(title)
+Multiple works can be downloaded at once. We'll add `title` data from the metadata.
+```{r download-multiple, eval=FALSE}
+books <- gutenberg_download(c(105, 161), meta_fields = "title")
 ```
 
-```{r}
-#| label: download-multiple-sample
-#| echo: false
+```{r download-multiple-sample, echo=FALSE}
 # For README building, use sample data
 books <- gutenbergr::sample_books |>
   select(gutenberg_id, text, title)
 ```
 
-```{r}
-#| label: show-books
+```{r show-books}
 books |> count(title)
 ```
 
-## Learn More
+## Vignettes
+
+See the following vignettes for more advanced usage of gutenbergr.
 
 * [Getting Started with gutenbergr](https://docs.ropensci.org/gutenbergr/articles/intro.html) - explore metadata and download books
-* [Text Mining with gutenbergr and tidytext](https://docs.ropensci.org/gutenbergr/articles/text-mining.html) - complete analysis workflow with tidytext
+* [Text Mining with gutenbergr and tidytext](https://docs.ropensci.org/gutenbergr/articles/text-mining.html) - complete analysis workflow with [tidytext](https://github.com/juliasilge/tidytext)
 
 ## FAQ
 

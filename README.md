@@ -1,13 +1,12 @@
 
-
-<!-- README.md is generated from README.qmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # gutenbergr <a href="https://docs.ropensci.org/gutenbergr/"><img src="man/figures/logo.png" align="right" height="160" alt="gutenbergr website" /></a>
 
 <!-- badges: start -->
 
 [![CRAN
-version](https://www.r-pkg.org/badges/version/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
+version](https://www.r-pkg.org/badges/version/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 [![CRAN
 checks](https://badges.cranchecks.info/summary/gutenbergr.svg?label=CRAN%20Status)](https://cran.r-project.org/web/checks/check_results_gutenbergr.html)
 [![rOpenSci
@@ -20,9 +19,9 @@ Tests](https://github.com/ropensci/gutenbergr/actions/workflows/integration-test
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/gutenbergr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/gutenbergr)
 [![Monthly
-Downloads](https://cranlogs.r-pkg.org/badges/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
+Downloads](https://cranlogs.r-pkg.org/badges/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 [![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr.png)](https://CRAN.R-project.org/package=gutenbergr)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/gutenbergr)](https://CRAN.R-project.org/package=gutenbergr)
 <!-- badges: end -->
 
 Search, download, and process public domain texts from the [Project
@@ -53,10 +52,11 @@ pak::pak("ropensci/gutenbergr")
 
 ## Quick Start
 
+Load the package:
+
 ``` r
 library(gutenbergr)
 library(dplyr)
-conflicted::conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
 We’ll get and set our Project Gutenberg mirror:
@@ -81,39 +81,39 @@ gutenberg_works(title == "Persuasion")
     #>   <chr>                                         <fct>                     <lgl>   
     #> 1 Category: Novels/Category: British Literature Public domain in the USA. TRUE
 
-Use the `gutenberg_id` of the book to download it. We’ll set a cache
-option so that we don’t have to re-download it later.
+*Persuasion*’s `gutenberg_id` is 105. We’ll use it to download it. We’ll
+set our cache option to `"persistent"` so that we don’t have to
+re-download it later.
 
 ``` r
 options(gutenbergr_cache_type = "persistent")
-persuasion <- gutenberg_download(105, meta_fields = "title")
+persuasion <- gutenberg_download(105)
 ```
 
 ``` r
 persuasion
 ```
 
-    #> # A tibble: 8,357 × 3
-    #>    gutenberg_id text             title     
-    #>           <int> <chr>            <chr>     
-    #>  1          105 "Persuasion"     Persuasion
-    #>  2          105 ""               Persuasion
-    #>  3          105 ""               Persuasion
-    #>  4          105 "by Jane Austen" Persuasion
-    #>  5          105 ""               Persuasion
-    #>  6          105 "(1818)"         Persuasion
-    #>  7          105 ""               Persuasion
-    #>  8          105 ""               Persuasion
-    #>  9          105 ""               Persuasion
-    #> 10          105 ""               Persuasion
+    #> # A tibble: 8,357 × 2
+    #>    gutenberg_id text            
+    #>           <int> <chr>           
+    #>  1          105 "Persuasion"    
+    #>  2          105 ""              
+    #>  3          105 ""              
+    #>  4          105 "by Jane Austen"
+    #>  5          105 ""              
+    #>  6          105 "(1818)"        
+    #>  7          105 ""              
+    #>  8          105 ""              
+    #>  9          105 ""              
+    #> 10          105 ""              
     #> # ℹ 8,347 more rows
 
-Multiple works can be downloaded at once. We’ll add `title` and `author`
-data from the metadata.
+Multiple works can be downloaded at once. We’ll add `title` data from
+the metadata.
 
 ``` r
-books <- gutenberg_download(c(105, 161), meta_fields = "title", "author")
-books |> count(title)
+books <- gutenberg_download(c(105, 161), meta_fields = "title")
 ```
 
 ``` r
@@ -126,14 +126,17 @@ books |> count(title)
     #> 1 Persuasion                   8357
     #> 2 Renascence, and Other Poems  1222
 
-## Learn More
+## Vignettes
+
+See the following vignettes for more advanced usage of gutenbergr.
 
 - [Getting Started with
   gutenbergr](https://docs.ropensci.org/gutenbergr/articles/intro.html) -
   explore metadata and download books
 - [Text Mining with gutenbergr and
   tidytext](https://docs.ropensci.org/gutenbergr/articles/text-mining.html) -
-  complete analysis workflow with tidytext
+  complete analysis workflow with
+  [tidytext](https://github.com/juliasilge/tidytext)
 
 ## FAQ
 
@@ -170,4 +173,4 @@ Note that this package is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
 project, you agree to abide by its terms.
 
-[![](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
+[![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org/)
