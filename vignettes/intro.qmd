@@ -44,7 +44,7 @@ library(stringr)
 
 ## Exploring the Metadata
 
-### gutenberg_metadata
+### `gutenberg_metadata`
 
 The `gutenberg_metadata` dataset contains information about each work in the Project Gutenberg collection:
 
@@ -63,7 +63,7 @@ gutenberg_metadata |>
 
 The metadata currently in the package was last updated on **`r format(attr(gutenberg_metadata, "date_updated"), '%d %B %Y')`**.
 
-### gutenberg_works()
+### `gutenberg_works()`
 
 In most analyses, you'll want to filter for English works, avoid duplicates, and include only books with downloadable text. The `gutenberg_works()` function does this automatically:
 
@@ -85,7 +85,7 @@ gutenberg_works(str_detect(author, "Austen"))
 gutenberg_works(author == "Dickens, Charles", has_text == TRUE)
 ```
 
-### gutenberg_subjects
+### `gutenberg_subjects`
 
 The `gutenberg_subjects` dataset pairs works with Library of Congress classifications and subject headings:
 
@@ -122,7 +122,7 @@ detective_ids <- gutenberg_subjects |>
 gutenberg_download(detective_ids[1:5], meta_fields = c("title", "author"))
 ```
 
-### gutenberg_authors
+### `gutenberg_authors`
 
 The `gutenberg_authors` dataset contains author information including aliases and birth/death years:
 
@@ -165,7 +165,7 @@ persuasion <- filter(gutenbergr::sample_books, gutenberg_id == 105)
 persuasion
 ```
 
-The result is a data frame with:
+The result is a tibble with:
 
 * `gutenberg_id` - the book's ID
 * `text` - one row per line of text
@@ -234,4 +234,3 @@ Now that you have book texts as tibbles, you can:
 * Match Wikipedia data with [WikipediR](https://cran.r-project.org/package=WikipediR) or [wikipediatrend](https://cran.r-project.org/package=wikipediatrend)
 * Parse author names with [humaniformat](https://cran.r-project.org/package=humaniformat)
 * Predict gender from names with [gender](https://cran.r-project.org/package=gender)
-
