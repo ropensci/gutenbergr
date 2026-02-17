@@ -35,18 +35,21 @@ Suggests:
     curl,
     devtools (>= 2.4.5),
     fs (>= 1.6.6),
+    ggplot2,
     here (>= 1.0.2),
     knitr,
     lubridate (>= 1.9.4),
     rmarkdown,
     testthat (>= 3.0.0),
+    textdata,
     tidyr,
     tidytext,
+    quarto,
     usethis (>= 3.2.1),
     withr,
     xml2
 VignetteBuilder:
-    knitr
+    quarto
 Encoding: UTF-8
 Language: en-US
 LazyData: TRUE

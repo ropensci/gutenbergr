@@ -9,3 +9,4 @@ docs
 CRAN-SUBMISSION
 
 /.quarto/
+**/*.quarto_ipynb

@@ -1,0 +1,236 @@
+---
+title: "Getting Started with gutenbergr"
+description: |
+  A simple introduction to the gutenbergr package
+knitr:
+  opts_chunk:
+    collapse: false
+    comment: "#>"
+    fig.width: 7
+    fig.height: 6
+format:
+  html:
+    toc: true
+execute:
+  warning: false
+  message: false
+vignette: >
+  %\VignetteIndexEntry{Getting Started with gutenbergr}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+The gutenbergr package helps you download and process public domain works from [Project Gutenberg](http://www.gutenberg.org/). This vignette introduces the package's metadata datasets and core downloading functionality.
+
+## Required Libraries
+
+```{r}
+#| label: windows-check
+#| include: false
+tryCatch(
+  library(gutenbergr),
+  error = function(e) {
+    # Fallback for Windows check environments
+    devtools::load_all("..")
+  }
+)
+```
+
+```{r}
+#| label: packages
+library(dplyr)
+library(stringr)
+```
+
+## Exploring the Metadata
+
+### `gutenberg_metadata`
+
+The `gutenberg_metadata` dataset contains information about each work in the Project Gutenberg collection:
+
+```{r}
+#| label: metadata
+gutenberg_metadata
+```
+
+You can filter this to find specific works:
+
+```{r}
+#| label: filter-metadata
+gutenberg_metadata |>
+  filter(title == "Persuasion")
+```
+
+The metadata currently in the package was last updated on **`r format(attr(gutenberg_metadata, "date_updated"), '%d %B %Y')`**.
+
+### `gutenberg_works()`
+
+In most analyses, you'll want to filter for English works, avoid duplicates, and include only books with downloadable text. The `gutenberg_works()` function does this automatically:
+
+```{r}
+#| label: works
+gutenberg_works()
+```
+
+You can also filter directly within the function:
+
+```{r}
+#| label: works-filter
+gutenberg_works(author == "Austen, Jane")
+
+# Using regular expressions
+gutenberg_works(str_detect(author, "Austen"))
+
+# Multiple conditions
+gutenberg_works(author == "Dickens, Charles", has_text == TRUE)
+```
+
+### `gutenberg_subjects`
+
+The `gutenberg_subjects` dataset pairs works with Library of Congress classifications and subject headings:
+
+```{r}
+#| label: subjects
+gutenberg_subjects
+```
+
+This is useful for finding works by genre or topic:
+
+```{r}
+#| label: filter-subjects
+# Find detective stories
+gutenberg_subjects |>
+  filter(subject == "Detective and mystery stories")
+
+# Find Sherlock Holmes stories
+gutenberg_subjects |>
+  filter(grepl("Holmes, Sherlock", subject))
+```
+
+You can join this with `gutenberg_works()` to download books by subject:
+
+```{r}
+#| label: join-subjects
+#| eval: false
+# Get IDs of detective stories
+detective_ids <- gutenberg_subjects |>
+  filter(subject == "Detective and mystery stories") |>
+  inner_join(gutenberg_works(), by = "gutenberg_id") |>
+  pull(gutenberg_id)
+
+# Download a sample
+gutenberg_download(detective_ids[1:5], meta_fields = c("title", "author"))
+```
+
+### `gutenberg_authors`
+
+The `gutenberg_authors` dataset contains author information including aliases and birth/death years:
+
+```{r}
+#| label: authors
+gutenberg_authors
+```
+
+This can be useful for filtering by author characteristics:
+
+```{r}
+#| label: filter-authors
+#| eval: false
+# Find works by 19th century authors
+gutenberg_authors |>
+  filter(birthdate >= 1800, birthdate < 1900) |>
+  inner_join(gutenberg_works(), by = "gutenberg_author_id")
+```
+
+## Downloading Books
+
+### Single Book
+
+Download a book using its Gutenberg ID with `gutenberg_download()`:
+
+```{r}
+#| label: download-single
+#| eval: false
+persuasion <- gutenberg_download(105, meta_fields = "title", "author")
+```
+
+```{r}
+#| label: download-single-display
+#| echo: false
+persuasion <- filter(gutenbergr::sample_books, gutenberg_id == 105)
+```
+
+```{r}
+#| label: show-persuasion
+persuasion
+```
+
+The result is a tibble with:
+
+* `gutenberg_id` - the book's ID
+* `text` - one row per line of text
+
+### Multiple Books
+
+Download multiple books by providing a vector of IDs:
+
+```{r}
+#| label: download-multiple
+#| eval: false
+books <- gutenberg_download(c(105, 109))
+```
+
+```{r}
+#| label: download-multiple-display
+#| echo: false
+books <- gutenbergr::sample_books
+```
+
+```{r}
+#| label: show-books
+books
+```
+
+### Adding Metadata
+
+Use the `meta_fields` argument to include additional information:
+
+```{r}
+#| label: download-with-meta
+#| eval: false
+books <- gutenberg_download(c(105, 109), meta_fields = c("title", "author"))
+```
+
+```{r}
+#| label: show-books-count
+books |>
+  count(title)
+```
+
+### Downloading from `gutenberg_works()`
+
+You can pipe the output of `gutenberg_works()` directly into `gutenberg_download()`:
+
+```{r}
+#| label: download-pipe
+#| eval: false
+# Download all of Aristotle's works with titles
+aristotle_books <- gutenberg_works(author == "Aristotle") |>
+  gutenberg_download(meta_fields = "title")
+
+aristotle_books
+```
+
+## What's Next?
+
+Now that you have book texts as tibbles, you can:
+
+* Perform text analysis with the [tidytext](https://github.com/juliasilge/tidytext) package
+* See the [Text Mining Example](text-mining.html) vignette for a complete analysis workflow
+* Explore the [Natural Language Processing CRAN View](https://CRAN.R-project.org/view=NaturalLanguageProcessing) for more text analysis packages
+
+## Additional Resources
+
+* Match Wikipedia data with [WikipediR](https://cran.r-project.org/package=WikipediR) or [wikipediatrend](https://cran.r-project.org/package=wikipediatrend)
+* Parse author names with [humaniformat](https://cran.r-project.org/package=humaniformat)
+* Predict gender from names with [gender](https://cran.r-project.org/package=gender)

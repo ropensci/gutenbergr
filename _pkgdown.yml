@@ -24,3 +24,14 @@ reference:
 - title: Data
 - contents:
   - has_keyword("datasets")
+
+articles:
+- title: Introduction to gutenbergr
+  navbar: ~
+  contents:
+  - intro
+
+- title: Text Mining with gutenbergr and tidytext
+  navbar: ~
+  contents:
+  - text-mining

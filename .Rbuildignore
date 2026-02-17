@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
-^README\.Rmd$
+^README\.qmd$
 ^cran-comments\.md$
 ^\.github$
 ^codecov\.yml$
@@ -12,3 +12,5 @@
 ^[.]?air[.]toml$
 ^\.vscode$
 ^CRAN-SUBMISSION$
+^vignettes/.quarto$
+/.quarto/
