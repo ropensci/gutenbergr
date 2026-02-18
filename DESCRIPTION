@@ -44,12 +44,11 @@ Suggests:
     textdata,
     tidyr,
     tidytext,
-    quarto,
     usethis (>= 3.2.1),
     withr,
     xml2
 VignetteBuilder:
-    quarto
+    knitr
 Encoding: UTF-8
 Language: en-US
 LazyData: TRUE

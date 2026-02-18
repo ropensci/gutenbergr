@@ -1,33 +1,33 @@
 ---
 title: "Text Mining with gutenbergr and tidytext"
-description: |
+description: >
   An introduction to text mining with tidytext and gutenbergr using Jane Austen's "Persuasion"
-knitr:
-  opts_chunk:
-    collapse: false
-    comment: "#>"
-    fig.width: 7
-    fig.height: 6
-    fig.path: "../man/figures/"
-format:
-  html:
+output:
+  rmarkdown::html_vignette:
     toc: true
-execute:
-  warning: false
-  message: false
 vignette: >
   %\VignetteIndexEntry{Text Mining with gutenbergr and tidytext}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette demonstrates a complete text mining workflow using gutenbergr and tidytext. We'll perform an in-depth analysis of Jane Austen's *Persuasion*, exploring its vocabulary, sentiment, structure, and themes. See * [_Text Mining with R_](https://www.tidytextmining.com/) for a great introduction to text mining.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 6,
+  fig.path = "../man/figures/",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+This vignette demonstrates a complete text mining workflow using gutenbergr and tidytext. We'll perform an in-depth analysis of Jane Austen's *Persuasion*, exploring its vocabulary, sentiment, structure, and themes. See [_Text Mining with R_](https://www.tidytextmining.com/) for a great introduction to text mining.
 
 ## Required Libraries
 
-```{r}
-#| label: windows-check
-#| include: false
+```{r windows-check, include=FALSE}
 tryCatch(
   library(gutenbergr),
   error = function(e) {
@@ -37,8 +37,7 @@ tryCatch(
 )
 ```
 
-```{r}
-#| label: packages
+```{r packages}
 library(dplyr)
 library(tidytext)
 library(ggplot2)
@@ -50,30 +49,24 @@ library(stringr)
 
 First, let's find and download Jane Austen's *Persuasion*:
 
-```{r}
-#| label: find-book
+```{r find-book}
 gutenberg_works(str_detect(title, "Persuasion"))
 ```
 
 We can see there are multiple works returned. 105 is *Persuasion*, so let's download that:
 
-```{r}
-#| label: download
-#| eval: false
+```{r download, eval=FALSE}
 persuasion <- gutenberg_download(105, meta_fields = "title")
 ```
 
-```{r}
-#| label: download-sample
-#| echo: false
+```{r download-sample, echo=FALSE}
 # For vignette building, use sample data
 persuasion <- gutenbergr::sample_books |>
   filter(gutenberg_id == 105) |>
   select(gutenberg_id, text, title)
 ```
 
-```{r}
-#| label: show-book
+```{r show-book}
 persuasion
 ```
 
@@ -81,8 +74,7 @@ persuasion
 
 Project Gutenberg texts processed into tibbles of lines. To analyze the book's progression, we use `gutenberg_add_sections()`. This function identifies headers and fills them down to create a structural column.
 
-```{r}
-#| label: sections
+```{r sections}
 persuasion <- persuasion |>
   gutenberg_add_sections(
     pattern = "^Chapter [IVXLCDM]+",
@@ -106,8 +98,7 @@ persuasion |>
 
 We need to move from a one-row-per-line format to a one-row-per-token format. We'll use `tidytext::unnest_tokens()` to split the text into individual words and remove stop words `tidytext::stop_words`.
 
-```{r}
-#| label: tokenize
+```{r tokenize}
 words <- persuasion |>
   unnest_tokens(word, text) |>
   anti_join(stop_words, by = "word")
@@ -117,8 +108,7 @@ words <- persuasion |>
 
 Tokenization makes it trivial to find the most frequent words in the text:
 
-```{r}
-#| label: word-frequency
+```{r word-frequency}
 word_counts <- words |>
   count(word, sort = TRUE)
 
@@ -127,9 +117,7 @@ word_counts
 
 Let's visualize the top 20 words:
 
-```{r}
-#| label: top-words
-#| fig-alt: "Horizontal bar chart showing the 20 most frequent words in Persuasion after removing stop words."
+```{r top-words, fig.alt="Horizontal bar chart showing the 20 most frequent words in Persuasion after removing stop words."}
 word_counts |>
   slice_max(n, n = 20) |>
   mutate(word = reorder(word, n)) |>
@@ -155,9 +143,7 @@ Let's use the [NRC sentiment lexicon](https://saifmohammad.com/WebPages/NRC-Emot
 
 > Note: The NRC lexicon requires accepting a license agreement during installation and is only free for non-commercial use. The code below shows the analysis workflow, with pre-computed results displayed.
 
-```{r}
-#| label: sentiment-nrc
-#| eval: false
+```{r sentiment-nrc, eval=FALSE}
 nrc_sentiments <- get_sentiments("nrc")
 
 word_sentiments <- words |>
@@ -167,9 +153,7 @@ word_sentiments <- words |>
 
 Visualize the distribution of sentiments:
 
-```{r}
-#| label: sentiment-plot
-#| eval: false
+```{r sentiment-plot, eval=FALSE}
 word_sentiments |>
   mutate(sentiment = reorder(sentiment, n)) |>
   ggplot(aes(x = n, y = sentiment, fill = sentiment)) +
@@ -185,15 +169,13 @@ word_sentiments |>
   theme_minimal()
 ```
 
-![Sentiment distribution in Persuasion](../man/figures/sentiment-plot-1.png){fig-alt="A horizontal bar chart showing the distribution of NRC sentiment categories in Persuasion. Positive sentiment has the highest count at around 1750 words, followed by trust at around 1200, anticipation at 1000, and negative at 1000. Joy, fear, sadness, anger, surprise, and disgust have progressively lower counts, with disgust having the fewest at around 250 words."}
+![Sentiment distribution in Persuasion](../man/figures/sentiment-plot-1.png)
 
 ### By Chapter
 
 We can aggregate these sentiments by the chapter structure we created earlier.
 
-```{r}
-#| label: nrc-chapters
-#| eval: false
+```{r nrc-chapters, eval=FALSE}
 nrc_by_chapter <- words |>
   inner_join(nrc_sentiments, by = "word", relationship = "many-to-many") |>
   count(chapter, sentiment) |>
@@ -216,7 +198,7 @@ nrc_by_chapter |>
   )
 ```
 
-![Sentiment by chapter in Persuasion](../man/figures/nrc-chapters-1.png){fig-alt="Four panel faceted bar chart showing the progression of joy, sadness, anger, and fear sentiments across 24 chapters of Persuasion. Each panel shows vertical bars for each chapter with varying heights."}
+![Sentiment by chapter in Persuasion](../man/figures/nrc-chapters-1.png)
 
 ### Sentiment Progression
 
@@ -224,9 +206,7 @@ We can also see the general emotive content as the book progresses by dividing t
 
 For good measure, let's add another x-axis with chapter labels so we can correlate the sentiment with portions of the narrative.
 
-```{r}
-#| label: nrc-bins
-#| eval: false
+```{r nrc-bins, eval=FALSE}
 # Add a running index to preserve order and calculate bins
 words_with_index <- words |>
   mutate(word_index = row_number()) |>
@@ -273,14 +253,13 @@ nrc_binned |>
   theme_minimal()
 ```
 
-![Sentiment progression in Persuasion](../man/figures/nrc-bins-1.png){fig-alt="Four panel faceted line chart showing sentiment progression through Persuasion using 500-word bins that track joy, sadness, anger, and fear. The x-axis shows both word bins and chapter markers."}
+![Sentiment progression in Persuasion](../man/figures/nrc-bins-1.png)
 
 ## TF-IDF: Finding Unique Chapter Words
 
 While simple frequency tells us who the main characters are, TF-IDF, or term frequency–inverse document frequency, tells us which words are most important to a specific chapter relative to the rest of the corpus. This is excellent for identifying specific plot points or settings (like the move to Bath or the trip to Lyme).
 
-```{r}
-#| label: tf-idf
+```{r tf-idf}
 chapter_words <- persuasion |>
   unnest_tokens(word, text) |>
   count(chapter, word, sort = TRUE) |>
