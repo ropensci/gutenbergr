@@ -125,7 +125,7 @@ This can be useful for filtering by author characteristics:
 
 ```{r filter-authors, eval=FALSE}
 # Find works by 19th century authors
-gutenberg_authors |>
+nineteenth_century_gutenberg_authors <- gutenberg_authors |>
   filter(birthdate >= 1800, birthdate < 1900) |>
   inner_join(gutenberg_works(), by = "gutenberg_author_id")
 ```
@@ -190,7 +190,6 @@ You can pipe the output of `gutenberg_works()` directly into `gutenberg_download
 # Download all of Aristotle's works with titles
 aristotle_books <- gutenberg_works(author == "Aristotle") |>
   gutenberg_download(meta_fields = "title")
-
 ```
 
 ## What's Next?
