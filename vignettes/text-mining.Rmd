@@ -11,7 +11,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
@@ -27,7 +29,9 @@ This vignette demonstrates a complete text mining workflow using gutenbergr and 
 
 ## Required Libraries
 
-```{r windows-check, include=FALSE}
+```{r}
+#| label: windows-check
+#| include: false
 tryCatch(
   library(gutenbergr),
   error = function(e) {
@@ -37,7 +41,8 @@ tryCatch(
 )
 ```
 
-```{r packages}
+```{r}
+#| label: packages
 library(dplyr)
 library(tidytext)
 library(ggplot2)
@@ -49,24 +54,30 @@ library(stringr)
 
 First, let's find and download Jane Austen's *Persuasion*:
 
-```{r find-book}
+```{r}
+#| label: find-book
 gutenberg_works(str_detect(title, "Persuasion"))
 ```
 
 We can see there are multiple works returned. 105 is *Persuasion*:
 
-```{r download, eval=FALSE}
+```{r}
+#| label: download
+#| eval: false
 persuasion <- gutenberg_download(105, meta_fields = "title")
 ```
 
-```{r download-sample, echo=FALSE}
+```{r}
+#| label: download-sample
+#| echo: false
 # For vignette building, use sample data
 persuasion <- gutenbergr::sample_books |>
   filter(gutenberg_id == 105) |>
   select(gutenberg_id, text, title)
 ```
 
-```{r show-book}
+```{r}
+#| label: show-book
 persuasion
 ```
 
@@ -74,7 +85,8 @@ persuasion
 
 Project Gutenberg texts processed into tibbles of lines. To analyze the book's progression, we'll use `gutenberg_add_sections()`. This function identifies headers and fills them down to create a structural column.
 
-```{r sections}
+```{r}
+#| label: sections
 persuasion <- persuasion |>
   gutenberg_add_sections(
     pattern = "^Chapter [IVXLCDM]+",
@@ -98,7 +110,8 @@ persuasion |>
 
 We need to move from a one-row-per-line format to a one-row-per-token format. We'll use `tidytext::unnest_tokens()` to split the text into individual words and remove stop words `tidytext::stop_words`.
 
-```{r tokenize}
+```{r}
+#| label: tokenize
 words <- persuasion |>
   unnest_tokens(word, text) |>
   anti_join(stop_words, by = "word")
@@ -108,7 +121,8 @@ words <- persuasion |>
 
 Tokenization makes it trivial to find the most frequent words in the text:
 
-```{r word-frequency}
+```{r}
+#| label: word-frequency
 word_counts <- words |>
   count(word, sort = TRUE)
 
@@ -117,7 +131,10 @@ word_counts
 
 Let's visualize the top 20 words:
 
-```{r top-words, fig.alt="Horizontal bar chart of the 20 most frequent non-stop words in Persuasion."}
+```{r}
+#| label: top-words
+#| fig.alt: "Horizontal bar chart of the 20 most frequent non-stop words in
+#|   Persuasion."
 word_counts |>
   slice_max(n, n = 20) |>
   mutate(word = reorder(word, n)) |>
@@ -143,7 +160,9 @@ Let's use the [NRC sentiment lexicon](https://saifmohammad.com/WebPages/NRC-Emot
 
 > Note: The NRC lexicon requires accepting a license agreement during installation and is only free for non-commercial use. The code below shows the analysis workflow, with pre-computed results displayed.
 
-```{r sentiment-nrc, eval=FALSE}
+```{r}
+#| label: sentiment-nrc
+#| eval: false
 nrc_sentiments <- get_sentiments("nrc")
 
 word_sentiments <- words |>
@@ -153,7 +172,9 @@ word_sentiments <- words |>
 
 Visualize the distribution of sentiments:
 
-```{r sentiment-plot, eval=FALSE}
+```{r}
+#| label: sentiment-plot
+#| eval: false
 word_sentiments |>
   mutate(sentiment = reorder(sentiment, n)) |>
   ggplot(aes(x = n, y = sentiment, fill = sentiment)) +
@@ -175,7 +196,9 @@ word_sentiments |>
 
 We can aggregate these sentiments by the chapter structure we created earlier.
 
-```{r nrc-chapters, eval=FALSE}
+```{r}
+#| label: nrc-chapters
+#| eval: false
 nrc_by_chapter <- words |>
   inner_join(nrc_sentiments, by = "word", relationship = "many-to-many") |>
   count(chapter, sentiment) |>
@@ -206,7 +229,9 @@ We can also see the general emotive content as the book progresses by dividing t
 
 For good measure, let's add another x-axis with chapter labels so we can correlate the sentiment with portions of the narrative.
 
-```{r nrc-bins, eval=FALSE}
+```{r}
+#| label: nrc-bins
+#| eval: false
 # Add a running index to preserve order and calculate bins
 words_with_index <- words |>
   mutate(word_index = row_number()) |>
@@ -259,7 +284,12 @@ nrc_binned |>
 
 While simple frequency tells us who the main characters are, TF-IDF, or term frequency–inverse document frequency, tells us which words are most important to a specific chapter relative to the rest of the corpus. This is excellent for identifying specific plot points or settings (like the move to Bath or the trip to Lyme).
 
-```{r tf-idf, fig.alt="Four faceted bar charts showing the highest TF-IDF words for chapters 10 through 13 of Persuasion.", fig.cap="Highest TF-IDF words for chapters 10–13, showing the most chapter-distinctive terms relative to the rest of the novel."}
+```{r}
+#| label: tf-idf
+#| fig.alt: "Four faceted bar charts showing the highest TF-IDF words for
+#|   chapters 10 through 13 of Persuasion."
+#| fig.cap: "Highest TF-IDF words for chapters 10–13, showing the most
+#|   chapter-distinctive terms relative to the rest of the novel."
 chapter_words <- persuasion |>
   unnest_tokens(word, text) |>
   count(chapter, word, sort = TRUE) |>

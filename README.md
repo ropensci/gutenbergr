@@ -52,7 +52,7 @@ pak::pak("ropensci/gutenbergr")
 
 ## Quick Start
 
-Load the package:
+Load the package and any other required libraries:
 
 ``` r
 library(gutenbergr)

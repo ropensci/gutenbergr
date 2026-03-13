@@ -11,7 +11,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
@@ -26,7 +28,9 @@ The gutenbergr package helps you download and process public domain works from [
 
 ## Required Libraries
 
-```{r windows-check, include=FALSE}
+```{r}
+#| label: windows-check
+#| include: false
 tryCatch(
   library(gutenbergr),
   error = function(e) {
@@ -36,7 +40,8 @@ tryCatch(
 )
 ```
 
-```{r packages}
+```{r}
+#| label: packages
 library(dplyr)
 library(stringr)
 ```
@@ -47,13 +52,15 @@ library(stringr)
 
 The `gutenberg_metadata` dataset contains information about each work in the Project Gutenberg collection:
 
-```{r metadata}
+```{r}
+#| label: metadata
 gutenberg_metadata
 ```
 
 You can filter this to find specific works:
 
-```{r filter-metadata}
+```{r}
+#| label: filter-metadata
 gutenberg_metadata |>
   filter(title == "Persuasion")
 ```
@@ -64,13 +71,15 @@ The metadata currently in the package was last updated on **`r format(attr(guten
 
 In most analyses, you'll want to filter for English works, avoid duplicates, and include only books with downloadable text. The `gutenberg_works()` function does this automatically:
 
-```{r works}
+```{r}
+#| label: works
 gutenberg_works()
 ```
 
 You can also filter directly within the function:
 
-```{r works-filter}
+```{r}
+#| label: works-filter
 gutenberg_works(author == "Austen, Jane")
 
 # Using regular expressions
@@ -84,13 +93,15 @@ gutenberg_works(author == "Dickens, Charles", has_text == TRUE)
 
 The `gutenberg_subjects` dataset pairs works with Library of Congress classifications and subject headings:
 
-```{r subjects}
+```{r}
+#| label: subjects
 gutenberg_subjects
 ```
 
 This is useful for finding works by genre or topic:
 
-```{r filter-subjects}
+```{r}
+#| label: filter-subjects
 # Find detective stories
 gutenberg_subjects |>
   filter(subject == "Detective and mystery stories")
@@ -102,7 +113,9 @@ gutenberg_subjects |>
 
 You can join this with `gutenberg_works()` to download books by subject:
 
-```{r join-subjects, eval=FALSE}
+```{r}
+#| label: join-subjects
+#| eval: false
 # Get IDs of detective stories
 detective_ids <- gutenberg_subjects |>
   filter(subject == "Detective and mystery stories") |>
@@ -110,20 +123,26 @@ detective_ids <- gutenberg_subjects |>
   pull(gutenberg_id)
 
 # Download a sample
-detective_stories <- gutenberg_download(detective_ids[1:5], meta_fields = c("title", "author"))
+detective_stories <- gutenberg_download(
+  detective_ids[1:5],
+  meta_fields = c("title", "author")
+)
 ```
 
 ### `gutenberg_authors`
 
 The `gutenberg_authors` dataset contains author information including aliases and birth/death years:
 
-```{r authors}
+```{r}
+#| label: authors
 gutenberg_authors
 ```
 
 This can be useful for filtering by author characteristics:
 
-```{r filter-authors, eval=FALSE}
+```{r}
+#| label: filter-authors
+#| eval: false
 # Find works by 19th century authors
 nineteenth_century_gutenberg_authors <- gutenberg_authors |>
   filter(birthdate >= 1800, birthdate < 1900) |>
@@ -136,15 +155,20 @@ nineteenth_century_gutenberg_authors <- gutenberg_authors |>
 
 Download a book using its Gutenberg ID with `gutenberg_download()`:
 
-```{r download-single, eval=FALSE}
+```{r}
+#| label: download-single
+#| eval: false
 persuasion <- gutenberg_download(105, meta_fields = c("title", "author"))
 ```
 
-```{r download-single-display, echo=FALSE}
+```{r}
+#| label: download-single-display
+#| echo: false
 persuasion <- filter(gutenbergr::sample_books, gutenberg_id == 105)
 ```
 
-```{r show-persuasion}
+```{r}
+#| label: show-persuasion
 persuasion
 ```
 
@@ -157,15 +181,20 @@ The result is a tibble with:
 
 Download multiple books by providing a vector of Gutenberg IDs:
 
-```{r download-multiple, eval=FALSE}
+```{r}
+#| label: download-multiple
+#| eval: false
 books <- gutenberg_download(c(105, 109))
 ```
 
-```{r download-multiple-display, echo=FALSE}
+```{r}
+#| label: download-multiple-display
+#| echo: false
 books <- gutenbergr::sample_books
 ```
 
-```{r show-books}
+```{r}
+#| label: show-books
 books
 ```
 
@@ -173,11 +202,14 @@ books
 
 Use the `meta_fields` argument to include additional information:
 
-```{r download-with-meta, eval=FALSE}
+```{r}
+#| label: download-with-meta
+#| eval: false
 books <- gutenberg_download(c(105, 109), meta_fields = c("title", "author"))
 ```
 
-```{r show-books-count}
+```{r}
+#| label: show-books-count
 books |>
   count(title)
 ```
@@ -186,7 +218,9 @@ books |>
 
 You can pipe the output of `gutenberg_works()` directly into `gutenberg_download()`:
 
-```{r download-pipe, eval=FALSE}
+```{r}
+#| label: download-pipe
+#| eval: false
 # Download all of Aristotle's works with titles
 aristotle_books <- gutenberg_works(author == "Aristotle") |>
   gutenberg_download(meta_fields = "title")
