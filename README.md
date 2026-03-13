@@ -147,8 +147,8 @@ See the
 [`data-raw`](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for scripts. Metadata was generated from [the Project
 Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **11
-January 2026**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **13
+March 2026**.
 
 ### Do you respect robot access rules?
 
