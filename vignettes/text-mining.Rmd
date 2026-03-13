@@ -53,7 +53,7 @@ First, let's find and download Jane Austen's *Persuasion*:
 gutenberg_works(str_detect(title, "Persuasion"))
 ```
 
-We can see there are multiple works returned. 105 is *Persuasion*, so let's download that:
+We can see there are multiple works returned. 105 is *Persuasion*:
 
 ```{r download, eval=FALSE}
 persuasion <- gutenberg_download(105, meta_fields = "title")
@@ -72,7 +72,7 @@ persuasion
 
 ## Structural Analysis: Adding Chapters
 
-Project Gutenberg texts processed into tibbles of lines. To analyze the book's progression, we use `gutenberg_add_sections()`. This function identifies headers and fills them down to create a structural column.
+Project Gutenberg texts processed into tibbles of lines. To analyze the book's progression, we'll use `gutenberg_add_sections()`. This function identifies headers and fills them down to create a structural column.
 
 ```{r sections}
 persuasion <- persuasion |>
@@ -117,7 +117,7 @@ word_counts
 
 Let's visualize the top 20 words:
 
-```{r top-words, fig.alt="Horizontal bar chart showing the 20 most frequent words in Persuasion after removing stop words."}
+```{r top-words, fig.alt="Horizontal bar chart of the 20 most frequent non-stop words in Persuasion."}
 word_counts |>
   slice_max(n, n = 20) |>
   mutate(word = reorder(word, n)) |>
@@ -169,7 +169,7 @@ word_sentiments |>
   theme_minimal()
 ```
 
-![Sentiment distribution in Persuasion](../man/figures/sentiment-plot-1.png)
+![Bar chart showing the distribution of NRC sentiment categories across all words in Persuasion.](../man/figures/sentiment-plot-1.png)
 
 ### By Chapter
 
@@ -198,11 +198,11 @@ nrc_by_chapter |>
   )
 ```
 
-![Sentiment by chapter in Persuasion](../man/figures/nrc-chapters-1.png)
+![Four faceted bar charts showing counts of joy, sadness, anger, and fear words per chapter in Persuasion.](../man/figures/nrc-chapters-1.png)
 
 ### Sentiment Progression
 
-We can also see the general emotive content as the book progresses by dividing the text into "bins" of 500 words to track how specific emotions fluctuate across the narrative arc.
+We can also see the general emotive content as the book progresses by dividing the text into bins of words to track how specific emotions fluctuate across the narrative arc.
 
 For good measure, let's add another x-axis with chapter labels so we can correlate the sentiment with portions of the narrative.
 
@@ -253,13 +253,13 @@ nrc_binned |>
   theme_minimal()
 ```
 
-![Sentiment progression in Persuasion](../man/figures/nrc-bins-1.png)
+![Four line charts tracking joy, sadness, anger, and fear word counts across 500-word bins in Persuasion, with a secondary x-axis showing even chapter numbers.](../man/figures/nrc-bins-1.png)
 
 ## TF-IDF: Finding Unique Chapter Words
 
 While simple frequency tells us who the main characters are, TF-IDF, or term frequency–inverse document frequency, tells us which words are most important to a specific chapter relative to the rest of the corpus. This is excellent for identifying specific plot points or settings (like the move to Bath or the trip to Lyme).
 
-```{r tf-idf}
+```{r tf-idf, fig.alt="Four faceted bar charts showing the highest TF-IDF words for chapters 10 through 13 of Persuasion.", fig.cap="Highest TF-IDF words for chapters 10–13, showing the most chapter-distinctive terms relative to the rest of the novel."}
 chapter_words <- persuasion |>
   unnest_tokens(word, text) |>
   count(chapter, word, sort = TRUE) |>

@@ -56,7 +56,7 @@ pak::pak("ropensci/gutenbergr")
 
 ## Quick Start
 
-Load the package:
+Load the package and any other required libraries:
 ```{r load-packages}
 library(gutenbergr)
 library(dplyr)
@@ -67,12 +67,12 @@ We'll get and set our Project Gutenberg mirror:
 gutenberg_get_mirror()
 ```
 
-Search through the metadata to find a book:
+Search through the metadata to find Jane Austen's _Persuasion_:
 ```{r find-book}
 gutenberg_works(title == "Persuasion")
 ```
 
-_Persuasion_'s `gutenberg_id` is 105. We'll use it to download it. We’ll set our cache option to `"persistent"` so that we don’t have to re-download it later.
+_Persuasion_'s `gutenberg_id` is 105. We'll use this ID to download it and also set our cache option to `"persistent"` so that we don’t have to re-download it later.
 ```{r download-single, eval=FALSE}
 options(gutenbergr_cache_type = "persistent")
 persuasion <- gutenberg_download(105)
@@ -89,7 +89,7 @@ persuasion <- gutenbergr::sample_books |>
 persuasion
 ```
 
-Multiple works can be downloaded at once. We'll add `title` data from the metadata.
+Multiple works can be downloaded at once. We'll also download Edna St. Vincent Millay's _Renascence and Other Poems_ (`gutenberg_id` 161) and throw in `title` data from the metadata.
 ```{r download-multiple, eval=FALSE}
 books <- gutenberg_download(c(105, 161), meta_fields = "title")
 ```

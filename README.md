@@ -67,7 +67,7 @@ gutenberg_get_mirror()
 
     #> [1] "https://aleph.pglaf.org"
 
-Search through the metadata to find a book:
+Search through the metadata to find Jane Austen’s *Persuasion*:
 
 ``` r
 gutenberg_works(title == "Persuasion")
@@ -81,8 +81,8 @@ gutenberg_works(title == "Persuasion")
     #>   <chr>                                         <fct>                     <lgl>   
     #> 1 Category: Novels/Category: British Literature Public domain in the USA. TRUE
 
-*Persuasion*’s `gutenberg_id` is 105. We’ll use it to download it. We’ll
-set our cache option to `"persistent"` so that we don’t have to
+*Persuasion*’s `gutenberg_id` is 105. We’ll use this ID to download it
+and also set our cache option to `"persistent"` so that we don’t have to
 re-download it later.
 
 ``` r
@@ -109,8 +109,9 @@ persuasion
     #> 10          105 ""              
     #> # ℹ 8,347 more rows
 
-Multiple works can be downloaded at once. We’ll add `title` data from
-the metadata.
+Multiple works can be downloaded at once. We’ll also download Edna
+St. Vincent Millay’s *Renascence and Other Poems* (`gutenberg_id` 161)
+and throw in `title` data from the metadata.
 
 ``` r
 books <- gutenberg_download(c(105, 161), meta_fields = "title")

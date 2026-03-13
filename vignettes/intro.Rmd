@@ -110,7 +110,7 @@ detective_ids <- gutenberg_subjects |>
   pull(gutenberg_id)
 
 # Download a sample
-gutenberg_download(detective_ids[1:5], meta_fields = c("title", "author"))
+detective_stories <- gutenberg_download(detective_ids[1:5], meta_fields = c("title", "author"))
 ```
 
 ### `gutenberg_authors`
@@ -155,7 +155,7 @@ The result is a tibble with:
 
 ### Multiple Books
 
-Download multiple books by providing a vector of IDs:
+Download multiple books by providing a vector of Gutenberg IDs:
 
 ```{r download-multiple, eval=FALSE}
 books <- gutenberg_download(c(105, 109))
