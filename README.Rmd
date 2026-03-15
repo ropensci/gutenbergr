@@ -4,7 +4,9 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r setup-options, echo=FALSE}
+```{r}
+#| label: setup-options
+#| echo: false
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
@@ -38,7 +40,9 @@ Search, download, and process public domain texts from the [Project Gutenberg](h
 ::: .pkgdown-release
 Install the released version from [CRAN](https://cran.r-project.org/):
 
-```{r install-cran, eval=FALSE}
+```{r}
+#| label: install-cran
+#| eval: false
 install.packages("gutenbergr")
 ```
 
@@ -47,7 +51,9 @@ install.packages("gutenbergr")
 ::: .pkgdown-devel
 Install the development version from [GitHub](https://github.com/):
 
-```{r install-dev, eval=FALSE}
+```{r}
+#| label: install-dev
+#| eval: false
 # install.packages("pak")
 pak::pak("ropensci/gutenbergr")
 ```
@@ -56,51 +62,64 @@ pak::pak("ropensci/gutenbergr")
 
 ## Quick Start
 
-Load the package:
-```{r load-packages}
+Load the package and any other required libraries:
+```{r}
+#| label: load-packages
 library(gutenbergr)
 library(dplyr)
 ```
 
 We'll get and set our Project Gutenberg mirror:
-```{r get-mirror}
+```{r}
+#| label: get-mirror
 gutenberg_get_mirror()
 ```
 
-Search through the metadata to find a book:
-```{r find-book}
+Search through the metadata to find Jane Austen's _Persuasion_:
+```{r}
+#| label: find-book
 gutenberg_works(title == "Persuasion")
 ```
 
-_Persuasion_'s `gutenberg_id` is 105. We'll use it to download it. We’ll set our cache option to `"persistent"` so that we don’t have to re-download it later.
-```{r download-single, eval=FALSE}
+_Persuasion_'s `gutenberg_id` is 105. We'll use this ID to download it and also set our cache option to `"persistent"` so that we don't have to re-download it later.
+```{r}
+#| label: download-single
+#| eval: false
 options(gutenbergr_cache_type = "persistent")
 persuasion <- gutenberg_download(105)
 ```
 
-```{r download-single-sample, echo=FALSE}
+```{r}
+#| label: download-single-sample
+#| echo: false
 # For README building, use sample data
 persuasion <- gutenbergr::sample_books |>
   filter(gutenberg_id == 105) |>
   select(gutenberg_id, text)
 ```
 
-```{r show-book}
+```{r}
+#| label: show-book
 persuasion
 ```
 
-Multiple works can be downloaded at once. We'll add `title` data from the metadata.
-```{r download-multiple, eval=FALSE}
+Multiple works can be downloaded at once. We'll also download Edna St. Vincent Millay's _Renascence and Other Poems_ (`gutenberg_id` 161) and throw in `title` data from the metadata.
+```{r}
+#| label: download-multiple
+#| eval: false
 books <- gutenberg_download(c(105, 161), meta_fields = "title")
 ```
 
-```{r download-multiple-sample, echo=FALSE}
+```{r}
+#| label: download-multiple-sample
+#| echo: false
 # For README building, use sample data
 books <- gutenbergr::sample_books |>
   select(gutenberg_id, text, title)
 ```
 
-```{r show-books}
+```{r}
+#| label: show-books
 books |> count(title)
 ```
 
