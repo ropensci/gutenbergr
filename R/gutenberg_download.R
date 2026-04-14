@@ -91,6 +91,10 @@ gutenberg_download <- function(
     )
   )
 
+  if (length(meta_fields) == 0) {
+    return(ret)
+  }
+
   gutenberg_add_metadata(ret, meta_fields)
 }
 
@@ -178,10 +182,51 @@ try_gutenberg_download <- function(url) {
 #' @return A `tbl_df` of the Gutenberg works with joined metadata.
 #' @keywords internal
 gutenberg_add_metadata <- function(gutenberg_tbl, meta_fields) {
-  meta_fields <- union("gutenberg_id", meta_fields)
+  tidy_meta <- gutenberg_tidy_metadata(
+    gutenbergr::gutenberg_metadata,
+    meta_fields,
+    sep = " & "
+  )
+
   dplyr::left_join(
     gutenberg_tbl,
-    gutenbergr::gutenberg_metadata[meta_fields],
+    tidy_meta,
     by = "gutenberg_id"
   )
+}
+
+#' Prepare metadata for a 1-to-1 join
+#'
+#' @param metadata The metadata data frame (usually `gutenberg_metadata`).
+#' @param fields The fields to include in the join.
+#' @param sep The separator to use for multiple values (e.g., authors).
+#' @return A data frame with one row per `gutenberg_id`.
+#' @keywords internal
+gutenberg_tidy_metadata <- function(metadata, fields, sep = " & ") {
+  if (length(fields) == 0) {
+    return(NULL)
+  }
+
+  fields <- union("gutenberg_id", fields)
+
+  metadata |>
+    dplyr::select(dplyr::all_of(fields)) |>
+    dplyr::group_by(gutenberg_id) |>
+    dplyr::summarize(
+      dplyr::across(
+        dplyr::everything(),
+        ~ {
+          vals <- unique(na.omit(.x))
+          if (length(vals) == 0) {
+            return(NA_character_)
+          }
+          # NOTE: Currently flattening to a string for backward compatibility.
+          # In a future version, we should consider returning 'list(vals)'
+          # instead of 'paste(...)' to allow for more robust programmatic
+          # filtering and unnesting by the user.
+          paste(vals, collapse = sep)
+        }
+      ),
+      .groups = "drop"
+    )
 }

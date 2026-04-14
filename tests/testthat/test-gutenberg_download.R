@@ -61,3 +61,66 @@ test_that("gutenberg_download actually caches a file", {
     expect_equal(nrow(gutenberg_cache_list(verbose = FALSE)), 1)
   })
 })
+
+test_that("gutenberg_tidy_metadata returns one row per gutenberg_id", {
+  test_meta <- tibble::tibble(
+    gutenberg_id = c(1, 1, 2),
+    title = c("Book A", "Book A", "Book B"),
+    author = c("Author 1", "Author 2", "Author 3")
+  )
+
+  out <- gutenberg_tidy_metadata(test_meta, c("title", "author"))
+  expect_equal(nrow(out), 2)
+  expect_equal(sum(out$gutenberg_id == 1), 1)
+})
+
+test_that("gutenberg_tidy_metadata collapses multiple authors with separator", {
+  test_meta <- tibble::tibble(
+    gutenberg_id = 1,
+    author = c("Gilbert, W. S.", "Sullivan, Arthur")
+  )
+
+  out <- gutenberg_tidy_metadata(test_meta, "author", sep = " & ")
+  expect_equal(out$author, "Gilbert, W. S. & Sullivan, Arthur")
+
+  out_alt <- gutenberg_tidy_metadata(test_meta, "author", sep = " | ")
+  expect_equal(out_alt$author, "Gilbert, W. S. | Sullivan, Arthur")
+})
+
+test_that("gutenberg_tidy_metadata handles NAs and unique values", {
+  test_meta <- tibble::tibble(
+    gutenberg_id = c(1, 1, 2),
+    title = c("Same", "Same", "Different"),
+    author = c("Author A", NA, NA)
+  )
+
+  out <- gutenberg_tidy_metadata(test_meta, c("title", "author"))
+  expect_equal(out$title[out$gutenberg_id == 1], "Same")
+  expect_equal(out$author[out$gutenberg_id == 1], "Author A")
+  expect_true(is.na(out$author[out$gutenberg_id == 2]))
+  expect_type(out$author, "character")
+})
+
+test_that("gutenberg_tidy_metadata handles empty or specific field requests", {
+  test_meta <- tibble::tibble(
+    gutenberg_id = 1,
+    title = "Title",
+    author = "Author"
+  )
+
+  expect_null(gutenberg_tidy_metadata(test_meta, character()))
+  out <- gutenberg_tidy_metadata(test_meta, "title")
+  expect_named(out, c("gutenberg_id", "title"))
+  expect_false("author" %in% names(out))
+})
+
+test_that("gutenberg_tidy_metadata handles literal duplicates in source metadata", {
+  test_meta <- tibble::tibble(
+    gutenberg_id = c(1, 1),
+    title = c("Redundant", "Redundant")
+  )
+
+  out <- gutenberg_tidy_metadata(test_meta, "title")
+  expect_equal(nrow(out), 1)
+  expect_equal(out$title, "Redundant")
+})
