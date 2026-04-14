@@ -252,18 +252,14 @@ gutenberg_cache_list <- function(verbose = TRUE) {
   filenames <- basename(files)
   gutenberg_ids <- as.integer(sub("\\..*$", "", filenames))
 
+  metadata_lookup <- gutenberg_tidy_metadata(
+    gutenbergr::gutenberg_metadata,
+    c("title", "author"),
+    sep = " & "
+  )
+
   metadata <- tibble::tibble(gutenberg_id = gutenberg_ids) |>
-    dplyr::left_join(
-      gutenberg_metadata |>
-        dplyr::select(gutenberg_id, title, author) |>
-        dplyr::group_by(gutenberg_id) |>
-        dplyr::summarise(
-          title = dplyr::first(title),
-          author = paste(author, collapse = " & "),
-          .groups = "drop"
-        ),
-      by = "gutenberg_id"
-    )
+    dplyr::left_join(metadata_lookup, by = "gutenberg_id")
 
   tibble::tibble(
     title = metadata$title,
