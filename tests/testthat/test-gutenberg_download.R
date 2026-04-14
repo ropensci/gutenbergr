@@ -70,8 +70,6 @@ test_that("gutenberg_tidy_metadata returns one row per gutenberg_id", {
   )
 
   out <- gutenberg_tidy_metadata(test_meta, c("title", "author"))
-
-  # ID 1 should be squashed into a single row
   expect_equal(nrow(out), 2)
   expect_equal(sum(out$gutenberg_id == 1), 1)
 })
@@ -97,14 +95,8 @@ test_that("gutenberg_tidy_metadata handles NAs and unique values", {
   )
 
   out <- gutenberg_tidy_metadata(test_meta, c("title", "author"))
-
-  # Unique should prevent "Same & Same"
   expect_equal(out$title[out$gutenberg_id == 1], "Same")
-
-  # NA should be ignored in the join for ID 1
   expect_equal(out$author[out$gutenberg_id == 1], "Author A")
-
-  # If all are NA, should return a true NA_character_
   expect_true(is.na(out$author[out$gutenberg_id == 2]))
   expect_type(out$author, "character")
 })
@@ -116,17 +108,13 @@ test_that("gutenberg_tidy_metadata handles empty or specific field requests", {
     author = "Author"
   )
 
-  # Should return NULL for empty fields
   expect_null(gutenberg_tidy_metadata(test_meta, character()))
-
-  # Should only include requested columns
   out <- gutenberg_tidy_metadata(test_meta, "title")
   expect_named(out, c("gutenberg_id", "title"))
   expect_false("author" %in% names(out))
 })
 
 test_that("gutenberg_tidy_metadata handles literal duplicates in source metadata", {
-  # Sometimes Gutenberg metadata has two identical rows for the same work
   test_meta <- tibble::tibble(
     gutenberg_id = c(1, 1),
     title = c("Redundant", "Redundant")
