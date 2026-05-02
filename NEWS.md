@@ -1,4 +1,4 @@
-# gutenbergr (development version)
+# gutenbergr 0.5.1
 
 * Fixed an issue where `gutenberg_download()` duplicated every line for works with multiple authors (@fditraglia, #148; @jrdnbradford, #149)
 
