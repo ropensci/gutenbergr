@@ -1,5 +1,7 @@
 # gutenbergr (development version)
 
+* Fixed an issue where `gutenberg_download()` duplicated every line for works with multiple authors (@fditraglia, #148; @jrdnbradford, #149)
+
 # gutenbergr 0.5.0
 
 * A new `gutenberg_add_sections()` function is available to create forward-filled section markers (@jrdnbradford, #138)
