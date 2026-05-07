@@ -30,5 +30,10 @@ Authors:
   \item David Robinson \email{admiral.david@gmail.com} [copyright holder]
 }
 
+Other contributors:
+\itemize{
+  \item rOpenSci (\href{https://ror.org/019jywm96}{ROR}) [funder]
+}
+
 }
 \keyword{internal}

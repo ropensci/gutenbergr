@@ -7,7 +7,8 @@ Authors@R: c(
     person("Jon", "Harmon", , "jonthegeek@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-4781-4346")),
     person("Myfanwy", "Johnston", , "mrowlan1@gmail.com", role = "aut"),
-    person("David", "Robinson", , "admiral.david@gmail.com", role = c("aut", "cph"))
+    person("David", "Robinson", , "admiral.david@gmail.com", role = c("aut", "cph")),
+    person("rOpenSci", role = "fnd", comment = c(ROR = "019jywm96"))
   )
 Description: Download and process public domain works in the Project
     Gutenberg collection <https://www.gutenberg.org/>. Includes metadata
