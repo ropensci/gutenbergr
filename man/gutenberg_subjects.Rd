@@ -16,7 +16,7 @@ of work and subject, with columns:
 }
 }
 \usage{
-gutenberg_subjects
+data(gutenberg_subjects)
 }
 \description{
 Gutenberg metadata about the subject of each work, particularly

@@ -16,7 +16,7 @@ be used to join with the \link{gutenberg_metadata} dataset.}
 }
 }
 \usage{
-sample_books
+data(sample_books)
 }
 \description{
 A \code{\link[tibble:tibble]{tibble::tibble()}} of book text for two sample books, generated using

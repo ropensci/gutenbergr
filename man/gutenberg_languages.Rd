@@ -16,7 +16,7 @@ letter code if one exists, otherwise three letter.}
 }
 }
 \usage{
-gutenberg_languages
+data(gutenberg_languages)
 }
 \description{
 Data frame with metadata about the languages of each Project
