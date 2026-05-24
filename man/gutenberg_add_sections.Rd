@@ -26,7 +26,7 @@ Default is \code{TRUE}.}
 
 \item{format_fn}{Optional function to format section text. Receives the
 matched text and returns formatted text. Common options include
-\link[stringr:case]{stringr::str_to_title} and \link[stringr:case]{stringr::str_to_upper} but a custom function
+\link[stringr:str_to_title]{stringr::str_to_title} and \link[stringr:str_to_upper]{stringr::str_to_upper} but a custom function
 can also be provided.}
 
 \item{group_by}{Character vector of column names to group by before filling

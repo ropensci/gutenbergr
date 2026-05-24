@@ -29,7 +29,7 @@ example, audiobooks). If not, cannot be retrieved with
 }
 }
 \usage{
-gutenberg_metadata
+data(gutenberg_metadata)
 }
 \description{
 Selected fields of metadata about each of the Project Gutenberg works.

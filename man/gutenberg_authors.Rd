@@ -21,7 +21,7 @@ are multiple, they are "/"-delimited}
 }
 }
 \usage{
-gutenberg_authors
+data(gutenberg_authors)
 }
 \description{
 Data frame with metadata about each author of a Project
