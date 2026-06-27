@@ -1,4 +1,4 @@
-# gutenbergr (development version)
+# gutenbergr 0.5.2
 
 * `gutenberg_get_all_mirrors()` now works with `readMDTable` (>= 0.4.0), which returns a named list of tibbles from `read_md_table()` instead of a single tibble (@jrdnbradford)
 
