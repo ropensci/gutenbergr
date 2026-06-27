@@ -146,7 +146,7 @@ gutenberg_get_all_mirrors <- function() {
     )
   }
 
-  result <- mirrors$result
+  result <- mirrors$result$table_1
 
   if (is.null(result) || nrow(result) < 3) {
     cli::cli_inform(c(

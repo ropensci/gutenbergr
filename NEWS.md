@@ -1,5 +1,7 @@
 # gutenbergr (development version)
 
+* `gutenberg_get_all_mirrors()` now works with `readMDTable` (>= 0.4.0), which returns a named list of tibbles from `read_md_table()` instead of a single tibble (@jrdnbradford)
+
 # gutenbergr 0.5.1
 
 * Fixed an issue where `gutenberg_download()` duplicated every line for works with multiple authors (@fditraglia, #148; @jrdnbradford, #149)
