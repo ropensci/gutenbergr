@@ -65,7 +65,7 @@ We’ll get and set our Project Gutenberg mirror:
 gutenberg_get_mirror()
 ```
 
-    #> [1] "https://aleph.pglaf.org"
+    #> [1] "https://gutenberg.pglaf.org"
 
 Search through the metadata to find Jane Austen’s *Persuasion*:
 
@@ -147,8 +147,8 @@ See the
 [`data-raw`](https://github.com/ropensci/gutenbergr/tree/master/data-raw)
 directory for scripts. Metadata was generated from [the Project
 Gutenberg
-catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **02
-May 2026**.
+catalog](https://www.gutenberg.org/ebooks/offline_catalogs.html) on **25
+June 2026**.
 
 ### Do you respect robot access rules?
 
